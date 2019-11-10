@@ -1,6 +1,7 @@
 CREATE TABLE PERSON (
 	id CHAR(9) PRIMARY KEY,
 	name VARCHAR(20),
+	age INTEGER,
 	username VARCHAR(10),
 	password VARCHAR(15)
 );
@@ -26,3 +27,6 @@ CREATE TABLE ANSWERS (
 	PRIMARY KEY (quiz_numb,ques_numb,id),
 	FOREIGN KEY (id) REFERENCES person(id)
 );
+
+ALTER TABLE Persons
+ADD CHECK (age>=18); 
