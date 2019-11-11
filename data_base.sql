@@ -28,5 +28,35 @@ CREATE TABLE ANSWERS (
 	FOREIGN KEY (id) REFERENCES person(id)
 );
 
-ALTER TABLE Persons
+ALTER TABLE PERSON
 ADD CHECK (age>=18); 
+
+
+CREATE TABLE CLASS (
+	crn INT(5),
+	course_code VARCHAR(7),
+	loc_id INT(5) FOREIGN KEY REFERENCES LOCATION(loc_id),
+	credit INT(1),
+
+);
+
+
+CREATE TABLE LOCATION (
+	class VARCHAR(10),
+	building CHAR(3),
+	day CHAR(3),
+	start_time TIME(),
+	end_time TIME(),
+	year YEAR,
+	loc_id INT(5) PRIMARY KEY
+);
+
+CREATE TABLE LOCATION (
+	dep_id INT(4),
+	dep_name VARCHAR(30),
+	fac_name VARCHAR(30),
+	dean_id INT FOREIGN KEY REFERENCES PERSON(id),
+	stu_delegate INT FOREIGN KEY REFERENCES PERSON(id)
+	
+);
+
