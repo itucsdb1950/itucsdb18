@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home_page():
-    return render_template("main.html")
+    return render_template("login.html")
 
 
 if __name__ == "__main__":
