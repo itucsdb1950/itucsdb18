@@ -6,18 +6,21 @@ import psycopg2 as dbapi2
 
 INIT_STATEMENTS = [
 	# KUTAY KARAKAMIŞ
-	# "CREATE TABLE IF NOT EXISTS DUMMY (NUM INTEGER)",
-	# "INSERT INTO DUMMY VALUES (42)",
-	# "CREATE TABLE PERSON (id CHAR(9) PRIMARY KEY, name VARCHAR(20), age INTEGER, username VARCHAR(10), password VARCHAR(15))",
-	# "CREATE INDEX person_name ON person(name)",
-	# "CREATE TABLE QUIZ ( quiz_numb INTEGER NOT NULL, ques_numb INTEGER NOT NULL, ques_text VARCHAR(250) NOT NULL, right_ans VARCHAR(25) NOT NULL, wrong_ans1 VARCHAR(25) NOT NULL, wrong_ans2 VARCHAR(25), wrong_ans3 VARCHAR(25), PRIMARY KEY(quiz_numb,ques_numb));",
-	# "CREATE TABLE ANSWERS (quiz_numb INTEGER NOT NULL, ques_numb INTEGER NOT NULL, id CHAR(9), given_ans VARCHAR(25)NOT NULL, PRIMARY KEY (quiz_numb,ques_numb,id), FOREIGN KEY (id) REFERENCES person(id));",
-	# "ALTER TABLE PERSON ADD CHECK (age>=18);" ,
+	
+	"DROP TABLE *"
+	
+	"CREATE TABLE IF NOT EXISTS DUMMY (NUM INTEGER)",
+	"INSERT INTO DUMMY VALUES (42)",
+	"CREATE TABLE PERSON (id CHAR(9) PRIMARY KEY, name VARCHAR(20), age INTEGER, username VARCHAR(10), password VARCHAR(15))",
+	"CREATE INDEX person_name ON person(name)",
+	"CREATE TABLE QUIZ ( quiz_numb INTEGER NOT NULL, ques_numb INTEGER NOT NULL, ques_text VARCHAR(250) NOT NULL, right_ans VARCHAR(25) NOT NULL, wrong_ans1 VARCHAR(25) NOT NULL, wrong_ans2 VARCHAR(25), wrong_ans3 VARCHAR(25), PRIMARY KEY(quiz_numb,ques_numb));",
+	"CREATE TABLE ANSWERS (quiz_numb INTEGER NOT NULL, ques_numb INTEGER NOT NULL, id CHAR(9), given_ans VARCHAR(25)NOT NULL, PRIMARY KEY (quiz_numb,ques_numb,id), FOREIGN KEY (id) REFERENCES person(id));",
+	"ALTER TABLE PERSON ADD CHECK (age>=18);" ,
 	
 	# ENES FURKAN ÖRNEK
-	#"CREATE TABLE LOCATION (class VARCHAR(10), building CHAR(3), day CHAR(3), start_time TIME, end_time TIME, year NUMERIC(4), loc_id NUMERIC(5) PRIMARY KEY);",
-	#"CREATE TABLE CLASS (crn CHAR(5) PRIMARY KEY, course_code VARCHAR(7), loc_id NUMERIC(5) REFERENCES LOCATION(loc_id), credit NUMERIC(1));",
-	#"CREATE TABLE DEPARTMENT (dep_id CHAR(4) PRIMARY KEY, dep_name VARCHAR(30), fac_name VARCHAR(30), dean_id CHAR(9) REFERENCES PERSON(id), stu_delegate CHAR(9) REFERENCES PERSON(id));",
+	"CREATE TABLE LOCATION (class VARCHAR(10), building CHAR(3), day CHAR(3), start_time TIME, end_time TIME, year NUMERIC(4), loc_id NUMERIC(5) PRIMARY KEY);",
+	"CREATE TABLE CLASS (crn CHAR(5) PRIMARY KEY, course_code VARCHAR(7), loc_id NUMERIC(5) REFERENCES LOCATION(loc_id), credit NUMERIC(1));",
+	"CREATE TABLE DEPARTMENT (dep_id CHAR(4) PRIMARY KEY, dep_name VARCHAR(30), fac_name VARCHAR(30), dean_id CHAR(9) REFERENCES PERSON(id), stu_delegate CHAR(9) REFERENCES PERSON(id));",
 	
 	# MEHMET FATİH YILDIRIM
 	"""
