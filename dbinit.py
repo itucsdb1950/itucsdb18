@@ -14,7 +14,7 @@ INIT_STATEMENTS = [
 	#  ~ ! "ALTER TABLE PERSON ADD CHECK (age>=18);" ,
 	"CREATE TABLE LOCATION (class VARCHAR(10), building CHAR(3), day CHAR(3), start_time TIME, end_time TIME, year NUMERIC(4), loc_id NUMERIC(5) PRIMARY KEY);",
 	"CREATE TABLE CLASS (crn NUMERIC(5), course_code VARCHAR(7), loc_id NUMERIC(5) REFERENCES LOCATION(loc_id), credit NUMERIC(1));",
-	"CREATE TABLE DEPARTMENT (dep_id NUMERIC(4), dep_name VARCHAR(30), fac_name VARCHAR(30), dean_id INT REFERENCES PERSON(id), stu_delegate INT REFERENCES PERSON(id));"
+	"CREATE TABLE DEPARTMENT (dep_id NUMERIC(4), dep_name VARCHAR(30), fac_name VARCHAR(30), dean_id CHAR(9) REFERENCES PERSON(id), stu_delegate INT REFERENCES PERSON(id));"
 ]
 
 
