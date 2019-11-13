@@ -12,7 +12,8 @@ DSN = {'user' : "postgres",
 def check_user(username, password):
 	statement = "SELECT * FROM PERSON WHERE username = '{}' AND password = '{}'".format(username, password)
 
-	with dbapi2.connect(**DSN) as connection:
+	with dbapi2.connect(os.getenv("DATABASE_URL")) as connection: # heroku
+	#with dbapi2.connect(**DSN) as connection: # local
 		with connection.cursor() as cursor:
 			cursor.execute(statement)
 			record = cursor.fetchone()
