@@ -9,3 +9,4 @@ __pycache__
 
 venv/
 docs/build/
+/static/bootstrap-4.4.1-dist/

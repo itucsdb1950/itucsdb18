@@ -11,17 +11,17 @@
     <h3 class="text-center">ADD LOCATION</h3>
         <hr>
 
-    <form method="post" action="">
+    <form method="post" action="{{ url_for('add_location') }}">
         <div class="form-group row">
             <label for="building" class="col-sm-2 col-form-label">Building:</label>
             <div class="col-sm-4">
-               <input type="text" name="building" id="building" class="form-control" placeholder="EEB">
+               <input type="text" name="building" id="building" class="form-control" placeholder="EEB" required>
             </div>
 
 
             <label for="day_sel" class="col-sm-2 col-form-label">Day:</label>
             <div class="col-sm-4">
-                <select class="form-control" name="day_sel" id="day_sel">
+                <select class="form-control" name="day_sel" id="day_sel" required>
                     <option value="Monday">Monday</option>
                     <option value="Tuesday">Tuesday</option>
                 </select>
@@ -31,14 +31,14 @@
         <div class="form-group row">
             <label for="classroom" class="col-sm-2 col-form-label">Classroom:</label>
             <div class="col-sm-4">
-               <input type="number" name="classroom" id="classroom" class="form-control" placeholder="5302">
+               <input type="number" name="classroom" id="classroom" class="form-control" placeholder="5302" required>
 
             </div>
 
 
             <label for="capacity" class="col-sm-2 col-form-label">Capacity:</label>
             <div class="col-sm-4">
-               <input type="number" name="capacity" id="capacity" class="form-control" placeholder="80">
+               <input type="number" name="capacity" id="capacity" class="form-control" placeholder="80" required>
 
             </div>
         </div>
@@ -56,23 +56,24 @@
             <th>Classroom</th>
             <th>Capacity</th>
             <th>Enrolled</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
+        
+        {% for location in locations %}
         <tr>
-            <td scope="row">123</td>
-            <td>QWE</td>
-            <td>ASD</td>
-            <td>ASD</td>
-            <td>ASD</td>
+            <td scope="row">{{ location[1] }}</td>
+            <td>{{ location[2] }}</td>
+            <td>{{ location[3] }}</td>
+            <td>{{ location[4] }}</td>
+            <td>sd</td>
+            <td><a name="update_location" id="update_location" class="btn btn-success" href="#" role="button">Update</a>
+                <a name="del_location" id="del_location" class="btn btn-danger" href="{{ url_for('del_location', loc_id=location[0]) }}" role="button">Delete</a>
+            </td>
         </tr>
-        <tr>
-            <td scope="row">ASD</td>
-            <td>WER</td>
-            <td>SDF</td>
-            <td>SDF</td>
-            <td>SDF</td>
-        </tr>
+        {% endfor %}
+
         </tbody>
     </table>
     </div>

@@ -1,79 +1,39 @@
-import os
 import sys
 
 import psycopg2 as dbapi2
+from configs import db_url
 
 
-INIT_STATEMENTS = [
-	# KUTAY KARAKAMIŞ
-	#
-	# ~ "CREATE TABLE IF NOT EXISTS DUMMY (NUM INTEGER)",
-	# ~ "INSERT INTO DUMMY VALUES (42)",
-	# ~ "CREATE TABLE PERSON (id CHAR(9) PRIMARY KEY, name VARCHAR(20), age INTEGER, username VARCHAR(10), password VARCHAR(15))",
-	# ~ "CREATE INDEX person_name ON person(name)",
-	# ~ "CREATE TABLE QUIZ ( quiz_numb INTEGER NOT NULL, ques_numb INTEGER NOT NULL, ques_text VARCHAR(250) NOT NULL, right_ans VARCHAR(25) NOT NULL, wrong_ans1 VARCHAR(25) NOT NULL, wrong_ans2 VARCHAR(25), wrong_ans3 VARCHAR(25), PRIMARY KEY(quiz_numb,ques_numb));",
-	# ~ "CREATE TABLE ANSWERS (quiz_numb INTEGER NOT NULL, ques_numb INTEGER NOT NULL, id CHAR(9), given_ans VARCHAR(25)NOT NULL, PRIMARY KEY (quiz_numb,ques_numb,id), FOREIGN KEY (id) REFERENCES person(id));",
-	# ~ "ALTER TABLE PERSON ADD CHECK (age>=18);" ,
-	#
-	# ENES FURKAN ÖRNEK
-	# ~"CREATE TABLE LOCATION (class VARCHAR(10), building CHAR(3), day CHAR(3), start_time TIME, end_time TIME, year NUMERIC(4), loc_id NUMERIC(5) PRIMARY KEY);",
-	# ~"CREATE TABLE CLASS (crn CHAR(5) PRIMARY KEY, course_code VARCHAR(7), loc_id NUMERIC(5) REFERENCES LOCATION(loc_id), credit NUMERIC(1));",
-	# ~ "DROP TABLE DEPARTMENT",
-	# ~"CREATE TABLE DEPARTMENT (dep_id CHAR(4) PRIMARY KEY, dep_name VARCHAR(30), fac_name VARCHAR(30), dean_id CHAR(9) REFERENCES PERSON(id), stu_delegate CHAR(9) REFERENCES PERSON(id));",
-	# ~"ALTER TABLE DEPARTMENT DROP COLUMN dep_id",
-	# ~"ALTER TABLE DEPARTMENT ADD COLUMN dep_id CHAR(4)",
-	# ~"ALTER TABLE DEPARTMENT ADD PRIMARY KEY (dep_id)",
-	#
-	# MEHMET FATİH YILDIRIM
-	# ~"""
-	# ~CREATE TABLE STUDENT (
-	# 	~ID CHAR(9) PRIMARY KEY REFERENCES PERSON,
-	# 	~GPA NUMERIC(3, 2),
-	# 	~COMP_CREDITS INT NOT NULL DEFAULT 0,
-	# 	~dep_id CHAR(4) REFERENCES DEPARTMENT NOT NULL,
-	# 	~CHECK (COMP_CREDITS >= 0),
-	# 	~CHECK (GPA >= 0),
-	# 	~CHECK (GPA <= 4)
-	# ~)
-	# ~""",
-	# ~"""
-	# ~CREATE TABLE ENROLLMENT (
-	# 	~ID CHAR(9) REFERENCES PERSON NOT NULL,
-	# 	~CRN CHAR(5) REFERENCES CLASS NOT NULL,
-	# 	~ATTENDANCE INT,
-	# 	~CHECK (ATTENDANCE >= 0),
-	# 	~PRIMARY KEY (ID, CRN)
-	# ~)
-	# ~""",
-	# ~"""
-	# ~CREATE TABLE GRADES (
-	# 	~ID CHAR(9) REFERENCES PERSON NOT NULL,
-	# 	~CRN CHAR(5) REFERENCES CLASS NOT NULL,
-	# 	~TAKEN_FROM VARCHAR(15) NOT NULL,
-	# 	~PERCENTAGE INT NOT NULL,
-	# 	~GRADE INT NOT NULL,
-	# 	~CHECK (PERCENTAGE >= 0),
-	# 	~CHECK (PERCENTAGE <= 100),
-	# 	~CHECK (GRADE >= 0),
-	# 	~CHECK (GRADE <= 100),
-	# 	~PRIMARY KEY (ID, CRN, TAKEN_FROM)
-	# ~)
-	# ~"""
-]
+def read_sql_from_file(filename: str) -> list:
+    with open(filename, 'r') as f:
+        content = f.read()
+        content = content.split(';')
+        content = [row + ";" for row in content]
+    return content
 
 
-def initialize(url):
-    with dbapi2.connect(url) as connection:
-        cursor = connection.cursor()
-        for statement in INIT_STATEMENTS:
-            cursor.execute(statement)
-        cursor.close()
+def initialize():
+    try:
+        with dbapi2.connect(db_url) as connection:
+            with connection.cursor() as cursor:
+                print("Connected...", file=sys.stderr)
+
+                drop_statements = read_sql_from_file('drop.sql')
+                for statement in drop_statements:
+                    if len(statement) > 5:
+                        cursor.execute(statement)
+                print("Drop tables...", file=sys.stderr)
+
+                create_statements = read_sql_from_file('data_base.sql')
+                for statement in create_statements:
+                    if len(statement) > 5:
+                        cursor.execute(statement)
+                print("Create tables...", file=sys.stderr)
+
+
+    except (Exception, dbapi2.Error) as error:
+        print("Error while connecting to PostgreSQL: {}".format(error), file=sys.stderr)
 
 
 if __name__ == "__main__":
-    # url = os.getenv("DATABASE_URL")
-    url = "postgres://yaiwmbrmgfpams:84d703ab0f16066210d421c443a4e4a3c9dab820c57bc87cc04fa8c01e95aee2@ec2-54-246-100-246.eu-west-1.compute.amazonaws.com:5432/d14ugetmit65gb"
-    if url is None:
-        print("Usage: DATABASE_URL=url python dbinit.py", file=sys.stderr)
-        sys.exit(1)
-    initialize(url)
+    initialize()
