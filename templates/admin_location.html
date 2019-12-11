@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block TITLE %}ADMIN LOCATION{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="container">
+    <br>
+    <h3 class="text-center">ADD LOCATION</h3>
+        <hr>
+
+    <form method="post" action="">
+        <div class="form-group row">
+            <label for="building" class="col-sm-2 col-form-label">Building:</label>
+            <div class="col-sm-4">
+               <input type="text" name="building" id="building" class="form-control" placeholder="EEB">
+            </div>
+
+
+            <label for="day_sel" class="col-sm-2 col-form-label">Day:</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="day_sel" id="day_sel">
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="classroom" class="col-sm-2 col-form-label">Classroom:</label>
+            <div class="col-sm-4">
+               <input type="number" name="classroom" id="classroom" class="form-control" placeholder="5302">
+
+            </div>
+
+
+            <label for="capacity" class="col-sm-2 col-form-label">Capacity:</label>
+            <div class="col-sm-4">
+               <input type="number" name="capacity" id="capacity" class="form-control" placeholder="80">
+
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Location</button>
+    </form>
+
+
+
+
+        <table class="table table-hover table-inverse">
+        <thead class="thead-inverse">
+        <tr>
+            <th>Building</th>
+            <th>Day</th>
+            <th>Classroom</th>
+            <th>Capacity</th>
+            <th>Enrolled</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td scope="row">123</td>
+            <td>QWE</td>
+            <td>ASD</td>
+            <td>ASD</td>
+            <td>ASD</td>
+        </tr>
+        <tr>
+            <td scope="row">ASD</td>
+            <td>WER</td>
+            <td>SDF</td>
+            <td>SDF</td>
+            <td>SDF</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+
+
+
+
+
+
+
+{% endblock %}
