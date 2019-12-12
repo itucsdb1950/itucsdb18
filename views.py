@@ -92,7 +92,9 @@ def get_person(limit=500):
             return records
 
 def add_person(stu_name, stu_num, usern, passw, age):
-    statement = "INSERT INTO person(id, name, age, username, password) VALUES('{}', '{}', '{}', '{}', '{}')".format(stu_num, stu_name, age, usern, passw)
+    statement="SELECT * FROM person WHERE username = '{}' ".format(usern)
+    if int(age) >= 18:
+        statement = "INSERT INTO person(id, name, age, username, password) VALUES('{}', '{}', '{}', '{}', '{}')".format(stu_num, stu_name, age, usern, passw)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
