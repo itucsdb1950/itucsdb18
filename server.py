@@ -16,7 +16,10 @@ def admin_page():
 
 @app.route("/admin/crn")
 def admin_crn_page():
-    return render_template("admin_crn.html")
+    locations = views.get_locations()
+    crns = views.get_crns()
+
+    return render_template("admin_crn.html", locations=locations, crns=crns)
 
 
 @app.route("/admin/location")
@@ -24,6 +27,23 @@ def admin_location_page():
     locations = views.get_locations()
 
     return render_template("admin_location.html", locations=locations)
+
+@app.route("/admin/persons")
+def admin_person_page():
+    person = views.get_person()
+
+    return render_template("admin_person.html", person=person)
+
+@app.route("/add_person", methods=['POST'])
+def add_person():
+    stu_name = request.form.get('stu_name')
+    stu_num = request.form.get('stu_num')
+    usern = request.form.get('usern')
+    passw = request.form.get('passw')
+    age = request.form.get('age')
+    if views.check_person(usern):
+        views.add_person(stu_name, stu_num, usern, passw, age)
+    return redirect(url_for('admin_person_page'))
 
 
 @app.route("/add_location", methods=['POST'])
@@ -43,6 +63,17 @@ def del_location(loc_id):
     return redirect(url_for('admin_location_page'))
 
 
+@app.route("/add_crn", methods=['POST'])
+def add_crn():
+    crn = request.form.get('crn')
+    code = request.form.get('code')
+    loc_sel = request.form.get('loc_sel')
+    credits_sel = request.form.get('credits_sel')
+    if views.check_crn(crn, code, loc_sel):
+        views.add_crn(crn, code, loc_sel, credits_sel)
+    return redirect(url_for('admin_crn_page'))
+
+
 @app.route("/login", methods=['POST'])
 def login():
     username = request.form.get('usrn')
@@ -51,6 +82,11 @@ def login():
     if user:
         return render_template("home.html", record=user)
     return "Your username and password is wrong"
+
+@app.route("/del_person/stu_num", methods=['GET'])
+def del_person(stu_num):
+    views.del_person(stu_num)
+    return redirect(url_for('admin_person_page'))
 
 
 if __name__ == "__main__":

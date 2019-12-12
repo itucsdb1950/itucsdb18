@@ -56,6 +56,64 @@ def del_location(id):
         with connection.cursor() as cursor:
             cursor.execute(statement)
 
+def get_crns(limit=100):
+    statement = "SELECT * FROM CLASS LIMIT {}".format(limit)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            records = cursor.fetchall()
+            return records
+
+def check_crn(crn, code, loc_sel):
+    statement = "SELECT * FROM class WHERE crn = '{}' AND course_code = '{}' AND loc_id = '{}'".format(crn, code, loc_sel)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            record = cursor.fetchone()
+            return record is None
+
+
+def add_crn(crn, code, loc_sel, credits_sel):
+    statement = "INSERT INTO CLASS(crn, course_code, loc_id, credit) VALUES('{}', '{}', '{}', '{}')".format(crn, code, loc_sel, credits_sel)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+def get_person(limit=500):
+    statement = "SELECT * FROM person LIMIT {}".format(limit)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            records = cursor.fetchall()
+            return records
+
+def add_person(stu_name, stu_num, usern, passw, age):
+    statement = "INSERT INTO person(id, name, age, username, password) VALUES('{}', '{}', '{}', '{}', '{}')".format(stu_num, stu_name, age, usern, passw)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+def check_person(usern):
+    statement = "SELECT * FROM person WHERE username = '{}' ".format(usern)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            record = cursor.fetchone()
+            return record is None
+
+def del_person(id):
+    statement = "DELETE FROM person WHERE id = '{}'".format(id)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
 
 if __name__ == '__main__':
     check_user("kkarakamis", "1234")

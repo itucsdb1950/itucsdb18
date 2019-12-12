@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block TITLE %}ADD PERSON{% endblock %}
+
+{% block body %}
+
+  <div class="container">
+    <br>
+
+    <form method="post" action="{{ url_for('add_person') }}">
+        <div class="form-group row">
+            <label for="stu_name" class="col-sm-2 col-form-label">Student Name:</label>
+            <div class="col-sm-4">
+               <input type="text" name="stu_name" id="stu_name" class="form-control" placeholder="H. Turgut" required>
+            </div>
+
+
+            <label for="stu_num" class="col-sm-2 col-form-label">Student Number:</label>
+            <div class="col-sm-4">
+                <input type="number" name="stu_num" id="stu_num" class="form-control" placeholder="15016000" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="usern" class="col-sm-2 col-form-label">Age:</label>
+            <div class="col-sm-4">
+               <input type="text" name="usern" id="usern" class="form-control" placeholder="ceylan16" required>
+            </div>
+
+             <label for="passw" class="col-sm-2 col-form-label">Initial Password:</label>
+            <div class="col-sm-4">
+               <input type="text" name="passw" id="passw" class="form-control" placeholder="12ef!84" required>
+
+            </div>
+
+        </div>
+
+        <div class="form-group row">
+            <label for="age" class="col-sm-2 col-form-label">Age:</label>
+            <div class="col-sm-4">
+               <input type="number" name="age" id="age" class="form-control" placeholder="18" required>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="prof" id="prof" value="option1">
+                      <label class="form-check-label" for="prof">Professor</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="student" id="student" value="option2">
+                      <label class="form-check-label" for="student">Student</label>
+                    </div>
+            </div>
+
+        </div>
+        <button type="submit" class="btn btn-primary">Add Person</button>
+
+    </form>
+
+
+        <table class="table table-hover table-inverse">
+        <thead class="thead-inverse">
+        <tr>
+            <th>Student Number</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Username</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for persons in person %}
+        <tr>
+            <td scope="row">{{ persons[0] }}</td>
+            <td>{{ persons[1] }}</td>
+            <td>{{ persons[2] }}</td>
+            <td>{{ persons[3] }}</td>
+            <!--<td>sd</td>-->
+            <td><a name="update_person" id="update_person" class="btn btn-success" href="#" role="button">Update</a>
+                <a name="del_person" id="del_person" class="btn btn-danger" href="{{ url_for('del_person', stu_num=persons[0]) }}" role="button">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    </div>
+
+
+
+
+
+
+
+
+{% endblock %}
