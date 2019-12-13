@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block TITLE %}ADMIN DEPARTMENT{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="container">
+    <br>
+    <h3 class="text-center">ADD DEPARTMENT</h3>
+        <hr>
+
+    <form method="post" action="{{ url_for('add_department') }}">
+        <div class="form-group row">
+            <label for="dept" class="col-sm-2 col-form-label">Department Name:</label>
+            <div class="col-sm-4">
+               <input type="text" name="dept" id="dept" class="form-control" placeholder="Computer Engineering" required>
+            </div>
+
+            <div class="col-sm-4">
+                <label for="dean" class="col-sm-2 col-form-label">Dean ID:</label>
+                    <select class="form-control" name="dean" id="dean" required>
+                         {% for persons in person %}
+                             {% if persons[0] in department[2] %}
+                             {% else %}
+                                <option value="{{ persons[0] }}">{{ persons[1] }} - {{ persons[2] }}</option>
+                             {% endif %}
+                         {% endfor %}
+                    </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="delege" class="col-sm-2 col-form-label">Student Delegate:</label>
+            <div class="col-sm-4">
+               <input type="text" name="delege" id="delege" class="form-control" placeholder="Emin KOCABIYIK" required>
+
+            </div>
+
+
+        <button type="submit" class="btn btn-primary">Add Location</button>
+        </div>
+    </form>
+
+
+
+
+        <table class="table table-hover table-inverse">
+        <thead class="thead-inverse">
+        <tr>
+            <th>Building</th>
+            <th>Day</th>
+            <th>Classroom</th>
+            <th>Capacity</th>
+            <th>Enrolled</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        
+        {% for location in locations %}
+        <tr>
+            <td scope="row">{{ location[1] }}</td>
+            <td>{{ location[2] }}</td>
+            <td>{{ location[3] }}</td>
+            <td>{{ location[4] }}</td>
+            <td>sd</td>
+            <td><a name="update_location" id="update_location" class="btn btn-success" href="#" role="button">Update</a>
+                <a name="del_location" id="del_location" class="btn btn-danger" href="{{ url_for('del_location', loc_id=location[0]) }}" role="button">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    </div>
+
+
+
+
+
+
+
+{% endblock %}

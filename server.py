@@ -34,15 +34,34 @@ def admin_person_page():
 
     return render_template("admin_person.html", person=person)
 
+
+@app.route("/admin/department")
+def admin_department_page():
+    person = views.get_person()
+    department = views.get_department()
+    return render_template("admin_department.html", person=person, department=department)
+
+
+@app.route("/add_crn", methods=['POST'])
+def add_crn():
+    dept = request.form.get('dept')
+    dean = request.form.get('dean')
+    delege = request.form.get('delege')
+    if views.check_crn(dept):
+        views.add_crn(dept, dean, delege)
+    return redirect(url_for('admin_crn_page'))
+
+
 @app.route("/add_person", methods=['POST'])
 def add_person():
-    stu_name = request.form.get('stu_name')
-    stu_num = request.form.get('stu_num')
+    per_name = request.form.get('per_name')
+    per_num = request.form.get('per_num')
     usern = request.form.get('usern')
     passw = request.form.get('passw')
     age = request.form.get('age')
+    type = request.form.get('type')
     if views.check_person(usern):
-        added = views.add_person(stu_name, stu_num, usern, passw, age)
+        added = views.add_person(per_name, per_num, usern, passw, age, type)
         if added == 1:
             # "User couldn't be added. Make sure all fields are convenient."
             pass
@@ -93,9 +112,9 @@ def login():
     return "Your username and password is wrong"
 
 
-@app.route("/del_person/<string:stu_num>", methods=['GET'])
-def del_person(stu_num):
-    views.del_person(stu_num)
+@app.route("/del_person/<string:per_num>", methods=['GET'])
+def del_person(per_num):
+    views.del_person(per_num)
     return redirect(url_for('admin_person_page'))
 
 

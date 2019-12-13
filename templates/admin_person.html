@@ -9,15 +9,15 @@
 
     <form method="post" action="{{ url_for('add_person') }}">
         <div class="form-group row">
-            <label for="stu_name" class="col-sm-2 col-form-label">Student Name:</label>
+            <label for="per_name" class="col-sm-2 col-form-label">Name:</label>
             <div class="col-sm-4">
-               <input type="text" name="stu_name" id="stu_name" class="form-control" placeholder="H. Turgut" required>
+               <input type="text" name="per_name" id="per_name" class="form-control" placeholder="H. Turgut" required>
             </div>
 
 
-            <label for="stu_num" class="col-sm-2 col-form-label">Student Number:</label>
+            <label for="per_num" class="col-sm-2 col-form-label">Person ID:</label>
             <div class="col-sm-4">
-                <input type="number" name="stu_num" id="stu_num" class="form-control" placeholder="15016000" required>
+                <input type="number" name="per_num" id="per_num" class="form-control" placeholder="15016000" required>
             </div>
         </div>
 
@@ -43,11 +43,11 @@
 
             <div class="col-sm-4">
                 <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="prof" id="prof" value="option1">
+                      <input class="form-check-input" type="radio" name="type" id="prof" value="prof">
                       <label class="form-check-label" for="prof">Professor</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="student" id="student" value="option2">
+                      <input class="form-check-input" type="radio" name="type" id="student" value="student">
                       <label class="form-check-label" for="student">Student</label>
                     </div>
             </div>
@@ -77,7 +77,7 @@
             <td>{{ persons[3] }}</td>
             <!--<td>sd</td>-->
             <td><a name="update_person" id="update_person" class="btn btn-success" href="#" role="button">Update</a>
-                <a name="del_person" id="del_person" class="btn btn-danger" href="{{ url_for('del_person', stu_num=persons[0]) }}" role="button">Delete</a>
+                <a name="del_person" id="del_person" class="btn btn-danger" href="{{ url_for('del_person', per_num=persons[0]) }}" role="button">Delete</a>
             </td>
         </tr>
         {% endfor %}

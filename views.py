@@ -110,18 +110,24 @@ def get_person(limit=500):
             records = cursor.fetchall()
             return records
 
-def add_person(stu_name, stu_num, usern, passw, age):
+def add_person(per_name, per_num, usern, passw, age, type):
     # ~statement="SELECT * FROM person WHERE username = '{}' ".format(usern)
     #TODO: If exists, don't add
 
     if int(age) < 18:
         return 1
-    
-    statement = "INSERT INTO person(id, name, age, username, password) VALUES('{}', '{}', '{}', '{}', '{}')".format(stu_num, stu_name, age, usern, passw)
+
+    if type == "prof":
+        statement = "INSERT INTO person(id, name, age, username, password) VALUES('{}', '{}', '{}', '{}', '{}')".format(
+            per_num, per_name, age, usern, passw)
+
+    else:
+        statement = "INSERT INTO person(id, name, age, username, password) VALUES('{}', '{}', '{}', '{}', '{}');".format(per_num, per_name, age, usern, passw)
+
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
             cursor.execute(statement)
-            return 0
+
 
 def check_person(usern):
     statement = "SELECT * FROM person WHERE username = '{}' ".format(usern)
@@ -138,6 +144,35 @@ def del_person(id):
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
             cursor.execute(statement)
+
+
+def get_department(limit=100):
+    statement = "SELECT * FROM department LIMIT {}".format(limit)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            records = cursor.fetchall()
+            return records
+
+
+def add_department(dept, dean, delege):
+    statement = "INSERT INTO CLASS(fac_name, dean_id, stu_delegate) VALUES('{}', '{}', '{}')".format(dept, dean, delege)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+
+def check_department(dept):
+    statement = "SELECT * FROM faculty WHERE fac_name = '{}' ".format(dept)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            record = cursor.fetchone()
+            return record is None
+
 
 
 if __name__ == '__main__':

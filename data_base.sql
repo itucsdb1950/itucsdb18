@@ -14,26 +14,26 @@
 
 
 
-	 CREATE TABLE IF NOT EXISTS QUIZ (
-      quiz_numb INTEGER NOT NULL,
-      ques_numb INTEGER NOT NULL,
-      ques_text VARCHAR(250) NOT NULL,
-      right_ans VARCHAR(25) NOT NULL,
-      wrong_ans1 VARCHAR(25) NOT NULL,
-      wrong_ans2 VARCHAR(25),
-      wrong_ans3 VARCHAR(25),
-	        PRIMARY KEY(quiz_numb,ques_numb)
-	  );
+-- 	 CREATE TABLE IF NOT EXISTS QUIZ (
+--       quiz_numb INTEGER NOT NULL,
+--       ques_numb INTEGER NOT NULL,
+--       ques_text VARCHAR(250) NOT NULL,
+--       right_ans VARCHAR(25) NOT NULL,
+--       wrong_ans1 VARCHAR(25) NOT NULL,
+--       wrong_ans2 VARCHAR(25),
+--       wrong_ans3 VARCHAR(25),
+-- 	        PRIMARY KEY(quiz_numb,ques_numb)
+-- 	  );
 
 
-	 CREATE TABLE IF NOT EXISTS ANSWERS (
-      quiz_numb INTEGER NOT NULL,
-      ques_numb INTEGER NOT NULL,
-      id CHAR(9),
-      given_ans VARCHAR(25)NOT NULL,
-	    PRIMARY KEY (quiz_numb,ques_numb,id),
-	    FOREIGN KEY (id) REFERENCES person(id)
-	  );
+-- 	 CREATE TABLE IF NOT EXISTS ANSWERS (
+--       quiz_numb INTEGER NOT NULL,
+--       ques_numb INTEGER NOT NULL,
+--       id CHAR(9),
+--       given_ans VARCHAR(25)NOT NULL,
+-- 	    PRIMARY KEY (quiz_numb,ques_numb,id),
+-- 	    FOREIGN KEY (id) REFERENCES person(id)
+-- 	  );
 
 	--ENES FURKAN ÖRNEK
 	CREATE TABLE IF NOT EXISTS LOCATION (
@@ -56,12 +56,11 @@
   );
 
 
-	CREATE TABLE IF NOT EXISTS DEPARTMENT (
+	CREATE TABLE IF NOT EXISTS FACULTY (
 	  id SERIAL PRIMARY KEY NOT NULL,
-    dep_name VARCHAR(30),
     fac_name VARCHAR(30),
     dean_id CHAR(9) REFERENCES PERSON(id),
-    stu_delegate CHAR(9) REFERENCES PERSON(id)
+    stu_delegate CHAR(9)
   );
 
 
@@ -72,7 +71,7 @@
 		person CHAR(9) REFERENCES PERSON(id),
 		GPA NUMERIC(3, 2),
 		COMP_CREDITS INT NOT NULL DEFAULT 0,
-		dep_id INTEGER REFERENCES DEPARTMENT(id) NOT NULL,
+		fac_id INTEGER REFERENCES FACULTY(id) NOT NULL,
 		CHECK (COMP_CREDITS >= 0),
 		CHECK (GPA >= 0),
 		CHECK (GPA <= 4)
