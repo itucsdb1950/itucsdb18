@@ -1,3 +1,5 @@
+# This Python file uses the following encoding: utf-8
+
 import os.path
 import sys
 
@@ -45,10 +47,11 @@ try:
         db_url = kk_connection_url
     elif 'someone' in HOME_PATH:  # Pc of Enes Furkan Örnek TODO: değiştir home path ine göre
         db_url = efo_connection_url
-    elif 'fatih' in HOME_PATH:  # Heroku TODO: değiştir home path ine göre
+    elif 'mfy' in HOME_PATH:  # Mehmet Fatih Yıldırım's PC
         db_url = mfy_connection_url
     elif 'app' in HOME_PATH:  # Heroku
         db_url = os.getenv("DATABASE_URL")
 except Exception as e:
-    print("Usage: DATABASE_URL=url python dbinit.py", file=sys.stderr)
+    # ~print("Usage: DATABASE_URL=url python dbinit.py", file=sys.stderr)
+    print("Usage: DATABASE_URL=url python dbinit.py")
     sys.exit(1)
