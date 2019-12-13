@@ -42,7 +42,10 @@ def add_person():
     passw = request.form.get('passw')
     age = request.form.get('age')
     if views.check_person(usern):
-        views.add_person(stu_name, stu_num, usern, passw, age)
+        added = views.add_person(stu_name, stu_num, usern, passw, age)
+        if added == 1:
+            # "User couldn't be added. Make sure all fields are convenient."
+            pass
     return redirect(url_for('admin_person_page'))
 
 
