@@ -38,8 +38,9 @@ def get_locations(limit=100):
             records = cursor.fetchall()
             return records
 
+
 def get_locations_for_crn(limit=100):
-    statement = "SELECT * FROM locaiton WHERE  NOT EXISTS (SELECT 3  FROM   class   WHERE  class.loc_id = locaiton.id) LIMIT {}".format(limit)
+    statement = "SELECT * FROM location WHERE  NOT EXISTS (SELECT 3  FROM   class   WHERE  class.loc_id = location.id) LIMIT {}".format(limit)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -90,6 +91,15 @@ def add_crn(crn, code, loc_sel, credits_sel):
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
             cursor.execute(statement)
+
+
+def del_crn(id):
+    statement = "DELETE FROM class WHERE crn = '{}'".format(id)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
 
 def get_person(limit=500):
     statement = "SELECT * FROM person LIMIT {}".format(limit)

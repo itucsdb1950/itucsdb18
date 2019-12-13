@@ -16,7 +16,7 @@ def admin_page():
 
 @app.route("/admin/crn")
 def admin_crn_page():
-    locations = views.get_locations()
+    locations = views.get_locations_for_crn()
     crns = views.get_crns()
 
     return render_template("admin_crn.html", locations=locations, crns=crns)
@@ -24,7 +24,7 @@ def admin_crn_page():
 
 @app.route("/admin/location")
 def admin_location_page():
-    locations = views.get_locations_for_crn()
+    locations = views.get_locations()
 
     return render_template("admin_location.html", locations=locations)
 
@@ -77,6 +77,12 @@ def add_crn():
     return redirect(url_for('admin_crn_page'))
 
 
+@app.route("/del_crn/<string:crn_num>", methods=['GET'])
+def del_crn(crn_num):
+    views.del_crn(crn_num)
+    return redirect(url_for('admin_crn_page'))
+
+
 @app.route("/login", methods=['POST'])
 def login():
     username = request.form.get('usrn')
@@ -86,7 +92,8 @@ def login():
         return render_template("home.html", record=user)
     return "Your username and password is wrong"
 
-@app.route("/del_person/stu_num", methods=['GET'])
+
+@app.route("/del_person/<string:stu_num>", methods=['GET'])
 def del_person(stu_num):
     views.del_person(stu_num)
     return redirect(url_for('admin_person_page'))
