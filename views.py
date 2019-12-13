@@ -93,6 +93,8 @@ def get_person(limit=500):
 
 def add_person(stu_name, stu_num, usern, passw, age):
     statement="SELECT * FROM person WHERE username = '{}' ".format(usern)
+    #TODO: If exists, don't add
+
     if int(age) >= 18:
         statement = "INSERT INTO person(id, name, age, username, password) VALUES('{}', '{}', '{}', '{}', '{}')".format(stu_num, stu_name, age, usern, passw)
 

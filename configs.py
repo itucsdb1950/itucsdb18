@@ -8,7 +8,7 @@ DSN_kk = {'user': "postgres",  # DSN for Kutay Karakamış
           'database': "scholar"
           }
 
-DSN_efo = {'user': "postgres",  # DSN for Furkan Güvenç
+DSN_efo = {'user': "postgres",  # DSN for Enes Furkan Örnek
            'password': "1234",
            'host': "127.0.0.1",
            'port': "5432",
