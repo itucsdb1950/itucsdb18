@@ -24,7 +24,7 @@ def admin_crn_page():
 
 @app.route("/admin/location")
 def admin_location_page():
-    locations = views.get_locations()
+    locations = views.get_locations_for_crn()
 
     return render_template("admin_location.html", locations=locations)
 

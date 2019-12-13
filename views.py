@@ -38,6 +38,15 @@ def get_locations(limit=100):
             records = cursor.fetchall()
             return records
 
+def get_locations_for_crn(limit=100):
+    statement = "SELECT * FROM locaiton WHERE  NOT EXISTS (SELECT 3  FROM   class   WHERE  class.loc_id = locaiton.id) LIMIT {}".format(limit)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            records = cursor.fetchall()
+            return records
+
 
 def check_location(building, day, classroom):
     statement = "SELECT * FROM location WHERE building = '{}' AND day = '{}' AND class = '{}'".format(building, day, classroom)
