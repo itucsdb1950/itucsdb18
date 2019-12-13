@@ -147,7 +147,7 @@ def del_person(id):
 
 
 def get_department(limit=100):
-    statement = "SELECT * FROM department LIMIT {}".format(limit)
+    statement = "SELECT * FROM faculty LIMIT {}".format(limit)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -157,7 +157,7 @@ def get_department(limit=100):
 
 
 def add_department(dept, dean, delege):
-    statement = "INSERT INTO CLASS(fac_name, dean_id, stu_delegate) VALUES('{}', '{}', '{}')".format(dept, dean, delege)
+    statement = "INSERT INTO FACULTY(fac_name, dean_id, stu_delegate) VALUES('{}', '{}', '{}')".format(dept, dean, delege)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:

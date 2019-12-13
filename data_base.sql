@@ -58,7 +58,7 @@
 
 	CREATE TABLE IF NOT EXISTS FACULTY (
 	  id SERIAL PRIMARY KEY NOT NULL,
-    fac_name VARCHAR(30),
+    fac_name VARCHAR(255),
     dean_id CHAR(9) REFERENCES PERSON(id),
     stu_delegate CHAR(9)
   );

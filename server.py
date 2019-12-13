@@ -85,15 +85,14 @@ def del_location(loc_id):
     return redirect(url_for('admin_location_page'))
 
 
-@app.route("/add_crn", methods=['POST'])
-def add_crn():
-    crn = request.form.get('crn')
-    code = request.form.get('code')
-    loc_sel = request.form.get('loc_sel')
-    credits_sel = request.form.get('credits_sel')
-    if views.check_crn(crn, code, loc_sel):
-        views.add_crn(crn, code, loc_sel, credits_sel)
-    return redirect(url_for('admin_crn_page'))
+@app.route("/add_department", methods=['POST'])
+def add_department():
+    dept = request.form.get('dept')
+    dean = request.form.get('dean')
+    delege = request.form.get('delege')
+    if views.check_department(dept):
+        views.add_department(dept, dean, delege)
+    return redirect(url_for('admin_department_page'))
 
 
 @app.route("/del_crn/<string:crn_num>", methods=['GET'])
