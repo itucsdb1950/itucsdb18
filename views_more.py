@@ -30,3 +30,20 @@ def get_courses(stu_num):
             cursor.execute(statement)
             records = cursor.fetchall()
             return records
+
+
+def get_attendance(stu_num):
+    statement = """
+                SELECT class.crn AS crn, class.course_code AS course_code,
+                       enrollment.attendance AS attendance
+                    FROM student, enrollment, class
+                    WHERE ( (student.id = enrollment.student_id)
+                        AND (enrollment.crn = class.crn) )
+                    WHERE (student.id = '{}')
+                """.format(stu_num)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            records = cursor.fetchall()
+            return records

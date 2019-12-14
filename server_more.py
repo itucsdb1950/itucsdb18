@@ -24,3 +24,9 @@ def student_page():
 def student_courses_page():
 	courses = views.get_courses(stu_num)
 	return render_template("student_courses.html", courses=courses)
+
+
+@site.route("/student/<string:stu_num>/attendance")
+def student_attendance_page():
+	courses = views.get_attendance(stu_num)
+	return render_template("student_attendance.html", courses=courses)
