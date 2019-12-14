@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import views
+import server_more # this file may be merged with that file at the end
 
 app = Flask(__name__)
 
