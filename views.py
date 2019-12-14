@@ -25,7 +25,7 @@ def check_user(username, password):
 
 
 def add_location(building, day, classroom, capacity):
-    statement = "INSERT INTO LOCATION(class, building, day, capacity) VALUES('{}', '{}', '{}', '{}')".format(building, day, classroom, capacity)
+    statement = "INSERT INTO LOCATION(classroom, building, day, capacity) VALUES('{}', '{}', '{}', '{}')".format(building, day, classroom, capacity)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -53,7 +53,7 @@ def get_locations_for_crn(limit=100):
 
 
 def check_location(building, day, classroom):
-    statement = "SELECT * FROM location WHERE building = '{}' AND day = '{}' AND class = '{}'".format(building, day, classroom)
+    statement = "SELECT * FROM location WHERE building = '{}' AND day = '{}' AND classroom = '{}'".format(building, day, classroom)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
