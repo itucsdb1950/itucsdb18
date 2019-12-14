@@ -1,11 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Blueprint, Flask, render_template, request, redirect, url_for
 import views_more
 
 
-app = Flask(__name__)
+site = Blueprint('site', __name__)
 
 
-@app.route("/student/<string:stu_num>")
+@site.route("/student/<string:stu_num>")
 def student_page():
 	student = views.get_student(stu_num)
 	
