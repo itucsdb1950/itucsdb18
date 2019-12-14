@@ -4,6 +4,9 @@ import sys
 import psycopg2 as dbapi2
 from configs import db_url
 
+import views_more # this file may be merged with that file at the end
+
+
 DSN = {'user': "postgres",
        'password': "123",
        'host': "127.0.0.1",
