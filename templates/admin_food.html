@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block TITLE %}ADMIN FOOD{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="container">
+
+    <form method="post" action="{{ url_for('add_food') }}">
+        <div class="form-group row">
+            <label for="dish_type" class="col-sm-2 col-form-label">Food Type:</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="dish_type" id="dish_type" required>
+                    <option value="soup">Soup</option>
+                    <option value="main">Main Dish</option>
+                    <option value="side">Side Dish</option>
+                    <option value="extra">Extra</option>
+                </select>
+            </div>
+
+            <label for="crn" class="col-sm-2 col-form-label">Food Name:</label>
+            <div class="col-sm-4">
+               <input type="text" name="crn" id="crn" class="form-control" placeholder="12345" required>
+            </div>
+
+        </div>
+
+        <div class="form-group row">
+            <label for="loc" class="col-sm-2 col-form-label">Location:</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="loc_sel" id="loc_sel" required>
+                     {% for location in locations %}
+                         {% if location[0] in crns[2] %}
+                         {% else %}
+                            <option value="{{ location[0] }}">{{ location[1] }} - {{ location[2] }} - {{ location[3] }}</option>
+                         {% endif %}
+                     {% endfor %}
+                </select>
+            </div>
+
+
+
+        </div>
+        <button type="submit" class="btn btn-primary">Add CRN</button>
+    </form>
+
+
+
+
+        <table class="table table-hover table-inverse">
+        <thead class="thead-inverse">
+        <tr>
+            <th>CRN</th>
+            <th>BUILDING</th>
+            <th>COURSE CODE</th>
+            <th>CREDIT</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for crn in crns %}
+        <tr>
+            <td scope="row">{{ crn[0] }}</td>
+            <td>{{ crn[1] }}</td>
+            <td>{{ crn[2] }}</td>
+            <td>{{ crn[3] }}</td>
+            <td><a name="update_crn" id="update_crn" class="btn btn-success" href="#" role="button">Update</a>
+                <a name="del_crn" id="del_crn" class="btn btn-danger" href="{{ url_for('del_crn', crn_num=crn[0]) }}" role="button">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+
+
+
+
+
+
+{% endblock %}
