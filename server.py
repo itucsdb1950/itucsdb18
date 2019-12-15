@@ -10,6 +10,16 @@ def home_page():
     return render_template("login.html")
 
 
+@app.route("/login", methods=['POST'])
+def login():
+    username = request.form.get('usrn')
+    password = request.form.get('pw')
+    user = views.check_user(username, password)
+    if user:
+        return render_template("base.html", record=user)
+    return "Your username and password is wrong"
+
+
 @app.route("/admin")
 def admin_page():
     return render_template("base.html")
@@ -29,6 +39,7 @@ def admin_location_page():
 
     return render_template("admin_location.html", locations=locations)
 
+
 @app.route("/admin/persons")
 def admin_person_page():
     person = views.get_person()
@@ -47,7 +58,8 @@ def admin_food_page():
 def admin_department_page():
     person = views.get_person()
     department = views.get_department()
-    return render_template("admin_department.html", person=person, department=department)
+    info = views.get_dept_info()
+    return render_template("admin_department.html", person=person, department=department, info=info)
 
 
 @app.route("/add_crn", methods=['POST'])
@@ -110,15 +122,6 @@ def del_crn(crn_num):
     return redirect(url_for('admin_crn_page'))
 
 
-@app.route("/login", methods=['POST'])
-def login():
-    username = request.form.get('usrn')
-    password = request.form.get('pw')
-    user = views.check_user(username, password)
-    if user:
-        return render_template("home.html", record=user)
-    return "Your username and password is wrong"
-
 
 @app.route("/del_person/<string:per_num>", methods=['GET'])
 def del_person(per_num):
@@ -139,7 +142,13 @@ def add_food():
     food_cal = request.form.get('food_cal')
     if views.check_food(dish_type, food_name):
         views.add_food(dish_type, food_name, food_cal)
-    return redirect(url_for('admin_location_page'))
+    return redirect(url_for('admin_food_page'))
+
+
+@app.route("/del_food/<string:id>", methods=['GET'])
+def del_food(id):
+    views.del_food(id)
+    return redirect(url_for('admin_food_page'))
 
 
 @app.route("/student/<string:stu_num>")

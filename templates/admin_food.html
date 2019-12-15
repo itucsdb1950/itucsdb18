@@ -33,7 +33,7 @@
                <input type="number" name="food_cal" id="food_cal" class="form-control" placeholder="420" required>
             </div>
             <div>
-                <button type="submit" class="btn btn-primary">Add CRN</button>
+                <button type="submit" class="btn btn-primary">Add Food</button>
             </div>
         </div>
     </form>
@@ -56,7 +56,7 @@
             <td>{{ tabemono[2] }}</td>
             <td>{{ tabemono[3] }}</td>
             <td><a name="update_food" id="update_food" class="btn btn-success" href="#" role="button">Update</a>
-                <a name="del_food" id="del_food" class="btn btn-danger" href="{{ url_for('del_food', food_id=tabemono[0]) }}" role="button">Delete</a>
+                <a name="del_food" id="del_food" class="btn btn-danger" href="{{ url_for('del_food', id=tabemono[0]) }}" role="button">Delete</a>
             </td>
         </tr>
         {% endfor %}

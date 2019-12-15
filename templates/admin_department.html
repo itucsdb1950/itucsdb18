@@ -55,24 +55,15 @@
         </thead>
         <tbody>
 
-        {% for dept in department %}
+        {% for dept in info %}
         <tr>
-            <td scope="row">{{ dept[1] }}</td>
-                {% for persons in person %}
-                    {% if persons[0] in department[2] %}
-                        <td>{{ persons[1] }}</td>
-                        <td>{{ persons[0] }}</td>
-                    {% endif %}
-                {% endfor %}
-            {% for persons in person %}
-                {% if persons[0] in department[2] %}
-                {% else %}
-                    <td> Not Assigned </td>
-                {% endif %}
-            {% endfor %}
+            <td scope="row" id="dept_name{{ loop.index }}">{{ dept[0] }}</td>
+                        <td id="dean_name{{ loop.index }}">{{ dept[1] }}</td>
+                        <td>{{ dept[2] }}</td>
+                        <td>{{ dept[3] }}</td>
 
-            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Update</button>
-                <a name="del_department" id="del_department" class="btn btn-danger" href="{{ url_for('del_department', id=department[0]) }}" role="button">Delete</a>
+            <td><button type="button" id="{{ loop.index }}" class="btn btn-primary update-button" onclick="update_button({{ loop.index }});" data-toggle="modal" data-target="#exampleModalCenter">Update</button>
+                <a name="del_department" id="del_department" class="btn btn-danger" href="{{ url_for('del_department', id=department[0][0]) }}" role="button">Delete</a>
             </td>
         </tr>
         {% endfor %}
@@ -84,11 +75,41 @@
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Update</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+                  <span aria-hidden="true"></span>
                 </button>
               </div>
               <div class="modal-body">
-                ...
+                  <form method="post" action="{{ url_for('add_department') }}">
+                        <div class="form-group row">
+                            <label for="dept" class="col-sm-2 col-form-label">Department Name:</label>
+                            <div class="col-sm-4">
+                               <input type="text" name="modal_dept_name" id="modal_dept_name" class="form-control" placeholder="schon" required>
+                            </div>
+
+                            <label for="dean" class="col-sm-2 col-form-label">Dean:</label>
+                            <div class="col-sm-4">
+                                    <select class="form-control" name="dean" id="model_deans" required>
+                                         {% for persons in person %}
+                                             {% if persons[0] in department[2] %}
+                                             {% else %}
+                                                <option value="{{ persons[0] }}">{{ persons[1] }} - {{ persons[0] }}</option>
+                                             {% endif %}
+                                         {% endfor %}
+                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="delege" class="col-sm-2 col-form-label">Student Delegate:</label>
+                            <div class="col-sm-4">
+                               <input type="text" name="delege" id="delege" class="form-control" placeholder="Emin KOCABIYIK">
+
+                            </div>
+
+
+{#                        <button type="submit" class="btn btn-primary">Add Faculty</button>#}
+                        </div>
+                  </form>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -106,6 +127,47 @@
 
 
 
+
+
+{% endblock %}
+
+{% block JS %}
+<script>
+
+var deans = [];
+var selected_dean;
+
+
+var update_button = function (id_) {
+
+        let modal_dept_name= $('#dept_name'.concat(id_)).html();
+        let modal_dean_name= $('#dean_name'.concat(id_)).html();
+        $('#modal_dept_name').val(modal_dept_name);
+
+        $.each(deans, function (index, value) {
+            if(modal_dean_name === value){
+                $('#model_deans').val(value);
+            }
+        });
+
+
+    };
+
+
+
+
+$(document).ready(function () {
+
+        $.each($("#model_deans option"), function(){
+            deans.push($(this).val());
+        });
+
+
+});
+
+
+
+</script>
 
 
 {% endblock %}
