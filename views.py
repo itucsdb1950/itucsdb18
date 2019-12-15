@@ -194,6 +194,22 @@ def get_food(limit=1000):
             return records
 
 
+def add_food(type, name, calorie):
+    statement = "INSERT INTO FOODS(type, name, calorie) VALUES('{}', '{}', '{}')".format(type, name, calorie)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+
+def check_food(type,name):
+    statement = "SELECT * FROM FOODS WHERE name = '{}' and type = {} ".format(name,type)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            record = cursor.fetchone()
+            return record is None
 
 
 def get_student(stu_num):

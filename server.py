@@ -132,6 +132,16 @@ def del_department(id):
     return redirect(url_for('admin_department_page'))
 
 
+@app.route("/add_food", methods=['POST'])
+def add_food():
+    dish_type = request.form.get('dish_type')
+    food_name = request.form.get('food_name')
+    food_cal = request.form.get('food_cal')
+    if views.check_food(dish_type, food_name):
+        views.add_food(dish_type, food_name, food_cal)
+    return redirect(url_for('admin_location_page'))
+
+
 @app.route("/student/<string:stu_num>")
 def student_page(stu_num):
     student = views.get_student(stu_num)
