@@ -184,6 +184,18 @@ def del_department(id):
             cursor.execute(statement)
 
 
+def get_food(limit=1000):
+    statement = "SELECT * FROM FOODS LIMIT {}".format(limit)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            records = cursor.fetchall()
+            return records
+
+
+
+
 def get_student(stu_num):
     statement = """
                 SELECT person.name, person.username, student.id, faculty.fac_name, student.gpa, student.comp_credits

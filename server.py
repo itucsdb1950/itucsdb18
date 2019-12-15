@@ -36,6 +36,13 @@ def admin_person_page():
     return render_template("admin_person.html", person=person)
 
 
+@app.route("/admin/food")
+def admin_food_page():
+    food = views.get_food()
+
+    return render_template("admin_food.html", food=food)
+
+
 @app.route("/admin/department")
 def admin_department_page():
     person = views.get_person()
@@ -45,11 +52,12 @@ def admin_department_page():
 
 @app.route("/add_crn", methods=['POST'])
 def add_crn():
-    dept = request.form.get('dept')
-    dean = request.form.get('dean')
-    delege = request.form.get('delege')
-    if views.check_crn(dept):
-        views.add_crn(dept, dean, delege)
+    crn = request.form.get('crn')
+    code = request.form.get('code')
+    loc_sel = request.form.get('loc_sel')
+    credits_sel = request.form.get('credits_sel')
+    if views.check_crn(crn, code, loc_sel):
+        views.add_crn(crn, code, loc_sel, credits_sel)
     return redirect(url_for('admin_crn_page'))
 
 
