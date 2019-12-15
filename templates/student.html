@@ -1,0 +1,32 @@
+{% extends 'base_student.html' %}
+
+{% block TITLE %}STUDENT{% endblock %}
+
+{% block body %}
+<!--
+name, username, stu_num, faculty, gpa, compltd_crd
+-->
+<table class="table table-hover table-inverse">
+    <thead class="thead-inverse">
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Student Number</th>
+            <th>Faculty</th>
+            <th>GPA</th>
+            <th>Completed Credits</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td scope="row">{{ name }}</td>
+            <td>{{ username }}</td>
+            <td>{{ stu_num }}</td>
+            <td>{{ faculty }}</td>
+            <td>{{ gpa }}</td>
+            <td>{{ compltd_crd }}</td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}

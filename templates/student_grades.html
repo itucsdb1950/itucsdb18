@@ -1,0 +1,36 @@
+{% extends 'base_student.html' %}
+
+{% block TITLE %}STUDENT - ATTENDANCE{% endblock %}
+
+{% block body %}
+
+<ul>
+	{% for course in courses %}
+	<li>
+		{{ course[0].course_code }} ({{ course[0].crn }})
+		<table class="table table-hover table-inverse">
+			<thead class="thead-inverse">
+				<tr>
+					<th>TAKEN FROM</th>
+					<th>GRADE</th>
+					<th>%</th>
+					<th>CREDITS</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for grade in course %}
+				<tr>
+					<td scope="row">{{ grade.taken_from }}</td>
+					<td>{{ grade.grade }}</td>
+					<td>{{ grade.percentage }}</td>
+					<td>{{ grade.credits }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</li>
+	{% endfor %}
+</ul>
+
+{% endblock %}
+

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block TITLE %}ADMIN FOOD{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="container">
+
+    <form method="post" action="{{ url_for('add_food') }}">
+        <div class="form-group row">
+            <label for="dish_type" class="col-sm-2 col-form-label">Food Type:</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="dish_type" id="dish_type" required>
+                    <option value="soup">Soup</option>
+                    <option value="main">Main Dish</option>
+                    <option value="side">Side Dish</option>
+                    <option value="extra">Extra</option>
+                </select>
+            </div>
+
+            <label for="food_name" class="col-sm-2 col-form-label">Food Name:</label>
+            <div class="col-sm-4">
+               <input type="text" name="food_name" id="food_name" class="form-control" placeholder="Böfstrogonof" required>
+            </div>
+
+        </div>
+
+        <div class="form-group row">
+            <label for="food_cal" class="col-sm-2 col-form-label">Food Calorie:</label>
+            <div class="col-sm-4">
+               <input type="number" name="food_cal" id="food_cal" class="form-control" placeholder="420" required>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Add CRN</button>
+            </div>
+        </div>
+    </form>
+
+
+
+
+        <table class="table table-hover table-inverse">
+        <thead class="thead-inverse">
+        <tr>
+            <th>Food Type</th>
+            <th>Food Name</th>
+            <th>Calorie</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for tabemono in food %}
+        <tr>
+            <td scope="row">{{ tabemono[1] }}</td>
+            <td>{{ tabemono[2] }}</td>
+            <td>{{ tabemono[3] }}</td>
+            <td><a name="update_food" id="update_food" class="btn btn-success" href="#" role="button">Update</a>
+                <a name="del_food" id="del_food" class="btn btn-danger" href="{{ url_for('del_food', food_id=tabemono[0]) }}" role="button">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+
+
+
+
+
+
+{% endblock %}

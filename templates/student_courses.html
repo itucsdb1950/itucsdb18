@@ -1,0 +1,32 @@
+{% extends 'base_student.html' %}
+
+{% block TITLE %}STUDENT - COURSES{% endblock %}
+
+{% block body %}
+<!--
+crn, course_code, day, building, class
+-->
+<table class="table table-hover table-inverse">
+    <thead class="thead-inverse">
+        <tr>
+            <th>CRN</th>
+            <th>COURSE CODE</th>
+            <th>DAY</th>
+            <th>BUILDING</th>
+            <th>CLASSROOM</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for course in courses %}
+        <tr>
+            <td scope="row">{{ course.crn }}</td>
+            <td>{{ course.course_code }}</td>
+            <td>{{ course.day }}</td>
+            <td>{{ course.building }}</td>
+            <td>{{ course.classroom }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

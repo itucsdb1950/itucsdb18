@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block TITLE %}ADMIN DEPARTMENT{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="container">
+    <br>
+    <h3 class="text-center">ADD DEPARTMENT</h3>
+        <hr>
+
+    <form method="post" action="{{ url_for('add_department') }}">
+        <div class="form-group row">
+            <label for="dept" class="col-sm-2 col-form-label">Department Name:</label>
+            <div class="col-sm-4">
+               <input type="text" name="dept" id="dept" class="form-control" placeholder="Computer Engineering" required>
+            </div>
+
+            <label for="dean" class="col-sm-2 col-form-label">Dean:</label>
+            <div class="col-sm-4">
+                    <select class="form-control" name="dean" id="dean" required>
+                         {% for persons in person %}
+                             {% if persons[0] in department[2] %}
+                             {% else %}
+                                <option value="{{ persons[0] }}">{{ persons[1] }} - {{ persons[0] }}</option>
+                             {% endif %}
+                         {% endfor %}
+                    </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="delege" class="col-sm-2 col-form-label">Student Delegate:</label>
+            <div class="col-sm-4">
+               <input type="text" name="delege" id="delege" class="form-control" placeholder="Emin KOCABIYIK">
+
+            </div>
+
+
+        <button type="submit" class="btn btn-primary">Add Faculty</button>
+        </div>
+    </form>
+
+
+        <table class="table table-hover table-inverse">
+        <thead class="thead-inverse">
+        <tr>
+            <th>Faculty</th>
+            <th>Dean</th>
+            <th>Dean ID</th>
+            <th>Student Delegate</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for dept in department %}
+        <tr>
+            <td scope="row">{{ dept[1] }}</td>
+                {% for persons in person %}
+                    {% if persons[0] in department[2] %}
+                        <td>{{ persons[1] }}</td>
+                        <td>{{ persons[0] }}</td>
+                    {% endif %}
+                {% endfor %}
+            {% for persons in person %}
+                {% if persons[0] in department[2] %}
+                {% else %}
+                    <td> Not Assigned </td>
+                {% endif %}
+            {% endfor %}
+
+            <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Update</button>
+                <a name="del_department" id="del_department" class="btn btn-danger" href="{{ url_for('del_department', id=department[0]) }}" role="button">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Update</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </tbody>
+    </table>
+    </div>
+
+
+
+
+
+
+
+{% endblock %}
