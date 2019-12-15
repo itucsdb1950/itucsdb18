@@ -1,13 +1,3 @@
-# from flask import Blueprint, Flask, render_template, request, redirect, url_for
-# import views_more
-#
-#
-# app\
-# = Blueprint('app'
-# 				, __name__)
-#
-#
-#
 # @app.route("/student/<string:stu_num>")
 # def student_page():
 # 	student = views.get_student(stu_num)
@@ -35,21 +25,24 @@
 # 	return render_template("student_attendance.html", courses=courses)
 #
 #
-# @app.route("/student/<string:stu_num>/grades")
-# def student_grades_page():
-# 	grades = views.get_grades(stu_num)
-#
-# 	# split courses list with respect to crn.
-# 	# note that SQL query in views.get_grades() is written in a way that returned table is ordered by crn.
-# 	# therefore, only one iteration is sufficent
-# 	courses = [] # initialize list that will hold grades which are split by course
-# 	crn = grades[0].crn # initilize crn with the first course's crn
-# 	i = 0
-# 	for grade in grades: # iterate over the entire table
-# 		if grade.crn == crn: # as long as crn remains same, add rows with that crn to courses[i]
-# 			courses[i].append(grade)
-# 		else: # if another crn is reached
-# 			crn = grade.crn # update crn to the new one
-# 			i++ # so that upcoming course's grades are written to the next index of courses
-#
-# 	return render_template("student_grades.html", courses=courses)
+@app.route("/food_menu")
+def food_menus_page():
+	foods = views.get_food_menus()
+
+	# split foods list with respect to day.
+	# note that SQL query in views.get_food_menus() is written in a way that returned table is ordered by day.
+	# therefore, only one iteration is sufficent
+	food_menus = [] # initialize list that will hold food menu which are split with respect to day
+	day = foods[0].day # initilize day with the day of the first food
+	i = 0 # start day from 0
+	for food in foods: # iterate over the entire table
+		if food.day == day: # as long as day remains same, add rows with that day to food_menus[i]
+			if food.repast == "lunch":
+				food_menus[i][0].append(food) # food_menus[0] which corresponds to lunch
+			else: #dinner
+				food_menus[i][1].append(food) # food_menus[1] which corresponds to dinner
+		else: # if another day is reached
+			day = food.day # update day to the new one
+			i += 1 # so that upcoming course's grades are written to the next index of courses
+	
+	return render_template("student_grades.html", menus=food_menus)

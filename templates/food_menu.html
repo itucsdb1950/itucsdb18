@@ -1,0 +1,46 @@
+{% extends 'base_student.html' %}
+
+{% block TITLE %}STUDENT - ATTENDANCE{% endblock %}
+
+{% block body %}
+
+<table class="table table-hover table-inverse">
+	<thead class="thead-inverse">
+		<tr>
+			<th>DAY</th> 
+			<th>REPAST</th>
+			<th>SOUP (calories)</th>
+			<th>MAIN DISH (calories)</th>
+			<th>SIDE DISH (calories)</th>
+			<th>EXTRA (calories)</th>
+			<th>TOTAL CALORIES</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for menu in menus %}
+		<tr>
+			<td scope="row" rowspan="2">{{ menu[0].day }}</td>
+			<td>{{ menu[0].repast }}</td>
+			<td>{{ menu[0][0].name }} ({{ menu[0][0].calories }})</td>
+			<td>{{ menu[0][1].name }} ({{ menu[0][1].calories }})</td>
+			<td>{{ menu[0][2].name }} ({{ menu[0][2].calories }})</td>
+			<td>{{ menu[0][3].name }} ({{ menu[0][3].calories }})</td>
+			<td>{{ menu[0][0].calories + menu[0][1].calories +
+			       menu[0][2].calories + menu[0][3].calories }}</td>
+		</tr>
+		<tr>
+			<td>{{ menu[1].repast }}</td>
+			<td>{{ menu[1][0].name }} ({{ menu[1][0].calories }})</td>
+			<td>{{ menu[1][1].name }} ({{ menu[1][1].calories }})</td>
+			<td>{{ menu[1][2].name }} ({{ menu[1][2].calories }})</td>
+			<td>{{ menu[1][3].name }} ({{ menu[1][3].calories }})</td>
+			<td>{{ menu[1][0].calories + menu[1][1].calories +
+			       menu[1][2].calories + menu[1][3].calories }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}
+
+
