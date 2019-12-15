@@ -116,21 +116,20 @@ def get_person(limit=500):
             return records
 
 
-def add_person(per_name, per_num, usern, passw, age, type):
+def add_person(per_name, per_num, usern, passw, age, fac):
     # ~statement="SELECT * FROM person WHERE username = '{}' ".format(usern)
     #TODO: If exists, don't add
 
     if int(age) < 18:
         return 1
 
-    # if type == "prof":
+    if fac:
+        statement = """INSERT INTO person(id, name, age, username, password) VALUES('{}', '{}', '{}', '{}', '{}');
+                        INSERT INTO STUDENT(id, fac_id) VALUES('{}','{}')""".format(per_num, per_name, age, usern, passw, per_num, fac)
+
+    else:
         statement = "INSERT INTO person(id, name, age, username, password) VALUES('{}', '{}', '{}', '{}', '{}')".format(
             per_num, per_name, age, usern, passw)
-
-    # else:
-    #     statement = """INSERT INTO person(id, name, age, username, password) VALUES('{}', '{}', '{}', '{}', '{}');
-                        # INSERT INTO STUDENT(id, fac_id) VALUES('{}','{}')""".format(per_num, per_name, age, usern, passw, per_num, )
-
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
             cursor.execute(statement)
@@ -295,7 +294,7 @@ def get_grades(stu_num):
     statement = """
                 SELECT class.crn AS crn, class.course_code AS course_code, 
                        grades.taken_from AS taken_from, grades.grade AS grade,
-                       grades.percentage AS percent, class.credits AS credits,
+                       grades.percentage AS percent, class.credit AS credits
                     FROM student, grades, class
                     WHERE ( (student.id = grades.student_id)
                         AND (grades.crn = class.crn)
