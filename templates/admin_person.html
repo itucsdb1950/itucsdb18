@@ -42,6 +42,10 @@
             </div>
 
             <div class="col-sm-4">
+               <input type="number" name="facu" id="facu" class="form-control" placeholder="Computer And Communication" required>
+            </div>
+
+            <div class="col-sm-4">
                 <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="type" id="prof" value="prof">
                       <label class="form-check-label" for="prof">Professor</label>
@@ -50,6 +54,9 @@
                       <input class="form-check-input" type="radio" name="type" id="student" value="student">
                       <label class="form-check-label" for="student">Student</label>
                     </div>
+                <div>
+
+                </div>
             </div>
 
         </div>
@@ -91,6 +98,21 @@
 
 
 
+
+
+{% endblock %}
+
+
+{% block JS %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+  $("prof").click(function(){
+    $("facu").toggle();
+  });
+});
+</script>
 
 
 {% endblock %}

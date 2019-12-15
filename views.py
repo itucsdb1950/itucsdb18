@@ -69,6 +69,7 @@ def del_location(id):
         with connection.cursor() as cursor:
             cursor.execute(statement)
 
+
 def get_crns(limit=100):
     statement = "SELECT * FROM CLASS LIMIT {}".format(limit)
 
@@ -77,6 +78,7 @@ def get_crns(limit=100):
             cursor.execute(statement)
             records = cursor.fetchall()
             return records
+
 
 def check_crn(crn, code, loc_sel):
     statement = "SELECT * FROM class WHERE crn = '{}' AND course_code = '{}' AND loc_id = '{}'".format(crn, code, loc_sel)
@@ -113,6 +115,7 @@ def get_person(limit=500):
             records = cursor.fetchall()
             return records
 
+
 def add_person(per_name, per_num, usern, passw, age, type):
     # ~statement="SELECT * FROM person WHERE username = '{}' ".format(usern)
     #TODO: If exists, don't add
@@ -120,12 +123,13 @@ def add_person(per_name, per_num, usern, passw, age, type):
     if int(age) < 18:
         return 1
 
-    if type == "prof":
+    # if type == "prof":
         statement = "INSERT INTO person(id, name, age, username, password) VALUES('{}', '{}', '{}', '{}', '{}')".format(
             per_num, per_name, age, usern, passw)
 
-    else:
-        statement = "INSERT INTO person(id, name, age, username, password) VALUES('{}', '{}', '{}', '{}', '{}');".format(per_num, per_name, age, usern, passw)
+    # else:
+    #     statement = """INSERT INTO person(id, name, age, username, password) VALUES('{}', '{}', '{}', '{}', '{}');
+                        # INSERT INTO STUDENT(id, fac_id) VALUES('{}','{}')""".format(per_num, per_name, age, usern, passw, per_num, )
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -140,6 +144,7 @@ def check_person(usern):
             cursor.execute(statement)
             record = cursor.fetchone()
             return record is None
+
 
 def del_person(id):
     statement = "DELETE FROM person WHERE id = '{}'".format(id)
@@ -176,8 +181,9 @@ def check_department(dept):
             record = cursor.fetchone()
             return record is None
 
+
 def del_department(id):
-    statement = "DELETE FROM faculty WHERE id = '{}'".format(id[1])
+    statement = "DELETE FROM faculty WHERE id = {}".format(id)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -195,7 +201,7 @@ def get_food(limit=1000):
 
 
 def add_food(type, name, calorie):
-    statement = "INSERT INTO FOODS(type, name, calorie) VALUES('{}', '{}', '{}')".format(type, name, calorie)
+    statement = "INSERT INTO FOODS(food_type, food_name, calorie) VALUES('{}', '{}', '{}')".format(type, name, calorie)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -203,13 +209,21 @@ def add_food(type, name, calorie):
 
 
 def check_food(type,name):
-    statement = "SELECT * FROM FOODS WHERE name = '{}' and type = {} ".format(name, str(type))
+    statement = "SELECT * FROM FOODS WHERE food_name = '{}' and food_type = '{}' ".format(name, type)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
             cursor.execute(statement)
             record = cursor.fetchone()
             return record is None
+
+
+def del_food(id):
+    statement = "DELETE FROM FOODS WHERE id = '{}'".format(id)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
 
 
 def get_student(stu_num):
@@ -226,6 +240,20 @@ def get_student(stu_num):
             cursor.execute(statement)
             record = cursor.fetchone()
             return record
+
+
+def get_dept_info():
+    statement = """
+                SELECT faculty.fac_name, faculty.dean_id AS dean_id, person.name
+                    FROM faculty, person
+                    WHERE  (person.id = dean_id)
+                """
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            records = cursor.fetchall()
+            return records
 
 
 def get_courses(stu_num):
