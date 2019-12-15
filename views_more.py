@@ -47,3 +47,22 @@ def get_attendance(stu_num):
             cursor.execute(statement)
             records = cursor.fetchall()
             return records
+
+
+def get_grades(stu_num):
+    statement = """
+                SELECT class.crn AS crn, class.course_code AS course_code, 
+                       grades.taken_from AS taken_from, grades.grade AS grade,
+                       grades.percentage AS percent, class.credits AS credits,
+                    FROM student, grades, class
+                    WHERE ( (student.id = grades.student_id)
+                        AND (grades.crn = class.crn) )
+                    WHERE (student.id = '{}')
+                    ORDER BY class.crn
+                """.format(stu_num)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            records = cursor.fetchall()
+            return records

@@ -30,3 +30,23 @@ def student_courses_page():
 def student_attendance_page():
 	courses = views.get_attendance(stu_num)
 	return render_template("student_attendance.html", courses=courses)
+
+
+@site.route("/student/<string:stu_num>/grades")
+def student_grades_page():
+	grades = views.get_grades(stu_num)
+	
+	# split courses list with respect to crn.
+	# note that SQL query in views.get_grades() is written in a way that returned table is ordered by crn.
+	# therefore, only one iteration is sufficent
+	courses = [] # initialize list that will hold grades which are split by course
+	crn = grades[0].crn # initilize crn with the first course's crn
+	i = 0
+	for grade in grades: # iterate over the entire table
+		if grade.crn == crn: # as long as crn remains same, add rows with that crn to courses[i]
+			courses[i].append(grade)
+		else: # if another crn is reached
+			crn = grade.crn # update crn to the new one
+			i++ # so that upcoming course's grades are written to the next index of courses
+	
+	return render_template("student_grades.html", courses=courses)
