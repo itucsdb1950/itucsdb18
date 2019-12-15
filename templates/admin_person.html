@@ -46,6 +46,7 @@
             <label for="fac" class="col-sm-2 col-form-label">Faculty:</label>
             <div class="col-sm-4">
                 <select class="form-control" name="fac" id="fac">
+                          <option value=""></option>
                          {% for facs in faculty %}
                              <option value="{{ facs[0] }}">{{ facs[1] }}</option>
                          {% endfor %}
