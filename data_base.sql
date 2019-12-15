@@ -14,20 +14,20 @@ ALTER TABLE PERSON ADD CHECK (age>=18);
 
 CREATE TABLE IF NOT EXISTS FOODS (
     id SERIAL PRIMARY KEY NOT NULL,
-    type VARCHAR(15),
-    name VARCHAR(20),
+    food_type VARCHAR(15),
+    food_name VARCHAR(20),
     calorie INT
 );
 
 
 CREATE TABLE IF NOT EXISTS MENU (
-    day VARCHAR(15),
+    dy VARCHAR(15),
     repast VARCHAR(20),
     soup INTEGER,
     main INTEGER,
     side INTEGER,
     extras INTEGER,
-    PRIMARY KEY(day, repast),
+    PRIMARY KEY(dy, repast),
     FOREIGN KEY(soup) REFERENCES FOODS(id),
     FOREIGN KEY(main) REFERENCES FOODS(id),
     FOREIGN KEY(side) REFERENCES FOODS(id),
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS LOCATION (
     id SERIAL PRIMARY KEY NOT NULL,
     classroom VARCHAR(255),
     building VARCHAR(255),
-    day VARCHAR(255),
+    dy VARCHAR(255),
     capacity INT DEFAULT 80
     --start_time TIME,
     --end_time TIME,

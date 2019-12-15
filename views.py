@@ -25,7 +25,7 @@ def check_user(username, password):
 
 
 def add_location(building, day, classroom, capacity):
-    statement = "INSERT INTO LOCATION(classroom, building, day, capacity) VALUES('{}', '{}', '{}', '{}')".format(building, day, classroom, capacity)
+    statement = "INSERT INTO LOCATION(classroom, building, dy, capacity) VALUES('{}', '{}', '{}', '{}')".format(building, day, classroom, capacity)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -53,7 +53,7 @@ def get_locations_for_crn(limit=100):
 
 
 def check_location(building, day, classroom):
-    statement = "SELECT * FROM location WHERE building = '{}' AND day = '{}' AND classroom = '{}'".format(building, day, classroom)
+    statement = "SELECT * FROM location WHERE building = '{}' AND dy = '{}' AND classroom = '{}'".format(building, day, classroom)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -203,7 +203,7 @@ def add_food(type, name, calorie):
 
 
 def check_food(type,name):
-    statement = "SELECT * FROM FOODS WHERE name = '{}' and type = {} ".format(name,type)
+    statement = "SELECT * FROM FOODS WHERE name = '{}' and type = {} ".format(name, str(type))
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -230,7 +230,7 @@ def get_student(stu_num):
 
 def get_courses(stu_num):
     statement = """
-                SELECT class.crn AS crn, class.course_code AS course_code, location.day AS day,
+                SELECT class.crn AS crn, class.course_code AS course_code, location.dy AS dy,
                        location.building AS building, location.class AS class
                     FROM student, enrollment, class, location
                     WHERE ( (student.id = enrollment.student_id)
