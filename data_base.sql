@@ -8,9 +8,34 @@
 
    ALTER TABLE PERSON ADD CHECK (age>=18);
 
+
+	CREATE TABLE IF NOT EXISTS MENU (
+     day VARCHAR(15),
+     repast VARCHAR(20),
+     soup VARCHAR(20),
+     main VARCHAR(20),
+     side VARCHAR(20),
+     extras VARCHAR(20),
+	  PRIMARY KEY(day, repast),
+          FOREIGN KEY(soup) REFERENCES FOODS(food_id),
+          FOREIGN KEY(main) REFERENCES FOODS(food_id),
+          FOREIGN KEY(side) REFERENCES FOODS(food_id),
+          FOREIGN KEY(extras) REFERENCES FOODS(food_id)
+);
+
+
+	CREATE TABLE IF NOT EXISTS FOODS (
+	  food_id SERIAL PRIMARY KEY NOT NULL,
+     type VARCHAR(15),
+     name VARCHAR(20),
+     calori INTEGER(20000)
+     --start_time TIME,
+     --end_time TIME,
+     --year NUMERIC(4),
+);
 	-- CREATE INDEX person_name ON person(name)
 
-
+/*
 
 	 CREATE TABLE IF NOT EXISTS QUIZ (
       quiz_numb INTEGER NOT NULL,
@@ -34,7 +59,7 @@
 	  );
 
 
-
+*/
 
 
 
@@ -43,7 +68,7 @@
 	  id SERIAL PRIMARY KEY NOT NULL,
      class VARCHAR(255),
      building VARCHAR(255),
-     day VARCHAR(255),
+     day VARCHAR(15),
      capacity INT DEFAULT 80
      --start_time TIME,
      --end_time TIME,
