@@ -1,3 +1,5 @@
+--KUTAY KARAKAMIŞ
+
 CREATE TABLE IF NOT EXISTS PERSON (
     id CHAR(9) PRIMARY KEY,
     name VARCHAR(20),
@@ -11,27 +13,27 @@ ALTER TABLE PERSON ADD CHECK (age>=18);
 -- CREATE INDEX person_name ON person(name)
 
 
+CREATE TABLE IF NOT EXISTS MENU (
+    day VARCHAR(15),
+    repast VARCHAR(20),
+    soup VARCHAR(20),
+    main VARCHAR(20),
+    side VARCHAR(20),
+    extras VARCHAR(20),
+    PRIMARY KEY(day, repast),
+    FOREIGN KEY(soup) REFERENCES FOODS(food_id),
+    FOREIGN KEY(main) REFERENCES FOODS(food_id),
+    FOREIGN KEY(side) REFERENCES FOODS(food_id),
+    FOREIGN KEY(extras) REFERENCES FOODS(food_id)
+);
 
---CREATE TABLE IF NOT EXISTS QUIZ (
-    --quiz_numb INTEGER NOT NULL,
-    --ques_numb INTEGER NOT NULL,
-    --ques_text VARCHAR(250) NOT NULL,
-    --right_ans VARCHAR(25) NOT NULL,
-    --wrong_ans1 VARCHAR(25) NOT NULL,
-    --wrong_ans2 VARCHAR(25),
-    --wrong_ans3 VARCHAR(25),
-    --PRIMARY KEY(quiz_numb,ques_numb)
---);
 
-
---CREATE TABLE IF NOT EXISTS ANSWERS (
-    --quiz_numb INTEGER NOT NULL,
-    --ques_numb INTEGER NOT NULL,
-    --id CHAR(9),
-    --given_ans VARCHAR(25)NOT NULL,
-    --PRIMARY KEY (quiz_numb,ques_numb,id),
-    --FOREIGN KEY (id) REFERENCES person(id)
---);
+CREATE TABLE IF NOT EXISTS FOODS (
+    food_id SERIAL PRIMARY KEY NOT NULL,
+    type VARCHAR(15),
+    name VARCHAR(20),
+    calori INTEGER(20000)
+);
 
 
 --ENES FURKAN ÖRNEK
