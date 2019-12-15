@@ -35,33 +35,26 @@
 
         </div>
 
+
+
         <div class="form-group row">
             <label for="age" class="col-sm-2 col-form-label">Age:</label>
             <div class="col-sm-4">
                <input type="number" name="age" id="age" class="form-control" placeholder="18" required>
             </div>
 
+            <label for="fac" class="col-sm-2 col-form-label">Faculty:</label>
             <div class="col-sm-4">
-               <input type="number" name="facu" id="facu" class="form-control" placeholder="Computer And Communication" required>
-            </div>
-
-            <div class="col-sm-4">
-                <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="type" id="prof" value="prof">
-                      <label class="form-check-label" for="prof">Professor</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="type" id="student" value="student">
-                      <label class="form-check-label" for="student">Student</label>
-                    </div>
-                <div>
-
-                </div>
+                <select class="form-control" name="fac" id="fac">
+                         {% for facs in faculty %}
+                             <option value="{{ facs[0] }}">{{ facs[1] }}</option>
+                         {% endfor %}
+                </select>
+            <p>Faculty Option is Just For Adding Student, <br>Else Leave it Empty</p>
             </div>
 
         </div>
         <button type="submit" class="btn btn-primary">Add Person</button>
-
     </form>
 
 
@@ -98,21 +91,6 @@
 
 
 
-
-
-{% endblock %}
-
-
-{% block JS %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<script>
-$(document).ready(function(){
-  $("prof").click(function(){
-    $("facu").toggle();
-  });
-});
-</script>
 
 
 {% endblock %}

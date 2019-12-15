@@ -43,8 +43,9 @@ def admin_location_page():
 @app.route("/admin/persons")
 def admin_person_page():
     person = views.get_person()
+    faculty = views.get_department()
 
-    return render_template("admin_person.html", person=person)
+    return render_template("admin_person.html", person=person, faculty=faculty)
 
 
 @app.route("/admin/food")
