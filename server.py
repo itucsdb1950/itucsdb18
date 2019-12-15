@@ -118,5 +118,11 @@ def del_person(per_num):
     return redirect(url_for('admin_person_page'))
 
 
+@app.route("/del_department/<string:id>", methods=['GET'])
+def del_department(id):
+    views.del_department(id)
+    return redirect(url_for('admin_department_page'))
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True)

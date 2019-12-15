@@ -176,6 +176,13 @@ def check_department(dept):
             record = cursor.fetchone()
             return record is None
 
+def del_department(id):
+    statement = "DELETE FROM faculty WHERE id = '{}'".format(id[1])
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
 
 
 if __name__ == '__main__':
