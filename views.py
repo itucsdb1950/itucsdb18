@@ -189,8 +189,8 @@ def get_student(stu_num):
                 SELECT person.name, person.username, student.id, faculty.fac_name, student.gpa, student.comp_credits
                     FROM student, person, faculty
                     WHERE ( (person.id = student.id)
-                        AND (student.fac_id = faculty.id) ) 
-                    WHERE student.id = '{}'
+                        AND (student.fac_id = faculty.id) 
+                        AND (student.id = '{}') )
                 """.format(stu_num)
 
     with dbapi2.connect(db_url) as connection:
@@ -207,8 +207,8 @@ def get_courses(stu_num):
                     FROM student, enrollment, class, location
                     WHERE ( (student.id = enrollment.student_id)
                         AND (enrollment.crn = class.crn)
-                        AND (class.loc_id = location.id) )
-                    WHERE (student.id = '{}')
+                        AND (class.loc_id = location.id)
+                        AND (student.id = '{}') )
                 """.format(stu_num)
 
     with dbapi2.connect(db_url) as connection:
@@ -224,8 +224,8 @@ def get_attendance(stu_num):
                        enrollment.attendance AS attendance
                     FROM student, enrollment, class
                     WHERE ( (student.id = enrollment.student_id)
-                        AND (enrollment.crn = class.crn) )
-                    WHERE (student.id = '{}')
+                        AND (enrollment.crn = class.crn)
+                        AND (student.id = '{}') )
                 """.format(stu_num)
 
     with dbapi2.connect(db_url) as connection:
@@ -242,8 +242,8 @@ def get_grades(stu_num):
                        grades.percentage AS percent, class.credits AS credits,
                     FROM student, grades, class
                     WHERE ( (student.id = grades.student_id)
-                        AND (grades.crn = class.crn) )
-                    WHERE (student.id = '{}')
+                        AND (grades.crn = class.crn)
+                        AND (student.id = '{}') )
                     ORDER BY class.crn
                 """.format(stu_num)
 
