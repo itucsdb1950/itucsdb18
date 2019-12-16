@@ -286,9 +286,9 @@ def add_meal():
     return redirect(url_for('admin_meal_page'))
 
 
-@app.route("/del_meal/<string:dy>/<string:mial>", methods=['GET'])
-def del_meal(dy,mial):
-    views.del_meal(dy,mial)
+@app.route("/del_meal/<string:dy>/<string:repast>", methods=['GET'])
+def del_meal(dy,repast):
+    views.del_meal(dy,repast)
     return redirect(url_for('admin_meal_page'))
 
 

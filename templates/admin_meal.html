@@ -116,9 +116,9 @@
             <td>{{ meal[4] }}</td>
             <td>{{ meal[5] }}</td>
             <td><a name="update_meal" id="update_meal" class="btn btn-success" href="#" role="button">Update</a>
-                <a name="del_meal" id="del_meal" class="btn btn-danger" href="{{ url_for('del_menu', dy=meal[0], mial=meal[1]) }}" role="button">Delete</a>
+                <a name="del_meal" id="del_meal" class="btn btn-danger" href="{{ url_for('del_meal', dy=meal[0], repast=meal[1]) }}" role="button">Delete</a>
             </td>
-        <   /tr>
+        </tr>
         {% endfor %}
 
         </tbody>
