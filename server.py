@@ -80,7 +80,7 @@ def admin_department_page():
 
 
 @app.route("/add_grades", methods=['POST'])
-def add_crn():
+def add_grades():
     crn = request.form.get('crn')
     stu_id = request.form.get('stu_id')
     taken_from = request.form.get('taken_from')

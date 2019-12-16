@@ -24,7 +24,8 @@ def check_user(username, password):
             return record
 
 def add_meal(day, repast, soup, main, side, extras):
-    statement = "INSERT INTO MENU(dy, repast, soup, main, side, extras) VALUES('{}', '{}', '{}', '{}', '{}', '{}')".format(day, repast, soup, main, side, extras)
+    statement = "INSERT INTO MENU(dy, repast, soup, main, side, extras) VALUES('{}', '{}', '{}', '{}', '{}', '{}')"\
+        .format(day, repast, soup, main, side, extras)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
