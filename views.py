@@ -96,11 +96,55 @@ def add_crn(crn, code, loc_sel, credits_sel):
             cursor.execute(statement)
 
 
-def update_crn(crn, code, loc_sel, credits_sel, modal_crn, modal_code, modal_loc_sel, modal_credits_sel):
+def update_crn(crn, modal_crn, modal_code, modal_loc_sel, modal_credits_sel):
     statement = """UPDATE class
                     SET crn='{}', course_code='{}',loc_id='{}',credit='{}'
-                    WHERE crn='{}', course_code='{}',loc_id='{}',credit='{}'
-                    """.format(modal_crn, modal_code, modal_loc_sel, modal_credits_sel, crn, code, loc_sel, credits_sel)
+                    WHERE crn='{}'
+                    """.format(modal_crn, modal_code, modal_loc_sel, modal_credits_sel, crn)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+
+def update_location(building, day, classroom, capacity, modal_building, modal_day, modal_classroom, modal_capacity):
+    statement = """UPDATE location
+                    SET classroom='{}',building='{}',dy='{}',capacity'{}'
+                    WHERE classroom='{}'and building='{}' and dy='{}' and capacity'{}'
+                    """.format(modal_classroom, modal_building, modal_day, modal_capacity, classroom, building, day, capacity)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+
+def update_grades(crn, stu_id, taken_from, m_crn, m_stu_id,m_taken_from, m_percentage, m_grade):
+    statement = """UPDATE grades
+                    SET student_id='{}',crn='{}',taken_from='{}',percentage'{}', grade'{}'
+                    WHERE student_id='{}' and crn='{}' and taken_from='{}'
+                    """.format(m_stu_id, m_crn, m_taken_from, m_percentage, m_grade, stu_id, crn, taken_from)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+
+def update_department(dept, dean, delege, m_dept, m_dean, m_delege):
+    statement = """UPDATE faculty
+                    SET fac_name='{}',dean_id='{}',stu_delegate='{}'
+                    WHERE fac_name='{}' and dean_id='{}' and stu_delegate='{}'
+                    """.format(m_dept, m_dean, m_delege, dept, dean, delege)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+
+def update_meal(day, repast, soup, main, side, extras, m_day, m_repast, m_soup, m_main, m_side, m_extras):
+    statement = """UPDATE menu
+                    SET dy='{}',repast='{}',soup='{}', main='{}',dise='{}',extras='{}'
+                    WHERE dy='{}' and repast='{}' and soup='{}' and main='{}' and dise='{}' and extras='{}'
+                    """.format(m_day, m_repast, m_soup, m_main, m_side, m_extras, day, repast, soup, main, side, extras)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
