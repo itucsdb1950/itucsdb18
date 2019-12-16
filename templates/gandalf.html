@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>You shall not pass!</title>
+	<style>
+
+		@font-face {
+			font-family: 'MrDumDumver07srHeavy';
+			src: url('/css/webfonts/mrdumdumver07sr-heavy.eot');
+			src: url('/css/webfonts/mrdumdumver07sr-heavy.eot?#iefix') format('embedded-opentype'),
+				 url('/css/webfonts/mrdumdumver07sr-heavy.woff') format('woff'),
+				 url('/css/webfonts/mrdumdumver07sr-heavy.ttf') format('truetype'),
+				 url('/css/webfonts/mrdumdumver07sr-heavy.svg#mr_dum_dumheavy') format('svg');
+			font-weight: normal;
+			font-style: normal;
+		}
+		body {
+			background: url("../static/styles/images/balrog.jpeg");
+            background-color: darkred;
+
+            background-repeat: no-repeat;
+            background-size: 60% 102%;
+            background-attachment: fixed;
+            background-position: center top;
+			color:#ffffff;
+			font-family: MrDumDumver07srHeavy, sans-serif;
+			font-size: 15px;
+			margin: 0;
+			padding:0;
+		}
+		h1{
+			font-weight: normal;
+			font-size: 10em;
+			margin: 0;
+			line-height: 1;
+            color : red;
+
+		}
+		img {
+            position: center;
+			height: 600px;
+			width: 450px;
+			margin: 0 auto;
+			display: block;
+		}
+		.retina img{
+			height: 200px;
+			width: 150px;
+		}
+		p{
+            color : red;
+			font-size: 3em;
+			margin: 0;
+
+		}
+		div{
+			position: absolute;
+			width:400px;
+			top: 50%;
+			left: 50%;
+			margin-left: -200px;
+			margin-top: -400px;
+			text-align: center;
+
+		}
+		.retina div{
+			margin-left: -100px;
+			margin-top: -200px;
+			width: 200px;
+		}
+
+	</style>
+
+</head>
+<body>
+	<div>
+		<h1>403</h1>
+            <img src="../static/styles/images/gandalf.png" alt="Gandalf standing and holding his staff in one hand and a sword with another."/>
+
+		<p>You shall not pass!</p>
+
+	</div>
+	<script>
+		if(window.devicePixelRatio!==undefined && window.devicePixelRatio>1){
+			document.body.className = 'retina';
+		}
+	</script>
+	<!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+			 mathiasbynens.be/notes/async-analytics-snippet -->
+	<script>
+		var _gaq=[['_setAccount','UA-2522163-37'],['_trackPageview']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+</body>
+</html>

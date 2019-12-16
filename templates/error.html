@@ -7,11 +7,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-	<title>404 HTML Template by Colorlib</title>
+	<title>404 HTML Tempalte by Colorlib</title>
 
 	<!-- Google font -->
-	<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Passion+One:900" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,900" rel="stylesheet">
 
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='styles/error.css') }}" />
@@ -27,14 +26,14 @@
 
 <body>
 
-	<div id="error">
-		<div class="error">
-			<div class="error">
-				<h1>:(</h1>
+	<div id="notfound">
+		<div class="notfound">
+			<div class="notfound-404">
+				<h1>Oops!</h1>
 			</div>
-			<h2>There is a problem</h2>
+			<h2>404 - Page not found</h2>
 			<p>The page you are looking for might have been removed had its name changed or is temporarily unavailable.</p>
-			<a href="{{url_for('admin_page')}}">home page</a>
+			<a href="{{ url_for('admin_page') }}">Go To Homepage</a>
 		</div>
 	</div>
 
