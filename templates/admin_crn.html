@@ -70,7 +70,7 @@
             <td>{{ crn[5] }}</td>
             <td>{{ crn[1] }}</td>
             <td>{{ crn[3] }}</td>
-            <td><button type="button" id="{{ loop.index }}" class="btn btn-primary update-button" onclick="update_button({{ loop.index }});" data-toggle="modal" data-target="#exampleModalCenter">Update</button>
+            <td><button type="button" class="btn btn-primary update-button" data-toggle="modal" data-target="#exampleModalCenter">Update</button>
                 <a name="del_crn" id="del_crn" class="btn btn-danger" href="{{ url_for('del_crn', crn_num=crn[0]) }}" role="button">Delete</a>
             </td>
         </tr>
@@ -90,7 +90,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                  <form method="post" action="{{ url_for('add_crn') }}">
+                  <form method="post" action="{{ url_for('update_crn') }}">
                         <div class="form-group row">
                             <label for="crn" class="col-sm-2 col-form-label">CRN:</label>
                             <div class="col-sm-4">
@@ -131,11 +131,12 @@
                             </div>
                         </div>
 {#                        <button type="submit" class="btn btn-primary">Add CRN</button>#}
-                    </form>
-              </div>
+
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+                  </form>
               </div>
             </div>
           </div>
@@ -145,51 +146,6 @@
     </table>
     </div>
 
-{% endblock %}
-
-
-{% block JS %}
-<script>
-
-var locs = [];
-var selected_dean;
-
-
-var update_button = function (id_) {
-
-        let modal_crn= $('#crn'.concat(id_)).html();
-        $('#modal_crn').val(modal_crn);
-
-        let modal_code= $('#code'.concat(id_)).html();
-        $('#modal_code').val(modal_code);
-
-
-        let modal_loc_sel= $('#loc_sel'.concat(id_)).html();
-
-        $.each(locs, function (index, value) {
-            if(modal_loc_sel === value){
-                $('#model_loc_sel').val(value);
-            }
-        });
-
-
-    };
-
-
-
-
-$(document).ready(function () {
-
-        $.each($("#model_loc_sel option"), function(){
-            locs.push($(this).val());
-        });
-
-
-});
-
-
-
-</script>
 
 
 {% endblock %}

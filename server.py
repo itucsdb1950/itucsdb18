@@ -15,7 +15,10 @@ def login():
     password = request.form.get('pw')
     user = views.check_user(username, password)
     if user:
-        return render_template("base.html", record=user)
+        if user[0]=='000000001':
+            return render_template("base.html", record=user)
+        else:
+            return render_template("base_student.html", stu_num=user[0])
     return "Your username and password is wrong"
 
 
@@ -156,14 +159,29 @@ def add_department():
     return redirect(url_for('admin_department_page'))
 
 
-@app.route("/update_department", methods=['POST'])
-def update_department():
-    dept = request.form.get('dept')
-    dean = request.form.get('dean')
-    delege = request.form.get('delege')
-    views.update_department(dept, dean, delege)
+# @app.route("/update_department", methods=['POST'])
+# def update_department():
+#     dept = request.form.get('dept')
+#     dean = request.form.get('dean')
+#     delege = request.form.get('delege')
+#     # views.update_department(dept, dean, delege)
+#
+#     return redirect(url_for('admin_department_page'))
 
-    return redirect(url_for('admin_department_page'))
+
+@app.route("/update_crn", methods=['POST'])
+def update_crn():
+    crn = request.form.get('crn')
+    code = request.form.get('code')
+    loc_sel = request.form.get('loc_sel')
+    credits_sel = request.form.get('credits_sel')
+    modal_crn = request.form.get('modal_crn')
+    modal_code = request.form.get('modal_code')
+    modal_loc_sel = request.form.get('modal_loc_sel')
+    modal_credits_sel = request.form.get('modal_credits_sel')
+    if views.check_crn(modal_crn, modal_code, modal_loc_sel):
+        views.update_crn(crn, code, loc_sel, credits_sel, modal_crn, modal_code, modal_loc_sel, modal_credits_sel)
+    return redirect(url_for('admin_crn_page'))
 
 
 @app.route("/del_crn/<string:crn_num>", methods=['GET'])

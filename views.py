@@ -14,6 +14,7 @@ DSN = {'user': "postgres",
 def check_user(username, password):
     statement = "SELECT * FROM PERSON WHERE username = '{}' AND password = '{}'".format(username, password)
 
+
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
             cursor.execute(statement)
@@ -89,6 +90,17 @@ def check_crn(crn, code, loc_sel):
 
 def add_crn(crn, code, loc_sel, credits_sel):
     statement = "INSERT INTO CLASS(crn, course_code, loc_id, credit) VALUES('{}', '{}', '{}', '{}')".format(crn, code, loc_sel, credits_sel)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+
+def update_crn(crn, code, loc_sel, credits_sel, modal_crn, modal_code, modal_loc_sel, modal_credits_sel):
+    statement = """UPDATE class
+                    SET crn='{}', course_code='{}',loc_id='{}',credit='{}'
+                    WHERE crn='{}', course_code='{}',loc_id='{}',credit='{}'
+                    """.format(modal_crn, modal_code, modal_loc_sel, modal_credits_sel, crn, code, loc_sel, credits_sel)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -230,14 +242,14 @@ def add_department(dept, dean, delege):
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
             cursor.execute(statement)
-
-
-def update_department(dept, dean, delege):
-    statement = "INSERT INTO FACULTY(fac_name, dean_id, stu_delegate) VALUES('{}', '{}', '{}')".format(dept, dean, delege)
-
-    with dbapi2.connect(db_url) as connection:
-        with connection.cursor() as cursor:
-            cursor.execute(statement)
+#
+#
+# def update_department(dept, dean, delege):
+#     statement = "INSERT INTO FACULTY(fac_name, dean_id, stu_delegate) VALUES('{}', '{}', '{}')".format(dept, dean, delege)
+#
+#     with dbapi2.connect(db_url) as connection:
+#         with connection.cursor() as cursor:
+#             cursor.execute(statement)
 
 
 
