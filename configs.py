@@ -11,10 +11,10 @@ DSN_kk = {'user': "postgres",  # DSN for Kutay Karakamış
           }
 
 DSN_efo = {'user': "postgres",  # DSN for Enes Furkan Örnek
-           'password': "1234",
+           'password': "asder",
            'host': "127.0.0.1",
            'port': "5432",
-           'database': "hebe2"
+           'database': "try"
            }
 
 DSN_mfy = {'user': "postgres",  # DSN for Mehmet Fatih Yıldırım
