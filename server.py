@@ -189,7 +189,10 @@ def del_food(id):
 @app.route("/student/<string:stu_num>")
 def student_page(stu_num):
     student = views.get_student(stu_num)
-
+    
+    if not student:
+        return "No Student Found"
+    
     # name, username, id, fac_name, gpa, comp_credits
     name = student[0]
     username = student[1]
