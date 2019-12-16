@@ -222,6 +222,15 @@ def add_department(dept, dean, delege):
             cursor.execute(statement)
 
 
+def update_department(dept, dean, delege):
+    statement = "INSERT INTO FACULTY(fac_name, dean_id, stu_delegate) VALUES('{}', '{}', '{}')".format(dept, dean, delege)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+
+
 def check_department(dept):
     statement = "SELECT * FROM faculty WHERE fac_name = '{}' ".format(dept)
 
@@ -333,7 +342,7 @@ def get_student(stu_num):
 def get_courses(stu_num):
     statement = """
                 SELECT class.crn AS crn, class.course_code AS course_code, location.dy AS dy,
-                       location.building AS building, location.classroom AS classroom, credits
+                       location.building AS building, location.classroom AS classroom, class.credit
                     FROM student, enrollment, class, location
                     WHERE ( (student.id = enrollment.student_id)
                         AND (enrollment.crn = class.crn)

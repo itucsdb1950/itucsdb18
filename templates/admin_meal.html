@@ -59,10 +59,11 @@
                 </select>
             </div>
         </div>
-        <div>
 
+        <div class="form-group row">
+            <label for="side" class="col-sm-2 col-form-label">Side:</label>
             <div class="col-sm-4">
-                <label for="side" class="col-sm-2 col-form-label">Side:</label>
+
                 <select class="form-control" name="side" id="side" required>
                      {% for meal in food %}
                          {% if meal[1] == 'side' %}
@@ -72,8 +73,8 @@
                 </select>
             </div>
 
+            <label for="extras" class="col-sm-2 col-form-label">Extras:</label>
             <div class="col-sm-4">
-                <label for="extras" class="col-sm-2 col-form-label">Extras:</label>
                 <select class="form-control" name="extras" id="extras" required>
                      {% for meal in food %}
                          {% if meal[1] == 'extra' %}
@@ -83,9 +84,9 @@
                 </select>
 
             </div>
-                <button type="submit" class="btn btn-primary">Add Menu</button>
-
         </div>
+        <button type="submit" class="btn btn-primary">Add Menu</button>
+
 
     </form>
 
@@ -123,11 +124,5 @@
         </tbody>
     </table>
     </div>
-
-
-
-
-
-
 
 {% endblock %}

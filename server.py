@@ -156,6 +156,16 @@ def add_department():
     return redirect(url_for('admin_department_page'))
 
 
+@app.route("/update_department", methods=['POST'])
+def update_department():
+    dept = request.form.get('dept')
+    dean = request.form.get('dean')
+    delege = request.form.get('delege')
+    views.update_department(dept, dean, delege)
+
+    return redirect(url_for('admin_department_page'))
+
+
 @app.route("/del_crn/<string:crn_num>", methods=['GET'])
 def del_crn(crn_num):
     views.del_crn(crn_num)
