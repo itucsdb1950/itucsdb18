@@ -161,7 +161,33 @@ def check_grades(crn, stu_id, taken_from):
 
 
 def add_grades(crn, stu_id, taken_from, percentage, grade):
-    statement = "INSERT INTO GRADES(fac_name, dean_id, stu_delegate) VALUES('{}', '{}', '{}')".format(dept, dean, delege)
+    statement = "INSERT INTO GRADES VALUES('{}', '{}', '{}', '{}', '{}')".format(stu_id, crn, taken_from, percentage, grade)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+
+def get_grades_admin():
+    statement = """
+                SELECT class.crn AS crn, class.course_code AS course_code, 
+                       grades.taken_from AS taken_from, grades.grade AS grade,
+                       grades.percentage AS percent, class.credit AS credits
+                    FROM student, grades, class
+                    WHERE ( (student.id = grades.student_id)
+                        AND (grades.crn = class.crn) )
+                    ORDER BY class.crn
+                """
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            records = cursor.fetchall()
+            return records
+
+
+def del_grades(student_id, crn,taken_from):
+    statement = "DELETE FROM GRADES WHERE student_id = '{}' and crn = '{}' and taken_from = '{}'".format(student_id, crn,taken_from)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -240,14 +266,13 @@ def del_food(id):
             cursor.execute(statement)
 
 
-def get_student(stu_num):
+def get_student_admin():
     statement = """
                 SELECT person.name, person.username, student.id, faculty.fac_name, student.gpa, student.comp_credits
                     FROM student, person, faculty
                     WHERE ( (person.id = student.id)
-                        AND (student.fac_id = faculty.id) 
-                        AND (student.id = '{}') )
-                """.format(stu_num)
+                        AND (student.fac_id = faculty.id) )
+                """
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:

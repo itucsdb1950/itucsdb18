@@ -65,8 +65,8 @@ def admin_meal_page():
 
 @app.route("/admin/grades")
 def admin_grades_page():
-    grades = views.get_grades()
-    student = views.get_student()
+    grades = views.get_grades_admin()
+    student = views.get_student_admin()
 
     return render_template("admin_grades.html", grades=grades, student=student)
 
@@ -85,9 +85,15 @@ def add_grades():
     stu_id = request.form.get('stu_id')
     taken_from = request.form.get('taken_from')
     percentage = request.form.get('percentage')
-    grade = request.form.get('grades')
+    grade = request.form.get('grade')
     if views.check_grades(crn, stu_id, taken_from):
         views.add_grades(crn, stu_id, taken_from, percentage, grade)
+    return redirect(url_for('admin_grades_page'))
+
+
+@app.route("/del_grades/<string:student_id>/<int:crn>/<string:taken_from>", methods=['GET'])
+def del_location(student_id, crn,taken_from):
+    views.del_grades(student_id, crn,taken_from)
     return redirect(url_for('admin_grades_page'))
 
 

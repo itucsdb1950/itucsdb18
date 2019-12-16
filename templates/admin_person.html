@@ -65,6 +65,7 @@
             <th>Student Number</th>
             <th>Name</th>
             <th>Age</th>
+            <th>Type</th>
             <th>Username</th>
         </tr>
         </thead>
@@ -75,8 +76,9 @@
             <td scope="row">{{ persons[0] }}</td>
             <td>{{ persons[1] }}</td>
             <td>{{ persons[2] }}</td>
+                        <td>sd</td>
+
             <td>{{ persons[3] }}</td>
-            <!--<td>sd</td>-->
             <td><a name="update_person" id="update_person" class="btn btn-success" href="#" role="button">Update</a>
                 <a name="del_person" id="del_person" class="btn btn-danger" href="{{ url_for('del_person', per_num=persons[0]) }}" role="button">Delete</a>
             </td>
