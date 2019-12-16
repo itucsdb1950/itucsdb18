@@ -37,6 +37,7 @@ def food_menus_page():
 	i = 0 # start day from 0
 	for food in foods: # iterate over the entire table
 		if food.day == day: # as long as day remains same, add rows with that day to food_menus[i]
+			# TODO: map table so food elements have the order soup, main, side, extra
 			if food.repast == "lunch":
 				food_menus[i][0].append(food) # food_menus[0] which corresponds to lunch
 			else: #dinner
