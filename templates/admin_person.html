@@ -76,8 +76,11 @@
             <td scope="row">{{ persons[0] }}</td>
             <td>{{ persons[1] }}</td>
             <td>{{ persons[2] }}</td>
-                        <td>sd</td>
-
+            {% if persons[7] == 0 %}
+                <td>student</td>
+            {% else %}
+                <td>professor</td>
+            {% endif %}
             <td>{{ persons[3] }}</td>
             <td><a name="update_person" id="update_person" class="btn btn-success" href="#" role="button">Update</a>
                 <a name="del_person" id="del_person" class="btn btn-danger" href="{{ url_for('del_person', per_num=persons[0]) }}" role="button">Delete</a>

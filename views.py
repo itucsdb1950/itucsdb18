@@ -104,7 +104,7 @@ def del_crn(id):
 
 
 def get_person(limit=500):
-    statement = "SELECT * FROM person LIMIT {}".format(limit)
+    statement = "SELECT * FROM person LEFT JOIN student ON person.id = student.id WHERE person.name <> 'ADMINISTRATOR'"
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -223,7 +223,16 @@ def check_department(dept):
 
 
 def del_department(id):
-    statement = "DELETE FROM faculty WHERE id = {}".format(id)
+    statement = """
+                DELETE FROM person
+                    WHERE (id = (
+                        SELECT FROM person, student
+                            WHERE ((person.id = student.id)
+                                AND (student.fac_id = {}))
+                    ));
+                
+                DELETE FROM faculty WHERE id = {}
+                """.format(id,id)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -285,7 +294,7 @@ def get_dept_info():
     statement = """
                 SELECT faculty.fac_name, faculty.dean_id AS dean_id, person.name
                     FROM faculty, person
-                    WHERE  (person.id = dean_id)
+                    WHERE ( (person.id = dean_id) or (dean_id is NULL) )
                 """
 
     with dbapi2.connect(db_url) as connection:
