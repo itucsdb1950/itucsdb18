@@ -19,6 +19,11 @@ def login():
     return "Your username and password is wrong"
 
 
+@app.route("/error")
+def error_page():
+    return render_template("error.html")
+
+
 @app.route("/admin")
 def admin_page():
     return render_template("base.html")
@@ -92,7 +97,7 @@ def add_grades():
 
 
 @app.route("/del_grades/<string:student_id>/<int:crn>/<string:taken_from>", methods=['GET'])
-def del_location(student_id, crn,taken_from):
+def del_grades(student_id, crn,taken_from):
     views.del_grades(student_id, crn,taken_from)
     return redirect(url_for('admin_grades_page'))
 
