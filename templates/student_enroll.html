@@ -1,0 +1,47 @@
+{% extends 'base_student.html' %}
+
+{% block TITLE %}STUDENT - ENROLL{% endblock %}
+
+{% block body %}
+
+<!--
+crn, course_code, day, building, class
+-->
+
+<form method="post" action="{{ url_for('student_enrollment_page') }}">
+	<div class="form-group row">
+		<label for="crn" class="col-sm-2 col-form-label">CRN:</label>
+		<div class="col-sm-4">
+		   <input type="number" name="crn" id="crn" class="form-control" placeholder="26590" required>
+		</div>
+	</div>
+	
+	<button type="submit" class="btn btn-primary">Enroll</button>
+</form>
+
+
+<table class="table table-hover table-inverse">
+    <thead class="thead-inverse">
+        <tr>
+            <th>CRN</th>
+            <th>COURSE CODE</th>
+            <th>DAY</th>
+            <th>BUILDING</th>
+            <th>CLASSROOM</th>
+            <th>CREDITS</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for course in courses %}
+        <tr>
+            <td scope="row">{{ course.crn }}</td>
+            <td>{{ course.course_code }}</td>
+            <td>{{ course.day }}</td>
+            <td>{{ course.building }}</td>
+            <td>{{ course.classroom }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

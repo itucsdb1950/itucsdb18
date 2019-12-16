@@ -70,3 +70,51 @@ def get_food_menus():
             cursor.execute(statement)
             records = cursor.fetchall()
             return records
+
+
+# ~def add_location(building, day, classroom, capacity):
+    # ~statement = "INSERT INTO LOCATION(classroom, building, dy, capacity) VALUES('{}', '{}', '{}', '{}')".format(building, day, classroom, capacity)
+
+    # ~with dbapi2.connect(db_url) as connection:
+        # ~with connection.cursor() as cursor:
+            # ~cursor.execute(statemen
+
+def get_class(crn):
+    statement = """
+                SELECT * FROM class, location
+                    WHERE ( (class.loc_id = location.id)
+                        AND (crn = '{}') )
+                """.format(crn)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            record = cursor.fetchone()
+            return record
+
+
+def get_enrolled(crn):
+    statement = """
+                SELECT COUNT(student.id) FROM class, student, enrollment
+                    WHERE ( (class.crn = enrollment.crn)
+                        AND (student.id = enrollment.student_id)
+                        AND (crn = '{}') )
+                """.format(crn)
+    
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            record = cursor.fetchone()
+            return record
+
+
+def add_crn(crn, stu_num):
+    statement = """
+                INSERT INTO CLASS 
+                    (crn, course_code, loc_id, credit)
+                    VALUES ('{}', '{}', '{}', '{}')
+                """.format(crn, code, loc_sel, credits_sel)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
