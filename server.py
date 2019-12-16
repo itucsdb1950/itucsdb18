@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
 import views
-import server_more # this file may be merged with that file at the end
 
 app = Flask(__name__)
 
@@ -55,12 +54,41 @@ def admin_food_page():
     return render_template("admin_food.html", food=food)
 
 
+@app.route("/admin/meal")
+def admin_meal_page():
+    meals = views.get_meal()
+    food = views.get_food()
+    # concat = views.get_concat()
+
+    return render_template("admin_meal.html", meals=meals, food=food)
+
+
+@app.route("/admin/grades")
+def admin_grades_page():
+    grades = views.get_grades()
+    student = views.get_student()
+
+    return render_template("admin_grades.html", grades=grades, student=student)
+
+
 @app.route("/admin/department")
 def admin_department_page():
     person = views.get_person()
     department = views.get_department()
     info = views.get_dept_info()
     return render_template("admin_department.html", person=person, department=department, info=info)
+
+
+@app.route("/add_grades", methods=['POST'])
+def add_crn():
+    crn = request.form.get('crn')
+    stu_id = request.form.get('stu_id')
+    taken_from = request.form.get('taken_from')
+    percentage = request.form.get('percentage')
+    grade = request.form.get('grades')
+    if views.check_grades(crn, stu_id, taken_from):
+        views.add_grades(crn, stu_id, taken_from, percentage, grade)
+    return redirect(url_for('admin_grades_page'))
 
 
 @app.route("/add_crn", methods=['POST'])
@@ -198,6 +226,26 @@ def student_grades_page(stu_num):
 
     return render_template("student_grades.html", courses=courses)
 
+
+
+@app.route("/add_meal", methods=['POST'])
+def add_meal():
+    day = request.form.get('day_sel')
+    repast = request.form.get('repast')
+    soup = request.form.get('soup')
+    main = request.form.get('main')
+    side = request.form.get('side')
+    extras = request.form.get('extras')
+
+    # if views.check_meal(building, day, classroom):
+    views.add_meal(day, repast, soup, main, side, extras)
+    return redirect(url_for('admin_meal_page'))
+
+
+@app.route("/del_meal/<string:id>", methods=['GET'])
+def del_meal(id):
+    views.del_meal(id)
+    return redirect(url_for('admin_meal_page'))
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True)

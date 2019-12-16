@@ -59,8 +59,6 @@
             <th>Day</th>
             <th>Classroom</th>
             <th>Capacity</th>
-            <th>Enrolled</th>
-            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -71,7 +69,6 @@
             <td>{{ location[2] }}</td>
             <td>{{ location[3] }}</td>
             <td>{{ location[4] }}</td>
-            <td>sd</td>
             <td><a name="update_location" id="update_location" class="btn btn-success" href="#" role="button">Update</a>
                 <a name="del_location" id="del_location" class="btn btn-danger" href="{{ url_for('del_location', loc_id=location[0]) }}" role="button">Delete</a>
             </td>

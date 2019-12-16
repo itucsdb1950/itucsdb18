@@ -97,8 +97,8 @@ def add_meal():
     side = request.form.get('side')
     extras = request.form.get('extras')
 
-    if views.check_location(building, day, classroom):
-        views.add_location(building, day, classroom, capacity)
+    # if views.check_meal(building, day, classroom):
+    views.add_meal(day, repast, soup, main, side, extras)
     return redirect(url_for('admin_location_page'))
 
 
