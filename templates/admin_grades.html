@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block TITLE %}ADD GRADES{% endblock %}
+
+{% block body %}
+
+  <div class="container">
+    <br>
+
+    <form method="post" action="{{ url_for('add_grades') }}">
+        <div class="form-group row">
+            <label for="crn" class="col-sm-2 col-form-label">CRN:</label>
+            <div class="col-sm-4">
+               <input type="text" name="crn" id="crn" class="form-control" placeholder="25681" required>
+            </div>
+
+
+            <label for="stu_id" class="col-sm-2 col-form-label">Student ID:</label>
+            <div class="col-sm-4">
+                <input type="text" name="stu_id" id="stu_id" class="form-control" placeholder="150160170" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="taken_from" class="col-sm-2 col-form-label">Taken From:</label>
+            <div class="col-sm-4">
+               <input type="text" name="taken_from" id="taken_from" class="form-control" placeholder="Midterm" required>
+            </div>
+
+             <label for="percentage" class="col-sm-2 col-form-label">Percentage:</label>
+            <div class="col-sm-4">
+               <input type="number" name="percentage" id="percentage" class="form-control" placeholder="30" required>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="form-group row">
+            <label for="grade" class="col-sm-2 col-form-label">Age:</label>
+            <div class="col-sm-4">
+               <input type="number" name="grade" id="grade" class="form-control" placeholder="92" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Grade</button>
+
+
+        </div>
+    </form>
+
+
+        <table class="table table-hover table-inverse">
+        <thead class="thead-inverse">
+        <tr>
+            <th>CRN</th>
+            <th>Student Number</th>
+            <th>Taken From</th>
+            <th>Grade</th>
+            <th>Percentage</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+{#        {% for persons in person %}#}
+{#        <tr>#}
+{#            <td scope="row">{{ persons[0] }}</td>#}
+{#            <td>{{ persons[1] }}</td>#}
+{#            <td>{{ persons[2] }}</td>#}
+{#            <td>{{ persons[3] }}</td>#}
+{#            <!--<td>sd</td>-->#}
+{#            <td><a name="update_person" id="update_person" class="btn btn-success" href="#" role="button">Update</a>#}
+{#                <a name="del_person" id="del_person" class="btn btn-danger" href="{{ url_for('del_person', per_num=persons[0]) }}" role="button">Delete</a>#}
+{#            </td>#}
+{#        </tr>#}
+{#        {% endfor %}#}
+
+        </tbody>
+    </table>
+    </div>
+
+
+
+
+
+
+
+
+{% endblock %}

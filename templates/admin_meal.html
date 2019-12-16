@@ -14,8 +14,6 @@
     <form method="post" action="{{ url_for('add_meal') }}">
         <div class="form-group row">
 
-
-
             <label for="day_sel" class="col-sm-2 col-form-label">Day:</label>
             <div class="col-sm-4">
                 <select class="form-control" name="day_sel" id="day_sel" required>
@@ -42,65 +40,53 @@
             <label for="soup" class="col-sm-2 col-form-label">Soup:</label>
             <div class="col-sm-4">
                 <select class="form-control" name="soup" id="soup" required>
-                     {% for meal in meals %}
-                         {% if meal[2] == 'soup' %}
-                         {% else %}
-                            <option value="{{ meal[2] }}">{{ meal[2] }}</option>
+                     {% for meal in food %}
+                         {% if meal[1] == 'soup' %}
+                            <option value="{{ meal[0] }}">{{ meal[2] }}</option>
                          {% endif %}
                      {% endfor %}
                 </select>
-               <input type="text" name="soup" id="soup" class="form-control" placeholder="Mahluta" required>
             </div>
 
-            <label for="soup" class="col-sm-2 col-form-label">Main:</label>
-
+            <label for="main" class="col-sm-2 col-form-label">Main:</label>
             <div class="col-sm-4">
                 <select class="form-control" name="main" id="main" required>
-                     {% for meal in meals %}
-                         {% if meal[3] == 'main' %}
-                         {% else %}
-                            <option value="{{ meal[3] }}">{{ meal[3] }}</option>
+                     {% for meal in food %}
+                         {% if meal[1] == 'main' %}
+                            <option value="{{ meal[0] }}">{{ meal[2] }}</option>
                          {% endif %}
                      {% endfor %}
                 </select>
-               <input type="text" name="main" id="main" class="form-control" placeholder="kirpi eti" required>
             </div>
-
-            <label for="soup" class="col-sm-2 col-form-label">Side:</label>
+        </div>
+        <div>
 
             <div class="col-sm-4">
-
+                <label for="side" class="col-sm-2 col-form-label">Side:</label>
                 <select class="form-control" name="side" id="side" required>
-                     {% for meal in meals %}
-                         {% if meal[4] == 'side' %}
-                         {% else %}
-                            <option value="{{ meal[4] }}">{{ meal[4] }}</option>
+                     {% for meal in food %}
+                         {% if meal[1] == 'side' %}
+                            <option value="{{ meal[0] }}">{{ meal[2] }}</option>
                          {% endif %}
                      {% endfor %}
                 </select>
-               <input type="text" name="side" id="side" class="form-control" placeholder="kürt böreki" required>
             </div>
-
-            <label for="soup" class="col-sm-2 col-form-label">Extras:</label>
 
             <div class="col-sm-4">
-
+                <label for="extras" class="col-sm-2 col-form-label">Extras:</label>
                 <select class="form-control" name="extras" id="extras" required>
-                     {% for meal in meals %}
-                         {% if meal[5] == 'extras' %}
-                         {% else %}
-                            <option value="{{ meal[5] }}">{{ meal[5] }}</option>
+                     {% for meal in food %}
+                         {% if meal[1] == 'extra' %}
+                            <option value="{{ meal[0] }}">{{ meal[2] }}</option>
                          {% endif %}
                      {% endfor %}
                 </select>
-               <input type="text" name="extras" id="extras" class="form-control" placeholder="süt_askisi" required>
 
             </div>
-
-
+                <button type="submit" class="btn btn-primary">Add Menu</button>
 
         </div>
-        <button type="submit" class="btn btn-primary">Add Menu</button>
+
     </form>
 
 
@@ -128,10 +114,10 @@
             <td>{{ meal[3] }}</td>
             <td>{{ meal[4] }}</td>
             <td>{{ meal[5] }}</td>
-            <td><a name="update_location" id="update_location" class="btn btn-success" href="#" role="button">Update</a>
-                <a name="del_location" id="del_location" class="btn btn-danger" href="{{ url_for('del_menu', loc_id=location[0]) }}" role="button">Delete</a>
+            <td><a name="update_meal" id="update_meal" class="btn btn-success" href="#" role="button">Update</a>
+                <a name="del_location" id="del_location" class="btn btn-danger" href="{{ url_for('del_menu', dy=meal[0]) }}" role="button">Delete</a>
             </td>
-        </tr>
+        <   /tr>
         {% endfor %}
 
         </tbody>

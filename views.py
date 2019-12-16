@@ -4,9 +4,6 @@ import sys
 import psycopg2 as dbapi2
 from configs import db_url
 
-import views_more # this file may be merged with that file at the end
-
-
 DSN = {'user': "postgres",
        'password': "123",
        'host': "127.0.0.1",
@@ -147,6 +144,24 @@ def check_person(usern):
 
 def del_person(id):
     statement = "DELETE FROM person WHERE id = '{}'".format(id)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+
+def check_grades(crn, stu_id, taken_from):
+    statement = "SELECT * FROM grades WHERE crn = '{}' and student_id = '{}' and taken_from = '{}'".format(crn, stu_id, taken_from)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            record = cursor.fetchone()
+            return record is None
+
+
+def add_grades(crn, stu_id, taken_from, percentage, grade):
+    statement = "INSERT INTO GRADES(fac_name, dean_id, stu_delegate) VALUES('{}', '{}', '{}')".format(dept, dean, delege)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -308,6 +323,39 @@ def get_grades(stu_num):
             records = cursor.fetchall()
             return records
 
+
+def add_meal(day, repast, soup, main, side, extras):
+    statement = "INSERT INTO MENU(dy, repast, soup, main, side, extras) VALUES('{}', '{}', '{}', '{}', '{}', '{}')".format(day, repast, soup, main, side, extras)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+def del_meal(day, repast):
+    statement = "DELETE FROM MENU WHERE dy = '{}', repast = '{}'".format(day, repast)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+def get_meal(limit=100):
+    statement = "SELECT * FROM MENU LIMIT {}".format(limit)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            records = cursor.fetchall()
+            return records
+
+
+# def get_concat():
+#     statement = "SELECT FOODS.id AS id, MENU.dy as dy, MENU.repast as repast,  "
+#
+#     with dbapi2.connect(db_url) as connection:
+#         with connection.cursor() as cursor:
+#             cursor.execute(statement)
+#             records = cursor.fetchall()
+#             return records
 
 
 if __name__ == '__main__':
