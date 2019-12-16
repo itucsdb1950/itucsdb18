@@ -8,7 +8,7 @@
 crn, course_code, day, building, class
 -->
 
-<form method="post" action="{{ url_for('student_enrollment_page') }}">
+<form method="post" action="{{ url_for('student_enrollment_page', stu_num=stu_num) }}">
 	<div class="form-group row">
 		<label for="crn" class="col-sm-2 col-form-label">CRN:</label>
 		<div class="col-sm-4">
@@ -34,11 +34,11 @@ crn, course_code, day, building, class
     <tbody>
         {% for course in courses %}
         <tr>
-            <td scope="row">{{ course.crn }}</td>
-            <td>{{ course.course_code }}</td>
-            <td>{{ course.day }}</td>
-            <td>{{ course.building }}</td>
-            <td>{{ course.classroom }}</td>
+            <td scope="row">{{ course[0] }}</td>
+            <td>{{ course[1] }}</td>
+            <td>{{ course[2] }}</td>
+            <td>{{ course[3] }}</td>
+            <td>{{ course[4] }}</td>
         </tr>
         {% endfor %}
     </tbody>

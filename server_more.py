@@ -25,45 +25,45 @@
 #   return render_template("student_attendance.html", courses=courses)
 #
 #
-@app.route("/food_menu")
-def food_menus_page():
-    foods = views.get_food_menus()
-
-    # split foods list with respect to day.
-    # note that SQL query in views.get_food_menus() is written in a way that returned table is ordered by day.
-    # therefore, only one iteration is sufficent
-    food_menus = [] # initialize list that will hold food menu which are split with respect to day
-    day = foods[0].day # initilize day with the day of the first food
-    i = 0 # start day from 0
-    for food in foods: # iterate over the entire table
-        if food.day == day: # as long as day remains same, add rows with that day to food_menus[i]
-            # TODO: map table so food elements have the order soup, main, side, extra
-            if food.repast == "lunch":
-                food_menus[i][0].append(food) # food_menus[0] which corresponds to lunch
-            else: #dinner
-                food_menus[i][1].append(food) # food_menus[1] which corresponds to dinner
-        else: # if another day is reached
-            day = food.day # update day to the new one
-            i += 1 # so that upcoming course's grades are written to the next index of courses
-    
-    return render_template("student_grades.html", menus=food_menus)
-
-
-@app.route("/student/<string:stu_num>/enroll", methods=['GET', 'POST'])
-def student_enrollment_page(stu_num):
-    if request.method == "GET":
-        courses = views.get_crns()
-        return render_template("student_enroll.html", courses=courses)
-    
-    crn = request.form['crn'] if request.form['crn'] else return "<h1>Failed! Fill CRN Field!</h1>"
-    
-    class = views.get_class(crn)
-    enrolled = views.get_enrolled(crn)
-    
-    if class is None:
-        return "<h1>Failed! There is no such CRN!</h1>"
-    if enrolled+1 > class.capacity:
-        return "<h1>Failed! Quota has been reached.</h1>"
-    
-    views.add_crn(crn, stu_num)
-    return redirect(url_for("student_enrollment_page"))
+# @app.route("/food_menu")
+# def food_menus_page():
+#     foods = views.get_food_menus()
+#
+#     # split foods list with respect to day.
+#     # note that SQL query in views.get_food_menus() is written in a way that returned table is ordered by day.
+#     # therefore, only one iteration is sufficent
+#     food_menus = [] # initialize list that will hold food menu which are split with respect to day
+#     day = foods[0].day # initilize day with the day of the first food
+#     i = 0 # start day from 0
+#     for food in foods: # iterate over the entire table
+#         if food.day == day: # as long as day remains same, add rows with that day to food_menus[i]
+#             # TODO: map table so food elements have the order soup, main, side, extra
+#             if food.repast == "lunch":
+#                 food_menus[i][0].append(food) # food_menus[0] which corresponds to lunch
+#             else: #dinner
+#                 food_menus[i][1].append(food) # food_menus[1] which corresponds to dinner
+#         else: # if another day is reached
+#             day = food.day # update day to the new one
+#             i += 1 # so that upcoming course's grades are written to the next index of courses
+#
+#     return render_template("student_grades.html", menus=food_menus)
+#
+#
+# @app.route("/student/<string:stu_num>/enroll", methods=['GET', 'POST'])
+# def student_enrollment_page(stu_num):
+#     if request.method == "GET":
+#         courses = views.get_crns()
+#         return render_template("student_enroll.html", courses=courses)
+#
+#     crn = request.form['crn'] if request.form['crn'] else return "<h1>Failed! Fill CRN Field!</h1>"
+#
+#     class = views.get_class(crn)
+#     enrolled = views.get_enrolled(crn)
+#
+#     if class is None:
+#         return "<h1>Failed! There is no such CRN!</h1>"
+#     if enrolled+1 > class.capacity:
+#         return "<h1>Failed! Quota has been reached.</h1>"
+#
+#     views.add_crn(crn, stu_num)
+#     return redirect(url_for("student_enrollment_page"))

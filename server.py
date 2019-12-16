@@ -32,7 +32,7 @@ def admin_page():
 @app.route("/admin/crn")
 def admin_crn_page():
     locations = views.get_locations_for_crn()
-    crns = views.get_crns()
+    crns = views.get_lesson()
 
     return render_template("admin_crn.html", locations=locations, crns=crns)
 
@@ -212,18 +212,20 @@ def student_page(stu_num):
 @app.route("/student/<string:stu_num>/courses")
 def student_courses_page(stu_num):
     courses = views.get_courses(stu_num)
-    return render_template("student_courses.html", courses=courses)
+    return render_template("student_courses.html", stu_num=stu_num, courses=courses)
 
 
 @app.route("/student/<string:stu_num>/attendance")
 def student_attendance_page(stu_num):
     courses = views.get_attendance(stu_num)
-    return render_template("student_attendance.html", courses=courses)
+    return render_template("student_attendance.html", stu_num=stu_num, courses=courses)
 
 
 @app.route("/student/<string:stu_num>/grades")
 def student_grades_page(stu_num):
     grades = views.get_grades(stu_num)
+    if not grades:
+        return "<h1>No Grades Found</h1>"
 
     # split courses list with respect to crn.
     # note that SQL query in views.get_grades() is written in a way that returned table is ordered by crn.
@@ -238,7 +240,7 @@ def student_grades_page(stu_num):
             crn = grade[0]  # update crn to the new one
             i += 1  # so that upcoming course's grades are written to the next index of courses
 
-    return render_template("student_grades.html", courses=courses)
+    return render_template("student_grades.html", stu_num=stu_num, courses=courses)
 
 
 
@@ -256,10 +258,59 @@ def add_meal():
     return redirect(url_for('admin_meal_page'))
 
 
-@app.route("/del_meal/<string:id>", methods=['GET'])
-def del_meal(id):
-    views.del_meal(id)
+@app.route("/del_meal/<string:dy>/<string:mial>", methods=['GET'])
+def del_meal(dy,mial):
+    views.del_meal(dy,mial)
     return redirect(url_for('admin_meal_page'))
+
+
+@app.route("/food_menu")
+def food_menus_page():
+    foods = views.get_food_menus()
+
+    # split foods list with respect to day.
+    # note that SQL query in views.get_food_menus() is written in a way that returned table is ordered by day.
+    # therefore, only one iteration is sufficent
+    food_menus = []  # initialize list that will hold food menu which are split with respect to day
+    day = foods[0].day  # initilize day with the day of the first food
+    i = 0  # start day from 0
+    for food in foods:  # iterate over the entire table
+        if food.day == day:  # as long as day remains same, add rows with that day to food_menus[i]
+            # TODO: map table so food elements have the order soup, main, side, extra
+            if food.repast == "lunch":
+                food_menus[i][0].append(food)  # food_menus[0] which corresponds to lunch
+            else:  # dinner
+                food_menus[i][1].append(food)  # food_menus[1] which corresponds to dinner
+        else:  # if another day is reached
+            day = food.day  # update day to the new one
+            i += 1  # so that upcoming course's grades are written to the next index of courses
+
+    return render_template("student_grades.html", menus=food_menus)
+
+
+@app.route("/student/<string:stu_num>/enroll", methods=['GET', 'POST'])
+def student_enrollment_page(stu_num):
+    if request.method == "GET":
+        courses = views.get_crns()
+        return render_template("student_enroll.html", stu_num=stu_num, courses=courses)
+
+    if request.form['crn']:
+        crn = request.form['crn']
+    else:
+        return "<h1>Failed! Fill CRN Field!</h1>"
+
+    klasse = views.get_class(crn)
+
+    enrolled = views.get_enrolled(crn)
+
+    if klasse is None:
+        return "<h1>Failed! There is no such CRN!</h1>"
+    if enrolled[0] + 1 > klasse[8]:
+        return "<h1>Failed! Quota has been reached.</h1>"
+
+    views.add_enrollment(crn, stu_num)
+    return redirect(url_for("student_enrollment_page", stu_num=stu_num))
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True)
