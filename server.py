@@ -78,7 +78,7 @@ def admin_grades_page():
 
 @app.route("/admin/department")
 def admin_department_page():
-    person = views.get_person()
+    person = views.get_prof()
     department = views.get_department()
     info = views.get_dept_info()
     return render_template("admin_department.html", person=person, department=department, info=info)

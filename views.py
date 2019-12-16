@@ -123,6 +123,16 @@ def get_person(limit=500):
             return records
 
 
+def get_prof(limit=500):
+    statement = "SELECT * FROM person WHERE (person.id <> ALL (SELECT person.id FROM person ,student WHERE person.id = student.id) and person.name <> 'ADMINISTRATOR')"
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            records = cursor.fetchall()
+            return records
+
+
 def add_person(per_name, per_num, usern, passw, age, fac):
     # ~statement="SELECT * FROM person WHERE username = '{}' ".format(usern)
     #TODO: If exists, don't add
