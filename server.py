@@ -2,7 +2,7 @@ import functools
 
 from flask import Flask, render_template, request, redirect, url_for
 import views
-from functools import wraps
+
 
 app = Flask(__name__)
 

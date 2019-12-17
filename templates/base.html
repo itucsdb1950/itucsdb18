@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static',filename='./styles/images/book-icon.png') }}"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -21,7 +22,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('admin_page') }}">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{{ url_for('admin_page') }}">Klasse <span class="sr-only">(current)</span></a>
       </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ url_for('admin_location_page') }}">Location</a>
