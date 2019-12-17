@@ -6,8 +6,6 @@ import views
 
 app = Flask(__name__)
 
-tabe = {'username': 'ali', 'password': 'veli'}
-
 userInf = []
 
 
