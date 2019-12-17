@@ -67,6 +67,7 @@
 #
 #     views.add_crn(crn, stu_num)
 #     return redirect(url_for("student_enrollment_page"))
+<<<<<<< HEAD
 
 @app.route("/update_department/<int:dept_id>", methods=['POST'])
 @allow_to()
@@ -97,3 +98,5 @@ def update_department(loc_id):
         capacity = request.form.get('capacity')
         views.update_department(old_id, building, day, classroom, capacity)
         return redirect(url_for('admin_department_page'))
+=======
+>>>>>>> df5f91c5437d948ba4ada4dcb267140e98882aac

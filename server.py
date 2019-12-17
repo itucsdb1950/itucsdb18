@@ -109,9 +109,10 @@ def admin_food_page():
 def admin_meal_page():
     meals = views.get_meal()
     food = views.get_food()
+    menu = views.get_food_menus()
     # concat = views.get_concat()
 
-    return render_template("admin_meal.html", meals=meals, food=food)
+    return render_template("admin_meal.html", meals=meals, food=food, menus=menu)
 
 
 @app.route("/admin/grades")
@@ -230,14 +231,23 @@ def add_department():
     return redirect(url_for('admin_department_page'))
 
 
-# @app.route("/update_department", methods=['POST'])
-# def update_department():
-#     dept = request.form.get('dept')
-#     dean = request.form.get('dean')
-#     delege = request.form.get('delege')
-#     # views.update_department(dept, dean, delege)
-#
-#     return redirect(url_for('admin_department_page'))
+
+@app.route("/update_department/<int:dept_id>", methods=['POST','GET'])
+@allow_to()
+def update_department(dept_id):
+    if request.method == 'GET':
+        people = views.get_person()
+        department = views.get_department()
+        return render_template("admin_department_update.html", old_id=dept_id, people=people, department=department)
+    else:
+        old_id = request.form.get('old_id')
+        dept_id = request.form.get('dept')
+        dean = request.form.get('dean')
+        delege = request.form.get('delege')
+        views.update_department(old_id, dept_id, dean, delege)
+        return redirect(url_for('admin_department_page'))
+
+
 
 '''
 @app.route("/update_crn/<string:crn_num>", methods=['GET', 'POST'])
