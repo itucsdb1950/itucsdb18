@@ -475,7 +475,10 @@ def del_meal(day, repast):
             cursor.execute(statement)
 
 def get_meal(limit=100):
-    statement = "SELECT * FROM MENU LIMIT {}".format(limit)
+    statement = """
+                SELECT dy, repast, soup 
+                    FROM MENU LIMIT {}
+                """.format(limit)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
