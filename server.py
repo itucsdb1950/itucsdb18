@@ -395,7 +395,7 @@ def food_menus_page():
     #         day = food[0]  # update day to the new one
     #         i += 1  # so that upcoming day's food menus are written to the next index of food_menus
 
-    return render_template("food_menu.html", menus=food_menus)
+    return render_template("food_menu.html", menus=foods)
 
 
 @app.route("/student/<string:stu_num>/enroll", methods=['GET', 'POST'])
