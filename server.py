@@ -51,7 +51,7 @@ def login():
             return render_template("base.html", record=user)
         else:
             return render_template("base_student.html", stu_num=user[0])
-    return "Your username and password is wrong"
+    return render_template("gandalf_wrong_id.html")
 
 
 @app.route("/error")
@@ -113,6 +113,22 @@ def admin_meal_page():
     # concat = views.get_concat()
 
     return render_template("admin_meal.html", meals=meals, food=food, menus=menu)
+
+
+@app.route("/update_location/<int:old_id>", methods=['GET', 'POST'])
+@allow_to()
+def update_location(old_id):
+    if request.method == 'GET':
+        # ~people = views.get_person()
+        return render_template("admin_location_update.html", old_id=old_id)
+    else:
+        old_id = request.form.get('old_id')
+        building = request.form.get('building')
+        day = request.form.get('day-sel')
+        classroom = request.form.get('classroom')
+        capacity = request.form.get('capacity')
+        views.update_location(old_id, building, day, classroom, capacity)
+        return redirect(url_for('admin_location_page'))
 
 
 @app.route("/admin/grades")

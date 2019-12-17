@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block TITLE %}ADMIN DEPARTMENT{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="container">
+    <br>
+    <h3 class="text-center">Update Department</h3>
+        <hr>
+
+    <form method="post" action="{{ url_for('update_location', old_id=old_id) }}">
+         <div class="form-group row" style="display: none">
+            <label for="old_id" class="col-sm-2 col-form-label">Old Location ID:</label>
+            <div class="col-sm-4">
+               <input type="text" name="old_id" id="old_id" class="form-control" value="{{ old_id }}" required>
+            </div>
+        </div>
+        
+        <div class="form-group row">
+            <label for="building" class="col-sm-2 col-form-label">Building:</label>
+            <div class="col-sm-4">
+               <input type="text" name="building" id="building" class="form-control" placeholder="EEB" value="{{ build_name }}" required>
+            </div>
+            
+	    <label for="day_sel" class="col-sm-2 col-form-label">Day:</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="day_sel" id="day_sel" required>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                </select>
+            </div>
+        </div>
+	
+	<div class="form-group row">
+            <label for="classroom" class="col-sm-2 col-form-label">Classroom:</label>
+            <div class="col-sm-4">
+               <input type="number" name="classroom" id="classroom" class="form-control" placeholder="5302" required>
+
+            </div>
+
+
+            <label for="capacity" class="col-sm-2 col-form-label">Capacity:</label>
+            <div class="col-sm-4">
+               <input type="number" name="capacity" id="capacity" class="form-control" placeholder="80" required>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Location</button>
+          </form>
+
+        </div>
+
+{% endblock %}

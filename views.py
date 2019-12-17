@@ -108,11 +108,12 @@ def update_crn(old_crn, crn, code, loc_sel, credits_sel):
             cursor.execute(statement)
 
 
-def update_location(building, day, classroom, capacity, modal_building, modal_day, modal_classroom, modal_capacity):
-    statement = """UPDATE location
-                    SET classroom='{}',building='{}',dy='{}',capacity'{}'
-                    WHERE classroom='{}'and building='{}' and dy='{}' and capacity'{}'
-                    """.format(modal_classroom, modal_building, modal_day, modal_capacity, classroom, building, day, capacity)
+def update_location(old_id, building, day, classroom, capacity):
+    statement = """
+                UPDATE location
+                    SET classroom='{}',building='{}',dy='{}',capacity='{}'
+                    WHERE (id='{}')
+                    """.format(classroom, building, day, capacity, old_id)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:

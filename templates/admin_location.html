@@ -69,7 +69,7 @@
             <td>{{ location[2] }}</td>
             <td>{{ location[3] }}</td>
             <td>{{ location[4] }}</td>
-            <td><a name="update_location" id="update_location" class="btn btn-success" href="#" role="button">Update</a>
+            <td><a name="update_location" id="update_location" class="btn btn-success" href="{{ url_for('update_location', old_id=location[0]) }}" role="button">Update</a>
                 <a name="del_location" id="del_location" class="btn btn-danger" href="{{ url_for('del_location', loc_id=location[0]) }}" role="button">Delete</a>
             </td>
         </tr>
