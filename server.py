@@ -238,6 +238,26 @@ def add_department():
 #     return redirect(url_for('admin_department_page'))
 
 
+<<<<<<< HEAD
+@app.route("/update_crn/<string:crn_num>", methods=['GET', 'POST'])
+def update_crn(crn_num):
+    if request.method == 'GET':
+        locations = views.get_locations()
+        return render_template("admin_crn_update.html", crn_num=crn_num, locations=locations)
+    else:
+        old_crn = request.form.get('old_crn')
+        crn = request.form.get('crn')
+        code = request.form.get('code')
+        loc_sel = request.form.get('loc_sel')
+        credits_sel = request.form.get('credits_sel')
+
+        # klasse = views.get_class(crn)
+        # if klasse:
+        views.update_crn(old_crn, crn, code, loc_sel, credits_sel)
+        return redirect(url_for('admin_crn_page'))
+
+=======
+>>>>>>> 0bb24d91075db5189c3476113837fdf6ab57f1be
 
 @app.route("/del_crn/<string:crn_num>", methods=['GET'])
 @allow_to()
@@ -355,25 +375,27 @@ def del_meal(dy, repast):
 @app.route("/food_menu")
 def food_menus_page():
     foods = views.get_food_menus()
+    if not foods:
+        return "<h1>No Menu Found</h1>"
 
     # split foods list with respect to day.
     # note that SQL query in views.get_food_menus() is written in a way that returned table is ordered by day.
-    # therefore, only one iteration is sufficent
-    food_menus = []  # initialize list that will hold food menu which are split with respect to day
-    day = foods[0].day  # initilize day with the day of the first food
+    # therefore, only one iteration is sufficient
+    food_menus = [[[], []]]  # initialize list that will hold food menu which are split with respect to day
+    day = foods[0][0]  # initialize day with the day of the first food
     i = 0  # start day from 0
     for food in foods:  # iterate over the entire table
-        if food.day == day:  # as long as day remains same, add rows with that day to food_menus[i]
+        if food[0] == day:  # as long as day remains same, add rows with that day to food_menus[i]
             # TODO: map table so food elements have the order soup, main, side, extra
-            if food.repast == "lunch":
+            if food[1] == "lunch":
                 food_menus[i][0].append(food)  # food_menus[0] which corresponds to lunch
             else:  # dinner
                 food_menus[i][1].append(food)  # food_menus[1] which corresponds to dinner
         else:  # if another day is reached
-            day = food.day  # update day to the new one
-            i += 1  # so that upcoming course's grades are written to the next index of courses
+            day = food[0]  # update day to the new one
+            i += 1  # so that upcoming day's food menus are written to the next index of food_menus
 
-    return render_template("student_grades.html", menus=food_menus)
+    return render_template("food_menu.html", menus=food_menus)
 
 
 @app.route("/student/<string:stu_num>/enroll", methods=['GET', 'POST'])
