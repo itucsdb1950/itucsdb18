@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for
+from flask_basicauth import BasicAuth
 import views
 
 app = Flask(__name__)
+
 
 @app.route("/error")
 def error_page():

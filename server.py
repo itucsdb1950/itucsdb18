@@ -1,7 +1,27 @@
-from flask import Flask, render_template, request, redirect, url_for
-import views
+import functools
 
+from flask import Flask, render_template, request, redirect, url_for, session
+import views
+from functools import wraps
 app = Flask(__name__)
+
+
+def let_to(username, password):
+    def decorator_let_to(view_func):
+        @functools.wraps(view_func)
+        def wrapper_view_func(*args, **kwargs):
+            # ------------------------------------------------------
+            user = views.check_user(username, password)
+            if user:
+               returned_value = view_func(*args, **kwargs)
+            else:
+                return redirect(url_for(forbidden_403.__name__))
+            # ------------------------------------------------------
+            return returned_value
+
+        return wrapper_view_func
+
+    return decorator_let_to
 
 
 @app.route("/")
@@ -9,17 +29,23 @@ def home_page():
     return render_template("login.html")
 
 
-@app.route("/login", methods=['POST'])
+@app.route("/login")
 def login():
-    username = request.form.get('usrn')
-    password = request.form.get('pw')
-    user = views.check_user(username, password)
+    session['username'] = request.form.get('usrn')
+    session['password'] = request.form.get('pw')
+    user = views.check_user(session['username'], session['password'])
     if user:
         return render_template("base.html", record=user)
     return "Your username and password is wrong"
 
 
+@app.route("/403_forbidden")
+def forbidden_403():
+    return render_template("gandalf.html")
+
+
 @app.route("/error")
+@let_to(['username'], ['password'])
 def error_page():
     return render_template("error.html")
 
@@ -30,6 +56,7 @@ def admin_page():
 
 
 @app.route("/admin/crn")
+@let_to(['username'], ['password'])
 def admin_crn_page():
     locations = views.get_locations_for_crn()
     crns = views.get_lesson()
