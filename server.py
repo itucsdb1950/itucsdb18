@@ -237,8 +237,7 @@ def add_department():
 #
 #     return redirect(url_for('admin_department_page'))
 
-
-<<<<<<< HEAD
+'''
 @app.route("/update_crn/<string:crn_num>", methods=['GET', 'POST'])
 def update_crn(crn_num):
     if request.method == 'GET':
@@ -256,8 +255,7 @@ def update_crn(crn_num):
         views.update_crn(old_crn, crn, code, loc_sel, credits_sel)
         return redirect(url_for('admin_crn_page'))
 
-=======
->>>>>>> 0bb24d91075db5189c3476113837fdf6ab57f1be
+'''
 
 @app.route("/del_crn/<string:crn_num>", methods=['GET'])
 @allow_to()
