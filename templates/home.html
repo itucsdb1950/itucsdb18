@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <title>Klasse - Home</title>
-	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/login.css') }}">
-  </head>
-  <body>
+{% extends 'base.html' %}
+
+{% block TITLE %}HOME{% endblock %}
+
+{% block body %}
+
   <p>Welcome {{record[1]}}.</p>
   <p>ID: {{record[0]}}.</p>
   <p>Age: {{record[2]}}.</p>
-  </body>
-</html>
+
+
 

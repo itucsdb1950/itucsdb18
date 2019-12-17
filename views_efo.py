@@ -14,6 +14,8 @@ DSN = {'user': "postgres",
        'database': "scholar"}
 
 
+
+
 def check_user(username, password):
     statement = "SELECT * FROM PERSON WHERE username = '{}' AND password = '{}'".format(username, password)
 

@@ -1,7 +1,19 @@
+import functools
+
 from flask import Flask, render_template, request, redirect, url_for
 import views
 
+
 app = Flask(__name__)
+
+tabe = {'username': 'ali', 'password': 'veli'}
+
+
+
+@app.errorhandler(404)
+@app.route("/404_not_found")
+def not_found(e):
+    return render_template("error.html")
 
 
 @app.route("/")
@@ -9,13 +21,31 @@ def home_page():
     return render_template("login.html")
 
 
+def allow_to():
+    def decorator_let_to(view_func):
+        @functools.wraps(view_func)
+        def wrapper_view_func(*args, **kwargs):
+            # ------------------------------------------------------
+            user = views.check_user(tabe['username'], tabe['password'])
+            if user:
+                returned_value = view_func(*args, **kwargs)
+            else:
+                return redirect(url_for(forbidden_403.__name__))
+            # ------------------------------------------------------
+            return returned_value
+
+        return wrapper_view_func
+
+    return decorator_let_to
+
+
 @app.route("/login", methods=['POST'])
 def login():
-    username = request.form.get('usrn')
-    password = request.form.get('pw')
-    user = views.check_user(username, password)
+    tabe['username'] = request.form.get('usrn')
+    tabe['password'] = request.form.get('pw')
+    user = views.check_user(tabe['username'], tabe['password'])
     if user:
-        if user[0]=='000000001':
+        if user[0] == '000000001':
             return render_template("base.html", record=user)
         else:
             return render_template("base_student.html", stu_num=user[0])
@@ -27,12 +57,19 @@ def error_page():
     return render_template("error.html")
 
 
+@app.route("/403_forbidden")
+def forbidden_403():
+    return render_template("gandalf.html")
+
+
 @app.route("/admin")
+@allow_to()
 def admin_page():
     return render_template("base.html")
 
 
 @app.route("/admin/crn")
+@allow_to()
 def admin_crn_page():
     locations = views.get_locations_for_crn()
     crns = views.get_lesson()
@@ -41,6 +78,7 @@ def admin_crn_page():
 
 
 @app.route("/admin/location")
+@allow_to()
 def admin_location_page():
     locations = views.get_locations()
 
@@ -48,6 +86,7 @@ def admin_location_page():
 
 
 @app.route("/admin/persons")
+@allow_to()
 def admin_person_page():
     person = views.get_person()
     faculty = views.get_department()
@@ -56,6 +95,7 @@ def admin_person_page():
 
 
 @app.route("/admin/food")
+@allow_to()
 def admin_food_page():
     food = views.get_food()
 
@@ -63,6 +103,7 @@ def admin_food_page():
 
 
 @app.route("/admin/meal")
+@allow_to()
 def admin_meal_page():
     meals = views.get_meal()
     food = views.get_food()
@@ -72,6 +113,7 @@ def admin_meal_page():
 
 
 @app.route("/admin/grades")
+@allow_to()
 def admin_grades_page():
     grades = views.get_grades_admin()
     student = views.get_student_admin()
@@ -80,6 +122,7 @@ def admin_grades_page():
 
 
 @app.route("/admin/department")
+@allow_to()
 def admin_department_page():
     person = views.get_prof()
     department = views.get_department()
@@ -88,6 +131,7 @@ def admin_department_page():
 
 
 @app.route("/add_grades", methods=['POST'])
+@allow_to()
 def add_grades():
     crn = request.form.get('crn')
     stu_id = request.form.get('stu_id')
@@ -100,12 +144,14 @@ def add_grades():
 
 
 @app.route("/del_grades/<string:student_id>/<int:crn>/<string:taken_from>", methods=['GET'])
-def del_grades(student_id, crn,taken_from):
-    views.del_grades(student_id, crn,taken_from)
+@allow_to()
+def del_grades(student_id, crn, taken_from):
+    views.del_grades(student_id, crn, taken_from)
     return redirect(url_for('admin_grades_page'))
 
 
 @app.route("/add_crn", methods=['POST'])
+@allow_to()
 def add_crn():
     crn = request.form.get('crn')
     code = request.form.get('code')
@@ -116,7 +162,27 @@ def add_crn():
     return redirect(url_for('admin_crn_page'))
 
 
+@app.route("/update_crn/<string:crn_num>", methods=['GET', 'POST'])
+@allow_to()
+def update_crn(crn_num):
+    if request.method == 'GET':
+        locations = views.get_locations()
+        return render_template("admin_crn_update.html", crn_num=crn_num, locations=locations)
+    else:
+        old_crn = request.form.get('old_crn')
+        crn = request.form.get('crn')
+        code = request.form.get('code')
+        loc_sel = request.form.get('loc_sel')
+        credits_sel = request.form.get('credits_sel')
+
+        # klasse = views.get_class(crn)
+        # if klasse:
+        views.update_crn(old_crn, crn, code, loc_sel, credits_sel)
+        return redirect(url_for('admin_crn_page'))
+
+
 @app.route("/add_person", methods=['POST'])
+@allow_to()
 def add_person():
     per_name = request.form.get('per_name')
     per_num = request.form.get('per_num')
@@ -133,6 +199,7 @@ def add_person():
 
 
 @app.route("/add_location", methods=['POST'])
+@allow_to()
 def add_location():
     building = request.form.get('building')
     day = request.form.get('day_sel')
@@ -144,12 +211,14 @@ def add_location():
 
 
 @app.route("/del_location/<int:loc_id>", methods=['GET'])
+@allow_to()
 def del_location(loc_id):
     views.del_location(loc_id)
     return redirect(url_for('admin_location_page'))
 
 
 @app.route("/add_department", methods=['POST'])
+@allow_to()
 def add_department():
     dept = request.form.get('dept')
     dean = request.form.get('dean')
@@ -169,43 +238,30 @@ def add_department():
 #     return redirect(url_for('admin_department_page'))
 
 
-@app.route("/update_crn/<string:crn_num>", methods=['GET', 'POST'])
-def update_crn(crn_num):
-    if request.method == 'GET':
-        locations = views.get_locations()
-        return render_template("admin_crn_update.html", crn_num=crn_num, locations=locations)
-    else:
-        old_crn = request.form.get('old_crn')
-        crn = request.form.get('crn')
-        code = request.form.get('code')
-        loc_sel = request.form.get('loc_sel')
-        credits_sel = request.form.get('credits_sel')
-
-        # klasse = views.get_class(crn)
-        # if klasse:
-        views.update_crn(old_crn, crn, code, loc_sel, credits_sel)
-        return redirect(url_for('admin_crn_page'))
-
 
 @app.route("/del_crn/<string:crn_num>", methods=['GET'])
+@allow_to()
 def del_crn(crn_num):
     views.del_crn(crn_num)
     return redirect(url_for('admin_crn_page'))
 
 
 @app.route("/del_person/<string:per_num>", methods=['GET'])
+@allow_to()
 def del_person(per_num):
     views.del_person(per_num)
     return redirect(url_for('admin_person_page'))
 
 
 @app.route("/del_department/<string:id>", methods=['GET'])
+@allow_to()
 def del_department(id):
     views.del_department(id)
     return redirect(url_for('admin_department_page'))
 
 
 @app.route("/add_food", methods=['POST'])
+@allow_to()
 def add_food():
     dish_type = request.form.get('dish_type')
     food_name = request.form.get('food_name')
@@ -216,6 +272,7 @@ def add_food():
 
 
 @app.route("/del_food/<string:id>", methods=['GET'])
+@allow_to()
 def del_food(id):
     views.del_food(id)
     return redirect(url_for('admin_food_page'))
@@ -224,10 +281,10 @@ def del_food(id):
 @app.route("/student/<string:stu_num>")
 def student_page(stu_num):
     student = views.get_student(stu_num)
-    
+
     if not student:
         return "No Student Found"
-    
+
     # name, username, id, fac_name, gpa, comp_credits
     name = student[0]
     username = student[1]
@@ -273,8 +330,8 @@ def student_grades_page(stu_num):
     return render_template("student_grades.html", stu_num=stu_num, courses=courses)
 
 
-
 @app.route("/add_meal", methods=['POST'])
+@allow_to()
 def add_meal():
     day = request.form.get('day_sel')
     repast = request.form.get('repast')
@@ -289,35 +346,34 @@ def add_meal():
 
 
 @app.route("/del_meal/<string:dy>/<string:repast>", methods=['GET'])
-def del_meal(dy,repast):
-    views.del_meal(dy,repast)
+@allow_to()
+def del_meal(dy, repast):
+    views.del_meal(dy, repast)
     return redirect(url_for('admin_meal_page'))
 
 
 @app.route("/food_menu")
 def food_menus_page():
     foods = views.get_food_menus()
-    if not foods:
-        return "<h1>No Menu Found</h1>"
 
     # split foods list with respect to day.
     # note that SQL query in views.get_food_menus() is written in a way that returned table is ordered by day.
-    # therefore, only one iteration is sufficient
-    food_menus = [[[], []]]  # initialize list that will hold food menu which are split with respect to day
-    day = foods[0][0]  # initialize day with the day of the first food
+    # therefore, only one iteration is sufficent
+    food_menus = []  # initialize list that will hold food menu which are split with respect to day
+    day = foods[0].day  # initilize day with the day of the first food
     i = 0  # start day from 0
     for food in foods:  # iterate over the entire table
-        if food[0] == day:  # as long as day remains same, add rows with that day to food_menus[i]
+        if food.day == day:  # as long as day remains same, add rows with that day to food_menus[i]
             # TODO: map table so food elements have the order soup, main, side, extra
-            if food[1] == "lunch":
+            if food.repast == "lunch":
                 food_menus[i][0].append(food)  # food_menus[0] which corresponds to lunch
             else:  # dinner
                 food_menus[i][1].append(food)  # food_menus[1] which corresponds to dinner
         else:  # if another day is reached
-            day = food[0]  # update day to the new one
-            i += 1  # so that upcoming day's food menus are written to the next index of food_menus
+            day = food.day  # update day to the new one
+            i += 1  # so that upcoming course's grades are written to the next index of courses
 
-    return render_template("food_menu.html", menus=food_menus)
+    return render_template("student_grades.html", menus=food_menus)
 
 
 @app.route("/student/<string:stu_num>/enroll", methods=['GET', 'POST'])

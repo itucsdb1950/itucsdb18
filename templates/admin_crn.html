@@ -8,6 +8,10 @@
 
     <div class="container">
 
+        <br>
+    <h3 class="text-center">ADD CRN</h3>
+        <hr>
+
         <form method="post" action="{{ url_for('add_crn') }}">
             <div class="form-group row">
                 <label for="crn" class="col-sm-2 col-form-label">CRN:</label>
@@ -67,7 +71,7 @@
                     <td>{{ crn[5] }}</td>
                     <td>{{ crn[1] }}</td>
                     <td>{{ crn[3] }}</td>
-                    <td><a name="update_crn" id="update_crn" class="btn btn-primary update-button" href="{{ url_for('update_crn', crn_num=crn[0]) }}">Update</button>
+                    <td><a name="update_crn" id="update_crn" class="btn btn-primary update-button" href="{{ url_for('update_crn', crn_num=crn[0]) }}">Update</a>
                         <a name="del_crn" id="del_crn" class="btn btn-danger" href="{{ url_for('del_crn', crn_num=crn[0]) }}" role="button">Delete</a>
                     </td>
                 </tr>

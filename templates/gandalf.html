@@ -4,6 +4,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>You shall not pass!</title>
+        <link rel="shortcut icon" type="image/png" href="{{ url_for('static',filename='./styles/images/book-icon.png') }}"/>
+
 	<style>
 
 		@font-face {
@@ -18,8 +20,8 @@
 		}
 		body {
 			background: url("../static/styles/images/balrog.jpeg");
-            background-color: darkred;
-
+            background-color: #E2E5BC;
+            /*background-color:#1A193B;*/
             background-repeat: no-repeat;
             background-size: 60% 102%;
             background-attachment: fixed;
@@ -32,7 +34,7 @@
 		}
 		h1{
 			font-weight: normal;
-			font-size: 10em;
+			font-size: 8em;
 			margin: 0;
 			line-height: 1;
             color : red;
@@ -50,8 +52,9 @@
 			width: 150px;
 		}
 		p{
-            color : red;
+            color : #1A193B;
 			font-size: 3em;
+			font-weight: bold;
 			margin: 0;
 
 		}
@@ -61,7 +64,7 @@
 			top: 50%;
 			left: 50%;
 			margin-left: -200px;
-			margin-top: -400px;
+			margin-top: -450px;
 			text-align: center;
 
 		}
@@ -77,9 +80,11 @@
 <body>
 	<div>
 		<h1>403</h1>
-            <img src="../static/styles/images/gandalf.png" alt="Gandalf standing and holding his staff in one hand and a sword with another."/>
-
-		<p>You shall not pass!</p>
+            <a href="{{ url_for('home_page') }}">
+                <img src="../static/styles/images/gandalf.png" alt="Gandalf standing and holding his staff in one hand and a sword with another."/>
+            </a>
+		<p>YOU SHALL NOT PASS!</p>
+        <p>Click on ME to go to login page!</p>
 
 	</div>
 	<script>
