@@ -18,11 +18,11 @@ def initialize():
             with connection.cursor() as cursor:
                 print("Connected...", file=sys.stderr)
 
-                drop_statements = read_sql_from_file('drop.sql')
-                for statement in drop_statements:
-                    if len(statement) > 5:
-                        cursor.execute(statement)
-                print("Drop tables...", file=sys.stderr)
+                # drop_statements = read_sql_from_file('drop.sql')
+                # for statement in drop_statements:
+                #     if len(statement) > 5:
+                #         cursor.execute(statement)
+                # print("Drop tables...", file=sys.stderr)
 
                 create_statements = read_sql_from_file('data_base.sql')
                 for statement in create_statements:
