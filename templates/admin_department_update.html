@@ -11,9 +11,9 @@
     <h3 class="text-center">Update Department</h3>
         <hr>
 
-    <form method="post" action="{{ url_for('update_department', old_id=old_id) }}">
+    <form method="post" action="{{ url_for('update_department', dept_id=old_id) }}">
          <div class="form-group row" style="display: none">
-            <label for="old_crn" class="col-sm-2 col-form-label">Old Department ID:</label>
+            <label for="old_id" class="col-sm-2 col-form-label">Old Department ID:</label>
             <div class="col-sm-4">
                <input type="text" name="old_id" id="old_id" class="form-control" value="{{ old_id }}" required>
             </div>
@@ -31,7 +31,7 @@
                          {% for person in people %}
                              {% if person[0] in department[2] %}
                              {% else %}
-                                <option value="{{ persons[0] }}">{{ person[1] }} - {{ person[0] }}</option>
+                                <option value="{{ person[0] }}">{{ person[1] }} - {{ person[0] }}</option>
                              {% endif %}
                          {% endfor %}
                     </select>
