@@ -8,6 +8,8 @@ app = Flask(__name__)
 
 tabe = {'username': 'ali', 'password': 'veli'}
 
+userInf = []
+
 
 
 @app.errorhandler(404)
@@ -26,7 +28,7 @@ def allow_to():
         @functools.wraps(view_func)
         def wrapper_view_func(*args, **kwargs):
             # ------------------------------------------------------
-            user = views.check_user(tabe['username'], tabe['password'])
+            user = views.check_user(userInf[0], userInf[1])
             if user:
                 returned_value = view_func(*args, **kwargs)
             else:
@@ -41,9 +43,11 @@ def allow_to():
 
 @app.route("/login", methods=['POST'])
 def login():
-    tabe['username'] = request.form.get('usrn')
-    tabe['password'] = request.form.get('pw')
-    user = views.check_user(tabe['username'], tabe['password'])
+    userInf.clear()
+    userInf.append(request.form.get('usrn'))
+    userInf.append(request.form.get('pw'))
+    print(userInf[0], userInf[1])
+    user = views.check_user(userInf[0], userInf[1])
     if user:
         if user[0] == '000000001':
             return render_template("base.html", record=user)
