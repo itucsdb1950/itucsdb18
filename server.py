@@ -381,19 +381,19 @@ def food_menus_page():
     # split foods list with respect to day.
     # note that SQL query in views.get_food_menus() is written in a way that returned table is ordered by day.
     # therefore, only one iteration is sufficient
-    food_menus = [[[], []]]  # initialize list that will hold food menu which are split with respect to day
-    day = foods[0][0]  # initialize day with the day of the first food
-    i = 0  # start day from 0
-    for food in foods:  # iterate over the entire table
-        if food[0] == day:  # as long as day remains same, add rows with that day to food_menus[i]
-            # TODO: map table so food elements have the order soup, main, side, extra
-            if food[1] == "lunch":
-                food_menus[i][0].append(food)  # food_menus[0] which corresponds to lunch
-            else:  # dinner
-                food_menus[i][1].append(food)  # food_menus[1] which corresponds to dinner
-        else:  # if another day is reached
-            day = food[0]  # update day to the new one
-            i += 1  # so that upcoming day's food menus are written to the next index of food_menus
+    # food_menus = [[[], []]]  # initialize list that will hold food menu which are split with respect to day
+    # day = foods[0][0]  # initialize day with the day of the first food
+    # i = 0  # start day from 0
+    # for food in foods:  # iterate over the entire table
+    #     if food[0] == day:  # as long as day remains same, add rows with that day to food_menus[i]
+    #         # TODO: map table so food elements have the order soup, main, side, extra
+    #         if food[1] == "lunch":
+    #             food_menus[i][0].append(food)  # food_menus[0] which corresponds to lunch
+    #         else:  # dinner
+    #             food_menus[i][1].append(food)  # food_menus[1] which corresponds to dinner
+    #     else:  # if another day is reached
+    #         day = food[0]  # update day to the new one
+    #         i += 1  # so that upcoming day's food menus are written to the next index of food_menus
 
     return render_template("food_menu.html", menus=food_menus)
 
