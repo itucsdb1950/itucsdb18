@@ -67,3 +67,36 @@
 #
 #     views.add_crn(crn, stu_num)
 #     return redirect(url_for("student_enrollment_page"))
+<<<<<<< HEAD
+
+@app.route("/update_department/<int:dept_id>", methods=['POST'])
+@allow_to()
+def update_department(dept_id):
+    if request.method == 'GET':
+        people = views.get_person()
+        return render_template("admin_department_update.html", dept_id=dept_id, people=people)
+    else:
+        old_id = request.form.get('old_id')
+        dept = request.form.get('dept')
+        dean = request.form.get('dean')
+        delege = request.form.get('delege')
+        views.update_department(old_id, dept_id, dean, delege)
+        return redirect(url_for('admin_department_page'))
+
+
+@app.route("/update_location/<int:loc_id>", methods=['GET', 'POST'])
+@allow_to()
+def update_department(loc_id):
+    if request.method == 'GET':
+        # ~people = views.get_person()
+        return render_template("admin_location_update.html", dept_id=dept_id)
+    else:
+        old_id = request.form.get('old_id')
+        building = request.form.get('building')
+        day = request.form.get('day-sel')
+        classroom = request.form.get('classroom')
+        capacity = request.form.get('capacity')
+        views.update_department(old_id, building, day, classroom, capacity)
+        return redirect(url_for('admin_department_page'))
+=======
+>>>>>>> df5f91c5437d948ba4ada4dcb267140e98882aac

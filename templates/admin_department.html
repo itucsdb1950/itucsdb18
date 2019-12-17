@@ -61,7 +61,7 @@
                         <td>{{ dept[2] }}</td>
                         <td>{{ dept[3] }}</td>
 
-            <td><a name="update_department" id="update_department" class="btn btn-primary update-button" href="{{ url_for('update_department', dept_id=department[0][0]) }}" role="button">Update</button>
+            <td><a name="update_department" id="update_department" class="btn btn-primary update-button" href="{{ url_for('update_department', id=department[0][0]) }}" role="button">Update</button>
                 <a name="del_department" id="del_department" class="btn btn-danger" href="{{ url_for('del_department', id=department[0][0]) }}" role="button">Delete</a>
             </td>
         </tr>

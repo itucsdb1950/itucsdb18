@@ -111,7 +111,7 @@ def update_crn(old_crn, crn, code, loc_sel, credits_sel):
 def update_location(old_id, building, day, classroom, capacity):
     statement = """
                 UPDATE location
-                    SET classroom='{}',building='{}',dy='{}',capacity='{}'
+                    SET classroom='{}',building='{}',dy='{}',capacity='{}a
                     WHERE (id='{}')
                     """.format(classroom, building, day, capacity, old_id)
 
