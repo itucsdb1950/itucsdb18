@@ -6,7 +6,7 @@ import views
 
 app = Flask(__name__)
 
-tabe = {'username': 'ali', 'password': 'veli'}
+tabe = {'username': 'a', 'password': 'b'}
 
 
 
@@ -26,7 +26,8 @@ def allow_to():
         @functools.wraps(view_func)
         def wrapper_view_func(*args, **kwargs):
             # ------------------------------------------------------
-            user = views.check_user(tabe['username'], tabe['password'])
+            user = views.check_user(tabe['username'] , tabe['password'])
+            #print(userInf[0], userInf[1])
             if user:
                 returned_value = view_func(*args, **kwargs)
             else:
@@ -43,6 +44,7 @@ def allow_to():
 def login():
     tabe['username'] = request.form.get('usrn')
     tabe['password'] = request.form.get('pw')
+    #print(userInf[0], userInf[1])
     user = views.check_user(tabe['username'], tabe['password'])
     if user:
         if user[0] == '000000001':
@@ -376,24 +378,7 @@ def food_menus_page():
     if not foods:
         return "<h1>No Menu Found</h1>"
 
-    # split foods list with respect to day.
-    # note that SQL query in views.get_food_menus() is written in a way that returned table is ordered by day.
-    # therefore, only one iteration is sufficient
-    food_menus = [[[], []]]  # initialize list that will hold food menu which are split with respect to day
-    day = foods[0][0]  # initialize day with the day of the first food
-    i = 0  # start day from 0
-    for food in foods:  # iterate over the entire table
-        if food[0] == day:  # as long as day remains same, add rows with that day to food_menus[i]
-            # TODO: map table so food elements have the order soup, main, side, extra
-            if food[1] == "lunch":
-                food_menus[i][0].append(food)  # food_menus[0] which corresponds to lunch
-            else:  # dinner
-                food_menus[i][1].append(food)  # food_menus[1] which corresponds to dinner
-        else:  # if another day is reached
-            day = food[0]  # update day to the new one
-            i += 1  # so that upcoming day's food menus are written to the next index of food_menus
-
-    return render_template("food_menu.html", menus=food_menus)
+    return render_template("food_menu.html", menus=foods)
 
 
 @app.route("/student/<string:stu_num>/enroll", methods=['GET', 'POST'])
