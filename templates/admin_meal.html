@@ -59,10 +59,11 @@
                 </select>
             </div>
         </div>
-        <div>
 
+        <div class="form-group row">
+            <label for="side" class="col-sm-2 col-form-label">Side:</label>
             <div class="col-sm-4">
-                <label for="side" class="col-sm-2 col-form-label">Side:</label>
+
                 <select class="form-control" name="side" id="side" required>
                      {% for meal in food %}
                          {% if meal[1] == 'side' %}
@@ -72,8 +73,8 @@
                 </select>
             </div>
 
+            <label for="extras" class="col-sm-2 col-form-label">Extras:</label>
             <div class="col-sm-4">
-                <label for="extras" class="col-sm-2 col-form-label">Extras:</label>
                 <select class="form-control" name="extras" id="extras" required>
                      {% for meal in food %}
                          {% if meal[1] == 'extra' %}
@@ -83,9 +84,9 @@
                 </select>
 
             </div>
-                <button type="submit" class="btn btn-primary">Add Menu</button>
-
         </div>
+        <button type="submit" class="btn btn-primary">Add Menu</button>
+
 
     </form>
 
@@ -115,19 +116,13 @@
             <td>{{ meal[4] }}</td>
             <td>{{ meal[5] }}</td>
             <td><a name="update_meal" id="update_meal" class="btn btn-success" href="#" role="button">Update</a>
-                <a name="del_meal" id="del_meal" class="btn btn-danger" href="{{ url_for('del_menu', dy=meal[0], mial=meal[1]) }}" role="button">Delete</a>
+                <a name="del_meal" id="del_meal" class="btn btn-danger" href="{{ url_for('del_meal', dy=meal[0], repast=meal[1]) }}" role="button">Delete</a>
             </td>
-        <   /tr>
+        </tr>
         {% endfor %}
 
         </tbody>
     </table>
     </div>
-
-
-
-
-
-
 
 {% endblock %}

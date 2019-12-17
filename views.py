@@ -14,6 +14,7 @@ DSN = {'user': "postgres",
 def check_user(username, password):
     statement = "SELECT * FROM PERSON WHERE username = '{}' AND password = '{}'".format(username, password)
 
+
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
             cursor.execute(statement)
@@ -95,6 +96,61 @@ def add_crn(crn, code, loc_sel, credits_sel):
             cursor.execute(statement)
 
 
+def update_crn(crn, modal_crn, modal_code, modal_loc_sel, modal_credits_sel):
+    statement = """UPDATE class
+                    SET crn='{}', course_code='{}',loc_id='{}',credit='{}'
+                    WHERE crn='{}'
+                    """.format(modal_crn, modal_code, modal_loc_sel, modal_credits_sel, crn)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+
+def update_location(building, day, classroom, capacity, modal_building, modal_day, modal_classroom, modal_capacity):
+    statement = """UPDATE location
+                    SET classroom='{}',building='{}',dy='{}',capacity'{}'
+                    WHERE classroom='{}'and building='{}' and dy='{}' and capacity'{}'
+                    """.format(modal_classroom, modal_building, modal_day, modal_capacity, classroom, building, day, capacity)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+
+def update_grades(crn, stu_id, taken_from, m_crn, m_stu_id,m_taken_from, m_percentage, m_grade):
+    statement = """UPDATE grades
+                    SET student_id='{}',crn='{}',taken_from='{}',percentage'{}', grade'{}'
+                    WHERE student_id='{}' and crn='{}' and taken_from='{}'
+                    """.format(m_stu_id, m_crn, m_taken_from, m_percentage, m_grade, stu_id, crn, taken_from)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+
+def update_department(dept, dean, delege, m_dept, m_dean, m_delege):
+    statement = """UPDATE faculty
+                    SET fac_name='{}',dean_id='{}',stu_delegate='{}'
+                    WHERE fac_name='{}' and dean_id='{}' and stu_delegate='{}'
+                    """.format(m_dept, m_dean, m_delege, dept, dean, delege)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+
+def update_meal(day, repast, soup, main, side, extras, m_day, m_repast, m_soup, m_main, m_side, m_extras):
+    statement = """UPDATE menu
+                    SET dy='{}',repast='{}',soup='{}', main='{}',dise='{}',extras='{}'
+                    WHERE dy='{}' and repast='{}' and soup='{}' and main='{}' and dise='{}' and extras='{}'
+                    """.format(m_day, m_repast, m_soup, m_main, m_side, m_extras, day, repast, soup, main, side, extras)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+
 def del_crn(id):
     statement = "DELETE FROM class WHERE crn = '{}'".format(id)
 
@@ -115,6 +171,16 @@ def get_lesson(limit=500):
 
 def get_person(limit=500):
     statement = "SELECT * FROM person LEFT JOIN student ON person.id = student.id WHERE person.name <> 'ADMINISTRATOR'"
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            records = cursor.fetchall()
+            return records
+
+
+def get_prof(limit=500):
+    statement = "SELECT * FROM person WHERE (person.id <> ALL (SELECT person.id FROM person ,student WHERE person.id = student.id) and person.name <> 'ADMINISTRATOR')"
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -220,6 +286,15 @@ def add_department(dept, dean, delege):
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
             cursor.execute(statement)
+#
+#
+# def update_department(dept, dean, delege):
+#     statement = "INSERT INTO FACULTY(fac_name, dean_id, stu_delegate) VALUES('{}', '{}', '{}')".format(dept, dean, delege)
+#
+#     with dbapi2.connect(db_url) as connection:
+#         with connection.cursor() as cursor:
+#             cursor.execute(statement)
+
 
 
 def check_department(dept):
@@ -333,7 +408,7 @@ def get_student(stu_num):
 def get_courses(stu_num):
     statement = """
                 SELECT class.crn AS crn, class.course_code AS course_code, location.dy AS dy,
-                       location.building AS building, location.classroom AS classroom, credits
+                       location.building AS building, location.classroom AS classroom, class.credit
                     FROM student, enrollment, class, location
                     WHERE ( (student.id = enrollment.student_id)
                         AND (enrollment.crn = class.crn)

@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block TITLE %}ADMIN CRN{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="container">
+
+    <form method="post" action="{{ url_for('add_crn') }}">
+        <div class="form-group row">
+            <label for="crn" class="col-sm-2 col-form-label">CRN:</label>
+            <div class="col-sm-4">
+               <input type="text" name="crn" id="crn" class="form-control" placeholder="12345" required>
+            </div>
+
+
+            <label for="code" class="col-sm-2 col-form-label">Course Code:</label>
+            <div class="col-sm-4">
+                <input type="text" name="code" id="code" class="form-control" placeholder="BLG" required>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="loc" class="col-sm-2 col-form-label">Location:</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="loc_sel" id="loc_sel" required>
+                     {% for location in locations %}
+                         {% if location[0] in crns[2] %}
+                         {% else %}
+                            <option value="{{ location[0] }}">{{ location[1] }} - {{ location[2] }} - {{ location[3] }}</option>
+                         {% endif %}
+                     {% endfor %}
+                </select>
+            </div>
+
+
+            <label for="credits_sel" class="col-sm-2 col-form-label">Credits:</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="credits_sel" id="credits_sel" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Add CRN</button>
+    </form>
+
+
+
+
+        <table class="table table-hover table-inverse">
+        <thead class="thead-inverse">
+        <tr>
+            <th>CRN</th>
+            <th>BUILDING</th>
+            <th>COURSE CODE</th>
+            <th>CREDIT</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for crn in crns %}
+        <tr>
+            <td scope="row">{{ crn[0] }}</td>
+            <td>{{ crn[5] }}</td>
+            <td>{{ crn[1] }}</td>
+            <td>{{ crn[3] }}</td>
+            <td><button type="button" class="btn btn-primary update-button" data-toggle="modal" data-target="#exampleModalCenter">Update</button>
+                <a name="del_crn" id="del_crn" class="btn btn-danger" href="{{ url_for('del_crn', crn_num=crn[0]) }}" role="button">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Update</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true"></span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form method="post" action="{{ url_for('update_crn') }}">
+                        <div class="form-group row">
+                            <label for="crn" class="col-sm-2 col-form-label">CRN:</label>
+                            <div class="col-sm-4">
+                               <input type="text" name="modal_crn" id="modal_crn" class="form-control" placeholder="12345" required>
+                            </div>
+
+
+                            <label for="code" class="col-sm-2 col-form-label">Course Code:</label>
+                            <div class="col-sm-4">
+                                <input type="text" name="modal_code" id="modal_code" class="form-control" placeholder="BLG" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="loc" class="col-sm-2 col-form-label">Location:</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" name="model_loc_sel" id="model_loc_sel" required>
+                                     {% for location in locations %}
+                                         {% if location[0] in crns[2] %}
+                                         {% else %}
+                                            <option value="{{ location[0] }}">{{ location[1] }} - {{ location[2] }} - {{ location[3] }}</option>
+                                         {% endif %}
+                                     {% endfor %}
+                                </select>
+                            </div>
+
+
+                            <label for="credits_sel" class="col-sm-2 col-form-label">Credits:</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" name="modal_credits_sel" id="modal_credits_sel" required>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+
+                                </select>
+                            </div>
+                        </div>
+{#                        <button type="submit" class="btn btn-primary">Add CRN</button>#}
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </tbody>
+    </table>
+    </div>
+
+
+
+{% endblock %}
