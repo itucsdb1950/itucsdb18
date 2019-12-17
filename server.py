@@ -116,6 +116,19 @@ def add_crn():
     return redirect(url_for('admin_crn_page'))
 
 
+@app.route("/update_crn", methods=['GET', 'POST'])
+def update_crn(crn):
+    if request.method == "GET":
+        
+    crn = request.form.get('crn')
+    code = request.form.get('code')
+    loc_sel = request.form.get('loc_sel')
+    credits_sel = request.form.get('credits_sel')
+    if views.check_crn(crn, code, loc_sel):
+        views.add_crn(crn, code, loc_sel, credits_sel)
+    return redirect(url_for('admin_crn_page'))
+
+
 @app.route("/add_person", methods=['POST'])
 def add_person():
     per_name = request.form.get('per_name')
