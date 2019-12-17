@@ -1,27 +1,7 @@
-import functools
-
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for
 import views
-from functools import wraps
+
 app = Flask(__name__)
-
-
-def let_to(username, password):
-    def decorator_let_to(view_func):
-        @functools.wraps(view_func)
-        def wrapper_view_func(*args, **kwargs):
-            # ------------------------------------------------------
-            user = views.check_user(username, password)
-            if user:
-               returned_value = view_func(*args, **kwargs)
-            else:
-                return redirect(url_for(forbidden_403.__name__))
-            # ------------------------------------------------------
-            return returned_value
-
-        return wrapper_view_func
-
-    return decorator_let_to
 
 
 @app.route("/")
@@ -29,23 +9,20 @@ def home_page():
     return render_template("login.html")
 
 
-@app.route("/login")
+@app.route("/login", methods=['POST'])
 def login():
-    session['username'] = request.form.get('usrn')
-    session['password'] = request.form.get('pw')
-    user = views.check_user(session['username'], session['password'])
+    username = request.form.get('usrn')
+    password = request.form.get('pw')
+    user = views.check_user(username, password)
     if user:
-        return render_template("base.html", record=user)
+        if user[0] == '000000001':
+            return render_template("base.html", record=user)
+        else:
+            return render_template("base_student.html", stu_num=user[0])
     return "Your username and password is wrong"
 
 
-@app.route("/403_forbidden")
-def forbidden_403():
-    return render_template("gandalf.html")
-
-
 @app.route("/error")
-@let_to(['username'], ['password'])
 def error_page():
     return render_template("error.html")
 
@@ -56,7 +33,6 @@ def admin_page():
 
 
 @app.route("/admin/crn")
-@let_to(['username'], ['password'])
 def admin_crn_page():
     locations = views.get_locations_for_crn()
     crns = views.get_lesson()
@@ -105,7 +81,7 @@ def admin_grades_page():
 
 @app.route("/admin/department")
 def admin_department_page():
-    person = views.get_person()
+    person = views.get_prof()
     department = views.get_department()
     info = views.get_dept_info()
     return render_template("admin_department.html", person=person, department=department, info=info)
@@ -124,13 +100,26 @@ def add_grades():
 
 
 @app.route("/del_grades/<string:student_id>/<int:crn>/<string:taken_from>", methods=['GET'])
-def del_grades(student_id, crn,taken_from):
-    views.del_grades(student_id, crn,taken_from)
+def del_grades(student_id, crn, taken_from):
+    views.del_grades(student_id, crn, taken_from)
     return redirect(url_for('admin_grades_page'))
 
 
 @app.route("/add_crn", methods=['POST'])
 def add_crn():
+    crn = request.form.get('crn')
+    code = request.form.get('code')
+    loc_sel = request.form.get('loc_sel')
+    credits_sel = request.form.get('credits_sel')
+    if views.check_crn(crn, code, loc_sel):
+        views.add_crn(crn, code, loc_sel, credits_sel)
+    return redirect(url_for('admin_crn_page'))
+
+
+@app.route("/update_crn", methods=['GET', 'POST'])
+def update_crn(crn):
+    if request.method == "GET":
+
     crn = request.form.get('crn')
     code = request.form.get('code')
     loc_sel = request.form.get('loc_sel')
@@ -183,11 +172,35 @@ def add_department():
     return redirect(url_for('admin_department_page'))
 
 
+# @app.route("/update_department", methods=['POST'])
+# def update_department():
+#     dept = request.form.get('dept')
+#     dean = request.form.get('dean')
+#     delege = request.form.get('delege')
+#     # views.update_department(dept, dean, delege)
+#
+#     return redirect(url_for('admin_department_page'))
+
+
+@app.route("/update_crn", methods=['POST'])
+def update_crn():
+    crn = request.form.get('crn')
+    code = request.form.get('code')
+    loc_sel = request.form.get('loc_sel')
+    credits_sel = request.form.get('credits_sel')
+    modal_crn = request.form.get('modal_crn')
+    modal_code = request.form.get('modal_code')
+    modal_loc_sel = request.form.get('modal_loc_sel')
+    modal_credits_sel = request.form.get('modal_credits_sel')
+    if views.check_crn(modal_crn, modal_code, modal_loc_sel):
+        views.update_crn(crn, code, loc_sel, credits_sel, modal_crn, modal_code, modal_loc_sel, modal_credits_sel)
+    return redirect(url_for('admin_crn_page'))
+
+
 @app.route("/del_crn/<string:crn_num>", methods=['GET'])
 def del_crn(crn_num):
     views.del_crn(crn_num)
     return redirect(url_for('admin_crn_page'))
-
 
 
 @app.route("/del_person/<string:per_num>", methods=['GET'])
@@ -221,10 +234,10 @@ def del_food(id):
 @app.route("/student/<string:stu_num>")
 def student_page(stu_num):
     student = views.get_student(stu_num)
-    
+
     if not student:
         return "No Student Found"
-    
+
     # name, username, id, fac_name, gpa, comp_credits
     name = student[0]
     username = student[1]
@@ -270,7 +283,6 @@ def student_grades_page(stu_num):
     return render_template("student_grades.html", stu_num=stu_num, courses=courses)
 
 
-
 @app.route("/add_meal", methods=['POST'])
 def add_meal():
     day = request.form.get('day_sel')
@@ -285,9 +297,9 @@ def add_meal():
     return redirect(url_for('admin_meal_page'))
 
 
-@app.route("/del_meal/<string:dy>/<string:mial>", methods=['GET'])
-def del_meal(dy,mial):
-    views.del_meal(dy,mial)
+@app.route("/del_meal/<string:dy>/<string:repast>", methods=['GET'])
+def del_meal(dy, repast):
+    views.del_meal(dy, repast)
     return redirect(url_for('admin_meal_page'))
 
 
