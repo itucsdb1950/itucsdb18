@@ -26,7 +26,7 @@ def allow_to():
         @functools.wraps(view_func)
         def wrapper_view_func(*args, **kwargs):
             # ------------------------------------------------------
-            user = views.check_user(tabe['username'] , tabe['username'])
+            user = views.check_user(tabe['username'] , tabe['password'])
             #print(userInf[0], userInf[1])
             if user:
                 returned_value = view_func(*args, **kwargs)
