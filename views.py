@@ -96,11 +96,12 @@ def add_crn(crn, code, loc_sel, credits_sel):
             cursor.execute(statement)
 
 
-def update_crn(crn, modal_crn, modal_code, modal_loc_sel, modal_credits_sel):
-    statement = """UPDATE class
+def update_crn(old_crn, crn, code, loc_sel, credits_sel):
+    statement = """
+                UPDATE class
                     SET crn='{}', course_code='{}',loc_id='{}',credit='{}'
-                    WHERE crn='{}'
-                    """.format(modal_crn, modal_code, modal_loc_sel, modal_credits_sel, crn)
+                    WHERE (crn='{}')
+                """.format(crn, code, loc_sel, credits_sel, old_crn)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -486,7 +487,7 @@ def get_meal(limit=100):
 def get_food_menus():
     statement = """
                 SELECT menu.dy AS day, menu.repast AS repast,
-                       foods.name AS name, foods.calorie AS calories, foods.food_type
+                       foods.food_name AS name, foods.calorie AS calories, foods.food_type
                     FROM menu, foods
                     WHERE ( (menu.soup = foods.id)
                         OR (menu.main = foods.id)
