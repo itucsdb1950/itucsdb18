@@ -130,11 +130,12 @@ def update_grades(crn, stu_id, taken_from, m_crn, m_stu_id,m_taken_from, m_perce
             cursor.execute(statement)
 
 
-def update_department(dept, dean, delege, m_dept, m_dean, m_delege):
-    statement = """UPDATE faculty
+def update_department(old_id, dept_id, dean, delege):
+    statement = """
+                UPDATE faculty
                     SET fac_name='{}',dean_id='{}',stu_delegate='{}'
-                    WHERE fac_name='{}' and dean_id='{}' and stu_delegate='{}'
-                    """.format(m_dept, m_dean, m_delege, dept, dean, delege)
+                    WHERE (id='{}')
+                """.format(dept_id, dean, delege, old_id)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
@@ -287,15 +288,6 @@ def add_department(dept, dean, delege):
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
             cursor.execute(statement)
-#
-#
-# def update_department(dept, dean, delege):
-#     statement = "INSERT INTO FACULTY(fac_name, dean_id, stu_delegate) VALUES('{}', '{}', '{}')".format(dept, dean, delege)
-#
-#     with dbapi2.connect(db_url) as connection:
-#         with connection.cursor() as cursor:
-#             cursor.execute(statement)
-
 
 
 def check_department(dept):
