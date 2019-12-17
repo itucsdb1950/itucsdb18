@@ -109,9 +109,10 @@ def admin_food_page():
 def admin_meal_page():
     meals = views.get_meal()
     food = views.get_food()
+    menu = views.get_food_menus()
     # concat = views.get_concat()
 
-    return render_template("admin_meal.html", meals=meals, food=food)
+    return render_template("admin_meal.html", meals=meals, food=food, menus=menu)
 
 
 @app.route("/admin/grades")

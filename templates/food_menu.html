@@ -17,7 +17,7 @@
 	<tbody>
 		{% for menu in menus %}
 		<tr>
-        {% if loop.index == 1 %}
+        {% if loop.index%8 == 1 %}
 			<td valign="middle" scope="row" rowspan="8">{{ menu[0] }}</td>
         {% endif %}
         {% if loop.index%4 ==1 %}

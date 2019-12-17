@@ -107,19 +107,20 @@
         </thead>
         <tbody>
         
-        {% for meal in meals %}
-        <tr>
-            <td scope="row">{{ meal[0] }}</td>
-            <td>{{ meal[1] }}</td>
-            <td>{{ meal[2] }}</td>
-            <td>{{ meal[3] }}</td>
-            <td>{{ meal[4] }}</td>
-            <td>{{ meal[5] }}</td>
-            <td><a name="update_meal" id="update_meal" class="btn btn-success" href="#" role="button">Update</a>
-                <a name="del_meal" id="del_meal" class="btn btn-danger" href="{{ url_for('del_meal', dy=meal[0], repast=meal[1]) }}" role="button">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
+        {% for menu in menus %}
+		<tr>
+        {% if loop.index%8 == 1 %}
+			<td valign="middle" scope="row" rowspan="8">{{ menu[0] }}</td>
+        {% endif %}
+        {% if loop.index%4 ==1 %}
+            <td valign="middle" scope="row" rowspan="4">{{ menu[1] }}</td>
+        {% endif %}
+			<td>{{ menu[4] }} </td>
+			<td>{{ menu[2] }} </td>
+			<td>{{ menu[3] }} </td>
+			<td>{{ menu[5] }} </td>
+		</tr>
+		{% endfor %}
 
         </tbody>
     </table>
