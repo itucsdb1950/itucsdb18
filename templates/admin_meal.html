@@ -98,10 +98,12 @@
         <tr>
             <th>Day</th>
             <th>Repast</th>
-            <th>Soup</th>
-            <th>Main</th>
-            <th>Side</th>
-            <th>Extras</th>
+                        <th>Delete</th>
+
+            <th>Type</th>
+                        <th>Name</th>
+             <th>Calories</th>
+
 
         </tr>
         </thead>
@@ -114,12 +116,19 @@
         {% endif %}
         {% if loop.index%4 ==1 %}
             <td valign="middle" scope="row" rowspan="4">{{ menu[1] }}</td>
+
+        {% endif %}
+         {% if loop.index%4 ==1 %}
+ <td valign="middle" scope="row" rowspan="4"><a name="del_meal" id="del_meal" class="btn btn-danger" href="{{ url_for('del_meal', dy=menu[0], repast=menu[1]) }}" role="button">Delete</a>
+</td>
         {% endif %}
 			<td>{{ menu[4] }} </td>
 			<td>{{ menu[2] }} </td>
 			<td>{{ menu[3] }} </td>
 			<td>{{ menu[5] }} </td>
+
 		</tr>
+
 		{% endfor %}
 
         </tbody>

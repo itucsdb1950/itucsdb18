@@ -461,7 +461,7 @@ def add_meal(day, repast, soup, main, side, extras):
             cursor.execute(statement)
 
 def del_meal(day, repast):
-    statement = "DELETE FROM MENU WHERE dy = '{}', repast = '{}'".format(day, repast)
+    statement = "DELETE FROM MENU WHERE ((dy = '{}') and( repast = '{}'))".format(day, repast)
 
     with dbapi2.connect(db_url) as connection:
         with connection.cursor() as cursor:
