@@ -19,14 +19,14 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'ITUCSDB18NN'
-copyright = '2018, ITUCSDB18NN'
-author = 'ITUCSDB18NN'
+project = 'ITUCSDB1950'
+copyright = '2019, ITUCSDB1950 - KLASSE Inc.'
+author = 'ITUCSDB1950'
 
 # The short X.Y version
-version = ''
+version = '1.0'
 # The full version, including alpha/beta/rc tags
-release = ''
+release = '1.0.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -102,7 +102,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'ITUCSDB18NNdoc'
+htmlhelp_basename = 'ITUCSDB1950doc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -129,8 +129,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'ITUCSDB18NN.tex', 'ITUCSDB18NN Documentation',
-     'ITUCSDB18NN', 'manual'),
+    (master_doc, 'ITUCSDB1950.tex', 'ITUCSDB1950 Documentation',
+     'ITUCSDB1950', 'manual'),
 ]
 
 
@@ -139,7 +139,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'itucsdb18nn', 'ITUCSDB18NN Documentation',
+    (master_doc, 'itucsdb1950', 'ITUCSDB1950 Documentation',
      [author], 1)
 ]
 
@@ -150,8 +150,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'ITUCSDB18NN', 'ITUCSDB18NN Documentation',
-     author, 'ITUCSDB18NN', 'One line description of project.',
+    (master_doc, 'ITUCSDB1950', 'ITUCSDB1950 Documentation',
+     author, 'ITUCSDB1950', 'This is a Ninova, but just better',
      'Miscellaneous'),
 ]
 
