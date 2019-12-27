@@ -66,3 +66,25 @@ LOCATION
   :scale: 100 %
   :align: center
   :alt: map to buried treasure
+
+
+ADMIN LOGIN
+^^^^^^^^^^^
+
+With this function users who is not login as a correct username and password are not able to enter the pages requiring permission.
+All these page functions in 'server.py' has starts with that @allow_to functool. If the user enter the wrong username or password this function direct them to 'forbidden_page' page.
+
+.. code-block::
+
+  def allow_to():
+      def decorator_let_to(view_func):
+          @functools.wraps(view_func)
+          def wrapper_view_func(*args, **kwargs):
+              user = views.check_user(tabe['username'] , tabe['password'])
+              if user:
+                  returned_value = view_func(*args, **kwargs)
+              else:
+                  return redirect(url_for(forbidden_403.__name__))
+          return returned_value
+      return wrapper_view_func
+  return decorator_let_to

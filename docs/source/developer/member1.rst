@@ -69,4 +69,42 @@ MENU
   :align: center
   :alt: map to buried treasure
 
+Python
+^^^^^^
 
+**Get Food Menus**
+
+.. code-block::
+
+    def get_food_menus():
+    statement = """
+                SELECT menu.dy AS day, menu.repast AS repast,
+                       foods.food_name AS name, foods.calorie AS calories, foods.food_type
+                    FROM menu, foods
+                    WHERE ( (menu.soup = foods.id)
+                        OR (menu.main = foods.id)
+                        OR (menu.side = foods.id)
+                        OR (menu.extras = foods.id) )
+                    ORDER BY menu.dy, menu.repast
+                """
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+            records = cursor.fetchall()
+            return records
+
+* This function shows the food menus both in admin and students food_menu pages.
+
+**Delete Menus**
+
+.. code-block::
+
+    def del_meal(day, repast):
+    statement = "DELETE FROM MENU WHERE ((dy = '{}') and( repast = '{}'))".format(day, repast)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+* With this function admin user are able to delete food menus from DB.

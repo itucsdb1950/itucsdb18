@@ -69,3 +69,56 @@ ENROLLMENT
   :scale: 100 %
   :align: center
   :alt: map to buried treasure
+
+Python
+^^^^^^
+
+**Add Enrollment**
+
+.. code-block::
+
+    def add_enrollment(crn, stu_num):
+        statement = """
+                INSERT INTO enrollment
+                    (crn, student_id)
+                    VALUES ('{}', '{}')
+                """.format(crn, stu_num)
+
+    with dbapi2.connect(db_url) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(statement)
+
+* This function allow the students enroll a class which exist in DB.
+
+**Get Enrollment**
+
+.. code-block::
+
+    def get_enrolled(crn):
+        statement = """
+                    SELECT COUNT(student.id) FROM class, student, enrollment
+                        WHERE ( (class.crn = enrollment.crn)
+                            AND (student.id = enrollment.student_id)
+                            AND (class.crn = '{}') )
+                    """.format(crn)
+
+        with dbapi2.connect(db_url) as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(statement)
+                record = cursor.fetchone()
+                return record
+
+* This function let the students see enrolled classes.
+
+**Update Location**
+
+.. code-block::
+
+    def update_location(old_id, building, day, classroom, capacity):
+    statement = """
+                UPDATE location
+                    SET classroom='{}',building='{}',dy='{}',capacity='{}a
+                    WHERE (id='{}')
+                    """.format(classroom, building, day, capacity, old_id)
+
+* With this function admin user can update the location tuples in DB.
