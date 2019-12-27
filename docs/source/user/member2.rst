@@ -29,7 +29,7 @@ Courses for Students
   :scale: 50 %
   :alt: map to buried treasure
 
-  http://itucsdb1950.herokuapp.com/student/'student_number'/courses
+  http://itucsdb1950.herokuapp.com/student/150160000/courses
 
 * Students can see the enrolled courses from this page.
 
@@ -40,7 +40,7 @@ Attendance for Students
   :scale: 50 %
   :alt: map to buried treasure
 
-  http://itucsdb1950.herokuapp.com/student/'student_number'/attendance
+  http://itucsdb1950.herokuapp.com/student/150160000/attendance
 
 * Students can see the attendance information of each course from this page.
 
@@ -51,7 +51,7 @@ Enrolling a Course
   :scale: 50 %
   :alt: map to buried treasure
 
-  http://itucsdb1950.herokuapp.com/student/'student_number'/enroll
+  http://itucsdb1950.herokuapp.com/student/150160000/enroll
 
 * Students are able to enroll the courses with entering CRN number from available courses.
 
