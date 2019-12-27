@@ -8,10 +8,10 @@ There are three main tables as in the Figure, these tables keeps foods,
 meal menus and class information.
 
 .. figure:: ../ss/kutay.jpg
-  :scale: 50 %
+  :scale: 70 %
   :alt: map to buried treasure
 
-Here is tables:
+Tables and their sql codes are like given below:
 
 CLASS
 ^^^^^
@@ -23,6 +23,7 @@ CLASS
     loc_id INTEGER REFERENCES LOCATION(id) ON DELETE SET NULL,
     credit NUMERIC(1)
   );
+
 .. figure:: ../ss/class.png
   :scale: 100 %
   :align: center
@@ -48,7 +49,6 @@ MENU
 ^^^^
 
 .. code-block:: sql
-  :linenos:
 
   CREATE TABLE IF NOT EXISTS MENU (
     dy VARCHAR(15),
