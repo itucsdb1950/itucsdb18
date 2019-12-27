@@ -5,7 +5,7 @@ User Guide
 Login Page
 __________
 
-*Here is our login page which you can enter as an admin with username = kkarakamis and password = 1234 entries.*
+Here is our login page which you can enter as an admin with username = kkarakamis and password = 1234 entries.
 
 .. figure:: ../ss/intro.png
   :scale: 50 %
