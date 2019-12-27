@@ -18,21 +18,7 @@ CRN
 * Location referenced from location table and contain its attributes. Therefore to create a CRN at least one tuple must be in the location table.
 * Credits take number from 1 to 5.
 
-Person
-^^^^^^
-.. figure:: ../ss/admin-person.png
-  :scale: 50 %
-  :alt: map to buried treasure
 
-  http://itucsdb1950.herokuapp.com/admin/persons
-
-* In this page admin user can add person to table and read, delete a person from table.
-* Person has attributes of name, person id, username, password, age and the faculty to identify the person is a student or not.
-* Name section takes person's name and surname information.
-* Person id is a key variable to identify persons and it is generally 9-digit number but it may differ.
-* Username and password are given person to enter the website.
-* Age info is important to check the person is at university age and it must be at least 18.
-* In department section is optional. If the department is selected, then the person becomes student otherwise person creates as professor automatically.
 
 Department
 ^^^^^^^^^^
@@ -80,11 +66,10 @@ Grades
 
   http://itucsdb1950.herokuapp.com/admin/grades
 
-* In this page admin user can add meal to table and read, delete a meal from table.
-* Meal has attributes of day, repast, soup, main, side and extras.
-* Every repast of days are unique and has mainly four types of foods.
-* Day and repast sections form selection feature which keeps days of weeks and lunch and dinner as repast.
-* Foods are reference the foods from table, with selecting them admin user can make different menus.
+* In this page admin user can add grades to table and read, delete a grade from table.
+* Grades have attributes of CRN which referenced from CRN table, student id which referenced from student table, taken-from, percentage, grade.
+* Taken from is name of the examination.
+* Percentage is the number of percentage the examination affects the all grade.
 
 
 

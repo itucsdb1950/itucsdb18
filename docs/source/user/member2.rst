@@ -21,6 +21,40 @@ Students Pages
 --------------
 **A student user can check their grades, classes which enrolled, attendance info and the menus for foods each day and repast. Also they can enroll a class from enroll to class section.**
 
+
+Courses for Students
+^^^^^^^^^^^^^^^^^^^^
+
+.. figure:: ../ss/student-course.png
+  :scale: 50 %
+  :alt: map to buried treasure
+
+  http://itucsdb1950.herokuapp.com/student/'student_number'/courses
+
+* Students can see the enrolled courses from this page.
+
+Attendance for Students
+^^^^^^^^^^^^^^^^^^^^^^^
+
+.. figure:: ../ss/student-course.png
+  :scale: 50 %
+  :alt: map to buried treasure
+
+  http://itucsdb1950.herokuapp.com/student/'student_number'/attendance
+
+* Students can see the attendance information of each course from this page.
+
+Enrolling a Course
+^^^^^^^^^^^^^^^^^^
+
+.. figure:: ../ss/student-Enroll.png
+  :scale: 50 %
+  :alt: map to buried treasure
+
+  http://itucsdb1950.herokuapp.com/student/'student_number'/enroll
+
+* Students are able to enroll the courses with entering CRN number from available courses.
+
 Menu List for Students
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -31,5 +65,3 @@ Menu List for Students
   http://itucsdb1950.herokuapp.com/food_menu
 
 * Students can see the meal menus from this page.
-
-

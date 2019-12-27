@@ -49,30 +49,82 @@ STUDENT
   :align: center
   :alt: map to buried treasure
 
-LOCATION
-^^^^^^^^^^
+FACULTY
+^^^^^^^
 
 .. code-block:: sql
 
-  CREATE TABLE IF NOT EXISTS LOCATION (
+  CREATE TABLE IF NOT EXISTS FACULTY (
     id SERIAL PRIMARY KEY NOT NULL,
-    classroom VARCHAR(255),
-    building VARCHAR(255),
-    dy VARCHAR(255),
-    capacity INT DEFAULT 80
+    fac_name VARCHAR(255),
+    dean_id CHAR(9) REFERENCES PERSON(id) ON DELETE SET NULL,
+    stu_delegate CHAR(9)
   );
 
-.. figure:: ../ss/location.png
+.. figure:: ../ss/faculty.png
   :scale: 100 %
   :align: center
   :alt: map to buried treasure
 
 
-ADMIN LOGIN
-^^^^^^^^^^^
+Some example functions of server.py and views.py are given below
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-With this function users who is not login as a correct username and password are not able to enter the pages requiring permission.
-All these page functions in 'server.py' has starts with that @allow_to functool. If the user enter the wrong username or password this function direct them to 'forbidden_page' page.
+Views
+^^^^^
+
+**Get Person**
+
+.. code-block::
+
+    def get_person(limit=500):
+        statement = "SELECT * FROM person LEFT JOIN student ON person.id = student.id WHERE person.name <> 'ADMINISTRATOR'"
+
+        with dbapi2.connect(db_url) as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(statement)
+                records = cursor.fetchall()
+                return records
+
+* This function takes the person information from DB and send the server.py.
+
+**Add Person**
+
+.. code-block::
+
+    def add_person(per_name, per_num, usern, passw, age, fac):
+        if int(age) < 18:
+            return 1
+        if fac:
+            statement = """INSERT INTO person(id, name, age, username, password) VALUES('{}', '{}', '{}', '{}', '{}');
+                            INSERT INTO STUDENT(id, fac_id) VALUES('{}','{}')""".format(per_num, per_name, age, usern, passw, per_num, fac)
+        else:
+            statement = "INSERT INTO person(id, name, age, username, password) VALUES('{}', '{}', '{}', '{}', '{}')".format(
+                per_num, per_name, age, usern, passw)
+        with dbapi2.connect(db_url) as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(statement)
+
+* This page add person to DB with checking whether age is more then 18. Also it checks the faculty information is entered or not to identify the person as student or professor.
+
+**Delete Person**
+
+.. code-block::
+
+    def del_person(id):
+        statement = "DELETE FROM person WHERE id = '{}'".format(id)
+
+        with dbapi2.connect(db_url) as connection:
+            with connection.cursor() as cursor:
+                cursor.execute(statement)
+
+* Given above function let the admin user to delete person tuple from DB.
+
+Server
+^^^^^^
+
+* With this function users who is not login as a correct username and password are not able to enter the pages requiring permission.
+* All these page functions in 'server.py' has starts with that @allow_to functool. If the user enter the wrong username or password this function direct them to 'forbidden_page' page.
 
 .. code-block::
 

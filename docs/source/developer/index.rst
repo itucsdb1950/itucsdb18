@@ -29,26 +29,25 @@ Explanations
 Code
 ----
 
-**explain the technical structure of your code**
-
 **We have mainly 'views.py' as a header file which keeps database operations functions and 'server.py' to run and manage the website pages.**
 
 VIEWS
 ^^^^^
-asdsad
+* There are 48 functions in views.py which making operations about data management.
+* Get functions read the necessary part of DB send them to server.py.
+* Del functions delete the selected parts from DB.
+* Add functions adds the intended sections of tables to DB.
+* Update functions change the selected parts of DB.
+* Check functions looks the some conditions to check whether the condition certain or not. This is important while deleting or updating some referenced keys.
 
 SERVER
 ^^^^^^
-asdadsads
+* The main aim of server.py is running the server and coordinate the relations of pages.
+* Almost all functions in this file correspond with a page of the website.
+* Some pages run with get, some of them with post and some of them run with both get and post method. This is determined according to the data will send or receive.
+* @app.route functools gives the address of the page to url.
+* @allow_to functools decide the pages are able to entered with unauthorised users or not.
 
-**to include a code listing, use the following example**::
-
-   .. code-block:: python
-
-      class Foo:
-
-         def __init__(self, x):
-            self.x = x
 
 .. toctree::
 
