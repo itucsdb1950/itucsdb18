@@ -123,8 +123,8 @@ Views
 Server
 ^^^^^^
 
-* With this function users who is not login as a correct username and password are not able to enter the pages requiring permission.
-* All these page functions in 'server.py' has starts with that @allow_to functool. If the user enter the wrong username or password this function direct them to 'forbidden_page' page.
+* With this function users who is not login as a correct username and password are not able to enter the pages which requiring permission.
+* Almost all page functions in 'server.py' has start with that @allow_to functool. If the user enter the wrong username or password this function direct them to 'forbidden_page' page.
 
 .. code-block:: python
 
