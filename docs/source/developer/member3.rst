@@ -75,7 +75,7 @@ Views
 
 **Get Person**
 
-.. code-block::
+.. code-block:: python
 
     def get_person(limit=500):
         statement = "SELECT * FROM person LEFT JOIN student ON person.id = student.id WHERE person.name <> 'ADMINISTRATOR'"
@@ -90,7 +90,7 @@ Views
 
 **Add Person**
 
-.. code-block::
+.. code-block:: python
 
     def add_person(per_name, per_num, usern, passw, age, fac):
         if int(age) < 18:
@@ -109,7 +109,7 @@ Views
 
 **Delete Person**
 
-.. code-block::
+.. code-block:: python
 
     def del_person(id):
         statement = "DELETE FROM person WHERE id = '{}'".format(id)
@@ -126,7 +126,7 @@ Server
 * With this function users who is not login as a correct username and password are not able to enter the pages requiring permission.
 * All these page functions in 'server.py' has starts with that @allow_to functool. If the user enter the wrong username or password this function direct them to 'forbidden_page' page.
 
-.. code-block::
+.. code-block:: python
 
   def allow_to():
       def decorator_let_to(view_func):

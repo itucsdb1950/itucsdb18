@@ -78,7 +78,7 @@ Views
 
 **Delete Location**
 
-.. code-block::
+.. code-block:: python
 
     def del_location(id):
         statement = "DELETE FROM location WHERE id = '{}'".format(id)
@@ -92,7 +92,7 @@ Views
 
 **Get Location**
 
-.. code-block::
+.. code-block:: python
 
     def get_locations(limit=100):
         statement = "SELECT * FROM location LIMIT {}".format(limit)
@@ -107,14 +107,14 @@ Views
 
 **Update Location**
 
-.. code-block::
+.. code-block:: python
 
     def update_location(old_id, building, day, classroom, capacity):
         statement = """
-                    UPDATE location
-                        SET classroom='{}',building='{}',dy='{}',capacity='{}'
-                        WHERE (id='{}')
-                        """.format(classroom, building, day, capacity, old_id)
+            UPDATE location
+            SET classroom='{}',building='{}',dy='{}',capacity='{}'
+            WHERE (id='{}')
+            """.format(classroom, building, day, capacity, old_id)
 
 * With this function admin user can update the location tuples in DB.
 
@@ -122,7 +122,7 @@ Views
 Server
 ^^^^^^
 
-.. code-block::
+.. code-block:: python
 
     @app.route("/admin/location")
     @allow_to()
@@ -133,7 +133,7 @@ Server
 
 * Given above function let the http://itucsdb1950.herokuapp.com/admin/location page run and takes related tables informations and show them in the website.
 
-.. code-block::
+.. code-block:: python
 
     @app.route("/add_location", methods=['POST'])
     @allow_to()

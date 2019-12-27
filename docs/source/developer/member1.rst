@@ -103,7 +103,7 @@ Views
 
 **Delete Menus**
 
-.. code-block::
+.. code-block:: python
 
     def del_meal(day, repast):
         statement = "DELETE FROM MENU WHERE ((dy = '{}') and( repast = '{}'))".format(day, repast)
@@ -117,7 +117,7 @@ Views
 
 **Add Menus**
 
-.. code-block::
+.. code-block:: python
 
     def add_meal(day, repast, soup, main, side, extras):
         statement = "INSERT INTO MENU(dy, repast, soup, main, side, extras) VALUES('{}', '{}', '{}', '{}', '{}', '{}')".format(day, repast, soup, main, side, extras)
@@ -130,7 +130,7 @@ Views
 
 **Update Menu**
 
-.. code-block::
+.. code-block:: python
 
     def update_meal(day, repast, soup, main, side, extras, m_day, m_repast, m_soup, m_main, m_side, m_extras):
         statement = """UPDATE menu
@@ -149,7 +149,7 @@ Server
 
 **Admin Meal Page**
 
-.. code-block::
+.. code-block:: python
 
     @app.route("/admin/meal")
     @allow_to()
@@ -164,7 +164,7 @@ Server
 
 **Delete Menu**
 
-.. code-block::
+.. code-block:: python
 
     @app.route("/del_meal/<string:dy>/<string:repast>", methods=['GET'])
     @allow_to()
