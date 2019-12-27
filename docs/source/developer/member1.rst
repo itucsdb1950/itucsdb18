@@ -16,7 +16,6 @@ Here is tables:
 CLASS
 ^^^^^
 .. code-block:: sql
-  :linenos:
 
   CREATE TABLE IF NOT EXISTS CLASS (
     crn INTEGER PRIMARY KEY NOT NULL ,
@@ -32,7 +31,6 @@ CLASS
 FOODS
 ^^^^^
 .. code-block:: sql
-  :linenos:
 
   CREATE TABLE IF NOT EXISTS FOODS (
     id SERIAL PRIMARY KEY NOT NULL,
@@ -65,6 +63,7 @@ MENU
     FOREIGN KEY(side) REFERENCES FOODS(id),
     FOREIGN KEY(extras) REFERENCES FOODS(id)
   );
+
 .. figure:: ../ss/menu.png
   :scale: 100 %
   :align: center
