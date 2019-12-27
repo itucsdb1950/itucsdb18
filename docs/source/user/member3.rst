@@ -1,2 +1,4 @@
-Parts Implemented by Member Name
-================================
+Parts Implemented by Enes Furkan Örnek
+======================================
+
+

@@ -4,9 +4,22 @@ Developer Guide
 Database Design
 ---------------
 
-**explain the database design of your project**
+Explanation
+^^^^^^^^^^^
+* Our database has 9 main tables. Their names are foods, menu, person, student, enrollment, grades, class, faculty and location.
+* In foods table we have different types of eatables of a repast. A repast has mainly four types of foods: soup, main, side and extras. Also there is calorie value of each food.
+* Menu tables keeps the repast menu of a day, which keeps mainly four types of foods from foods table and every day has two different repast as lunch and dinner.
+* Person table has information about a student or a lecturer. These persons created and took id, username and password by admin users . In addition to them, person have name and age information too.
+* When adding a person if the faculty information of person is entered, then that person becomes a student otherwise person added to system as a lecturer.
+.. * A lecturer can do ....
+.. * A student user can check their grades, classes which enrolled, attendance info and the menus for foods each day and repast. Also they can enroll a class from enroll to class section.
 
-**include the E/R diagram(s)**
+**Database E/R diagram**
+
+.. figure:: ../ss/diagram.png
+  :scale: 50 %
+  :alt: map to buried treasure
+
 
 Code
 ----
