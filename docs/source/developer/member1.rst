@@ -11,3 +11,16 @@ meal menus and class information.
   :scale: 50 %
   :alt: map to buried treasure
 
+Here is tables:
+
+.. figure:: ../ss/menu.png
+  :scale: 50 %
+  :alt: map to buried treasure
+
+.. figure:: ../ss/foods.png
+  :scale: 50 %
+  :alt: map to buried treasure
+
+.. figure:: ../ss/class.png
+  :scale: 50 %
+  :alt: map to buried treasure

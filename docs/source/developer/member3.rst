@@ -11,4 +11,17 @@ student and location information.
   :scale: 50 %
   :alt: map to buried treasure
 
+Here is tables:
+
+.. figure:: ../ss/person.png
+  :scale: 50 %
+  :alt: map to buried treasure
+
+.. figure:: ../ss/student.png
+  :scale: 50 %
+  :alt: map to buried treasure
+
+.. figure:: ../ss/location.png
+  :scale: 50 %
+  :alt: map to buried treasure
 
